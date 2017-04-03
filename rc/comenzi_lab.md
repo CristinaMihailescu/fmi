@@ -11,7 +11,7 @@ Tutorial configurare Calculator-Switch-Router
 //INCEPUT
 Switch> enable //mod user => mod privileged
 Switch# configure terminal
-Switch(config)# no ip domain-lookup ```//cand introduci ceva gresit, sa nu astepti degeaba```
+Switch(config)# no ip domain-lookup ```**//cand introduci ceva gresit, sa nu astepti degeaba**```markdown
 Switch(config)# hostname SW1 //SW1 = nume switch de care e legat
 
 //PAROLE
