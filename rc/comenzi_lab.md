@@ -82,6 +82,7 @@ R1(config)# enable password cisco54321
 R1(config)# banner motd #Text#
 </pre>
 **CONFIGURARE ACCES CONSOLA ..**
+
 **CONFIGURARE ACCES TELNET ..**
 
 **INTERFATA**
