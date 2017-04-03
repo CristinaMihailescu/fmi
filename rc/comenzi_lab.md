@@ -7,50 +7,54 @@ Tutorial configurare Calculator-Switch-Router
 3. Plaseaza Laptop: conecteaza cu SW1 - console (Laptop RS 232 ~ SW1 Console)
 
 3. Configureaza SW1 (in terminal - Laptop):
+
+**INCEPUT**
 ```markdown
-//INCEPUT
 Switch> enable //mod user => mod privileged
 Switch# configure terminal
-Switch(config)# no ip domain-lookup
-```
-**cand introduci ceva gresit, sa nu astepti degeaba**
-```markdown
+Switch(config)# no ip domain-lookup //cand introduci ceva sa nu astepti degeaba
 Switch(config)# hostname SW1 //SW1 = nume switch de care e legat
-
-//PAROLE
+```
+**PAROLE**
+```markdown
 SW1(config)# service password-encryption
 SW1(config)# enable secret cisco12345 //pentru enable
 SW1(config)# enable password cisco54321
 
 SW1(config)# banner motd #Text#
-
-//CONFIGURARE ACCES CONSOLA
+```
+**CONFIGURARE ACCES CONSOLA**
+```markdown
 SW1(config)# line console 0
 SW1(config-line)# password ciscoconpass //pentru consola
 SW1(config-line)# login //ca sa ceara pass
 SW1(config-line)# logging synchronous //sa te intoarca unde ai ramas daca vin mesaje de la OS
 SW1(config-line)# exec-timeout 15 0 //te da afara dupa 15 minute si 0 secunde
 SW1(config-line)# exit
-
-//CONFIGURARE ACCES TELNET
+```
+**CONFIGURARE ACCES TELNET**
+```markdown
 SW1(config)# line vty 0 15
 SW1(config-line)# password ciscovtypass
 SW1(config-line)# login
 SW1(config-line)# logging synchronous
 SW1(config-line)# exec-timeout 15 0
 SW1(config-line)# exit
-
-//INTERFATA
+```
+**INTERFATA**
+```markdown
 SW1(config)# interface range FastEthernet 0/1-24
 SW1(config-if-range)# **shutdown**
 SW1(config-if-range)# exit
 SW1(config)# exit
-
-//SAVE
+```
+**SAVE**
+```markdown
 SW1# copy running-config startup-config
 SW1# exit
-
-//VERIFICARE SECURITATE
+```
+**VERIFICARE SECURITATE**
+```markdown
 SW1# enable
 SW1# show running-config
 ```
@@ -61,8 +65,10 @@ SW1# show running-config
 
 ```markdown
 no
-//INCEPUT ..
-//PAROLE
+```
+**INCEPUT ..**
+**PAROLE**
+```markdown
 R1(config)# service password-encryption
 R1(config)# **security passwords min-length 10**
 R1(config)# **login block-for 20 attempts 2 within 30** //blocheaza timp de 20 de secunde la doua incercari gresite in interval de 30 de secunde
@@ -71,28 +77,32 @@ R1(config)# enable password cisco54321
 
 R1(config)# **banner login #Text#**
 R1(config)# banner motd #Text#
+```
+**CONFIGURARE ACCES CONSOLA ..**
+**CONFIGURARE ACCES TELNET ..**
 
-//CONFIGURARE ACCES CONSOLA ..
-//CONFIGURARE ACCES TELNET ..
-
-//INTERFATA
+**INTERFATA**
+```markdown
 R1(config)# interface GigabitEthernet 0/0 //SW1 G 0/1 ~ R1 G 0/0
 R1(config-if)# description Legatura LAN 1
 R1(config-if)# ip address 192.168.10.1 255.255.255.0//default gateway CALC1, subnet mask CALC 1
 R1(config-if)# **no shutdown**
 R1(config-if)# exit
+```
+**SAVE ..**
 
-//SAVE ..
-
-//TEST CONECTIVITATE
+**TEST CONECTIVITATE**
+```markdown
 R1# ping 192.168.10.10
+```
 
-//CONECTARE REMOTE
+**CONECTARE REMOTE**
+```markdown
 R1# telnet 192.168.10.1 //ciscovtypass
 R1# enable //cisco123545
 ```
 
-SCURTATURI
+**SCURTATURI**
 ```markdown
 en ~ enable
 conf t ~ configure terminal
