@@ -9,12 +9,13 @@
 3. Configureaza SW1 (in terminal - Laptop):
 
 **INCEPUT**
-```markdown
-Switch> enable //mod user => mod privileged
+`
+Switch> enable //mod user => `**`mod privileged`**`
+
 Switch# configure terminal
 Switch(config)# no ip domain-lookup //cand introduci ceva sa nu astepti degeaba
 Switch(config)# hostname SW1 //SW1 = nume switch de care e legat
-```
+`
 **PAROLE**
 ```markdown
 SW1(config)# service password-encryption
