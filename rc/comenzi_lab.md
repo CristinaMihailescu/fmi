@@ -45,7 +45,7 @@ SW1(config-line)# exit
 **INTERFATA**
 <pre>
 SW1(config)# interface range FastEthernet 0/1-24
-<span style='color:red;'>SW1(config-if-range)# shutdown</span>
+SW1(config-if-range)# shutdown
 SW1(config-if-range)# exit
 SW1(config)# exit
 </pre>
