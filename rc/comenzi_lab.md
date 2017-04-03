@@ -7,7 +7,7 @@ Tutorial configurare Calculator-Switch-Router
 3. Plaseaza Laptop: conecteaza cu SW1 - console (Laptop RS 232 ~ SW1 Console)
 
 3. Configureaza SW1 (in terminal - Laptop):
-``markdown
+```markdown
 //INCEPUT
 Switch> enable //mod user => mod privileged
 Switch# configure terminal
@@ -50,7 +50,7 @@ SW1# exit
 //VERIFICARE SECURITATE
 SW1# enable
 SW1# show running-config
-``
+```
 
 4. Plaseaza R1 (Router 2911): conecteaza cu SW1 - copper straight through(SW1 G 0/1 ~ R1 G 0/2), conecteaza cu Laptop - console (Laptop RS 232 ~ R1 Console)
 
