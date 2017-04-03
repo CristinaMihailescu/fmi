@@ -90,8 +90,10 @@ R1# enable //cisco123545
 ```
 
 SCURTATURI
+```markdown
 en ~ enable
 conf t ~ configure terminal
 int ~ interface
 ip add ~ ip address
 no shut ~ no shutdown
+```
