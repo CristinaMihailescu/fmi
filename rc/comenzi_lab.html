@@ -45,7 +45,7 @@ SW1(config-line)# exit
 **INTERFATA**
 <pre>
 SW1(config)# interface range FastEthernet 0/1-24
-SW1(config-if-range)# **shutdown**
+<span style='color:red;'>SW1(config-if-range)# shutdown</span>
 SW1(config-if-range)# exit
 SW1(config)# exit
 </pre>
@@ -76,7 +76,7 @@ R1(config)# **login block-for 20 attempts 2 within 30** //blocheaza timp de 20 d
 R1(config)# enable secret cisco12345
 R1(config)# enable password cisco54321
 
-R1(config)# **banner login #Text#**
+<b>R1(config)# banner login #Text#</b>
 R1(config)# banner motd #Text#
 </pre>
 **CONFIGURARE ACCES CONSOLA ..**
