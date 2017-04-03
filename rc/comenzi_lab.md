@@ -45,7 +45,7 @@ SW1(config-line)# exit
 **INTERFATA**
 <pre>
 SW1(config)# interface range FastEthernet 0/1-24
-SW1(config-if-range)# shutdown
+<b>SW1(config-if-range)# shutdown</b>
 SW1(config-if-range)# exit
 SW1(config)# exit
 </pre>
@@ -71,8 +71,9 @@ no
 **PAROLE**
 <pre>
 R1(config)# service password-encryption
-R1(config)# **security passwords min-length 10**
-R1(config)# **login block-for 20 attempts 2 within 30** //blocheaza timp de 20 de secunde la doua incercari gresite in interval de 30 de secunde
+<b>R1(config)# security passwords min-length 10</b>
+<b>R1(config)# login block-for 20 attempts 2 within 30</b> //blocheaza timp de 20 de secunde la doua incercari gresite
+                                                           //in interval de 30 de secunde
 R1(config)# enable secret cisco12345
 R1(config)# enable password cisco54321
 
@@ -87,7 +88,7 @@ R1(config)# banner motd #Text#
 R1(config)# interface GigabitEthernet 0/0 //SW1 G 0/1 ~ R1 G 0/0
 R1(config-if)# description Legatura LAN 1
 R1(config-if)# ip address 192.168.10.1 255.255.255.0//default gateway CALC1, subnet mask CALC 1
-R1(config-if)# **no shutdown**
+<b>R1(config-if)# no shutdown</b>
 R1(config-if)# exit
 </pre>
 **SAVE ..**
