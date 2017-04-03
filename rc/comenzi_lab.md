@@ -56,7 +56,7 @@ SW1# show running-config
 
 5. Configureaza R1 (in terminal - Laptop):
 
-``markdown
+```markdown
 no
 //INCEPUT ..
 //PAROLE
@@ -87,7 +87,7 @@ R1# ping 192.168.10.10
 //CONECTARE REMOTE
 R1# telnet 192.168.10.1 //ciscovtypass
 R1# enable //cisco123545
-``
+```
 
 SCURTATURI
 en ~ enable
