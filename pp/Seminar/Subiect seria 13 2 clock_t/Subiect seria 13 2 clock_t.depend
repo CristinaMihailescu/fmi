@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1453658481 source:d:\facultate\pp\seminar\subiect seria 13 2 clock_t\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+

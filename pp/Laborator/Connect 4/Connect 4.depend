@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1452100725 source:d:\facultate\pp\laborator\connect 4\main.c
+	<stdio.h>
+	<string.h>
+	<windows.h>
+

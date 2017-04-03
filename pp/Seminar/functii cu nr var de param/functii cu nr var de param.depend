@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1453650785 source:d:\facultate\pp\seminar\functii cu nr var de param\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdarg.h>
+	<String.h>
+

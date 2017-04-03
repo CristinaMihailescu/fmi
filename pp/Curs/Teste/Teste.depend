@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1450535829 source:d:\facultate\pp\curs\teste\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+

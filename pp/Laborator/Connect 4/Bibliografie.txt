@@ -1,0 +1,3 @@
+http://www.dotnetperls.com/console-color
+http://stackoverflow.com/questions/24708700/c-detect-when-user-presses-arrow-key
+http://stackoverflow.com/questions/2347770/how-do-you-clear-console-screen-in-c

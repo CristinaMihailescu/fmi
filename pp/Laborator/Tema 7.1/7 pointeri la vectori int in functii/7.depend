@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1453035520 source:d:\facultate\pp\laborator\tema 7.1\7\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+

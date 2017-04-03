@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1450551938 source:d:\facultate\pp\laborator\tema 4 wtf\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+

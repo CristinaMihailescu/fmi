@@ -1,0 +1,66 @@
+Indica?ii
+-pot fi utilizate func?ii auxiliare, în afara celor din cerin?e
+-codul va fi salvat într-un singur fi?ier sursa
+-toate afi?arile vor fi facute în fi?ierul date.out, prin adaugare la sfâr?it (nu suprascriere) ?i mesaje corespunzatoare
+-fi?ierele sursa precum ?i fi?ierele de intrare ?i ie?ire vor fi puse într-un folder denumit astfel: "nume.prenume.NR_GRUPA"
+-timp de lucru: 2 ore
+-se acorda 1p din oficiu ?i 0.5p pentru lizibilitate, explica?ii oferite în comentarii, gestionarea resurselor ?i a memoriei etc. precum ?i 0.5p daca programul compileaza
+
+
+1. Folosind operatorii logici de deplasare la nivel de bit, sa se scrie o func?ie care calculeaza valoarea expresiei 12/7*5 ?i sa se afi?eze rezultatul (0.5p)
+
+2. Crea?i o structura pentru lucrul cu numere ra?ionale, sub forma de frac?ie. Scrie?i o func?ie ce returneaza rezultatul scaderii a n frac?ii citite din fi?ierul date1.in, unde n se cite?te tot din fi?ier. Afi?a?i rezultatul sub forma unei frac?ii ireductibile (2p)
+
+date1.in:
+4
+2 3
+1 2
+2 4
+3 2
+
+3. Din fi?ierul date2.in se cite?te dimensiunea unei matrice patratice, precum ?i elementele sale. Sa se scrie o func?ie ce creeaza o lista simplu înlan?uita ce con?ine elementele matricei, citite în urma parcurgerii de mai jos. Sa se afi?eze lista (2p)
+
+---------------------------------->
+<---------------------------------
+---------------------------------->
+<---------------------------------
+---------------------------------->
+<---------------------------------
+
+4. Fi?ierul date3.in con?ine strofa de mai jos. Sa se scrie o func?ie care returneaza:
+0, daca strofa nu are rima (a, b, c, d)
+1, daca strofa are rima împerecheata (a, a, b, b)
+2, daca strofa are rima încruci?ata (a, b, a, b)
+3, daca strofa are rima îmbra?i?ata (a, b, b, a)
+4, daca strofa are monorima (a, a, a, a)
+Sa se interpreteze în main rezultatul returnat de func?ie folosind o construc?ie corespunzatoare ?i sa se afi?eze tipul de rima al strofei:
+"Iar te-ai cufundat in stele
+Si în nori si-n ceruri nalte
+De nu m-ai uita incalte
+Sufletul vietii mele"
+Observa?ie: Rima este data de ultimele 3 caractere ale cuvintelor! (2p)
+
+5. Numerele naturale se afi?eaza într-un triunghi precum în figura de mai jos. Fiecare numar este a?ezat în vârful unui romb ?i este unic determinat de cele 2 diagonale A ?i B, numerotate de la A1, respectiv B1, ca în figura. Dat fiind un numar natural n de maxim 9 cifre citit de la tastatura, calcula?i ?i afi?a?i coordonatele diagonalelor pe care se afla (1p)
+Exemplu: 12 se afla pe A4 B2
+6 se afla pe A1 B3
+
+                                         A1                 B1
+                                                \        /
+                                                  \    /
+                                         A2        \ /       B2
+                                          \         1       /
+                                            \      /  \    /
+                                      A3     \  /      \  /
+                                       \       2         3       B3
+                                        \    /  \       /  \     /
+                                A4        \ /     \   /      \  /
+                                  \        4        5         6        B4
+                                    \     /  \      /  \     / \    /
+                                      \  /    \   /      \ /      \/
+                              A5        7       8        9        10
+                                 \     /  \    / \     /
+                                   \ /      \ /    \ / 
+                                   11        12     13...
+
+
+6. Scrie?i în câteva rânduri ce nu a?i în?eles din materia parcursa în acest semestru la laborator. Argumenta?i! (0.5p bonus)
