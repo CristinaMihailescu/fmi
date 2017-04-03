@@ -1,4 +1,4 @@
-#Tutorial configurare Calculator-Switch-Router
+# Tutorial configurare Calculator-Switch-Router
 
 1. Plaseaza CALC1: opreste pc, schimba placa de retea cu -1CGE, porneste PC, configurezi IP pe CALC1 - ip address, subnet mask, defult gateway
 
