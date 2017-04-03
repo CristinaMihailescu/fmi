@@ -1,4 +1,4 @@
-# Tutorial configurare Calculator-Switch-Router
+# Configurare Calculator-Switch-Router
 
 1. Plaseaza CALC1: opreste pc, schimba placa de retea cu -1CGE, porneste PC, configurezi IP pe CALC1 - ip address, subnet mask, defult gateway
 
@@ -114,3 +114,8 @@ int ~ interface
 ip add ~ ip address
 no shut ~ no shutdown
 </pre>
+
+# Configurare Router-Router
+
+1. Schimba physical device view la ambele routere: opreste, scoate toate modulele, adauga HWIC-2T pe ultima pozitie, porneste
+2. Conecteaza R1 cu R2 - Serial DTE (R1 Serial 0/0/0 ~ R2 Serial 0/0/0)
