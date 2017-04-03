@@ -68,6 +68,7 @@ SW1# show running-config
 no
 </pre>
 **INCEPUT ..**
+
 **PAROLE**
 <pre>
 R1(config)# service password-encryption
