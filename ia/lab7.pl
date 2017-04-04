@@ -16,8 +16,10 @@ grad_nod([_ - Nod | Graf], Nod, Grad) :-  grad_nod(Graf, Nod, Grad1), Grad is Gr
 grad_nod([_ - _ | Graf], Nod, Grad) :-  grad_nod(Graf, Nod, Grad).
 
 drum(A, B, Graf, Drum) :- drum1(A, [B], Graf, Drum).
-drum1(A, [E | BL], Graf, Drum) :- adiacent(A, E, Graf) -> Drum = [A, E| BL]; 
-													      (adiacent(E, X, Graf), (\+membru(X, BL) -> drum1(A, [X, E | BL], Graf, Drum))).
+drum1(A, [A, _], Graf, Drum).
+drum1(A, [E | BL], Graf, Drum) :- adiacent(E, X, Graf), \+membru(X, BL), drum1(A, [X, E | BL]), Graf, Drum).
+drum1(A, [E | BL], Graf, Drum) :- adiacent(A, E, Graf) -> Drum = [A, E| BL] ;													
+      (adiacent(E, X, Graf), (\+membru(X, BL) -> drum1(A, [X, E | BL], Graf, Drum))).
 
 neconex(Graf) :- lista_noduri(Graf, L), membru(X, L), membru(Y, L), \+drum(X, Y, Graf, _).				  
 conex(Graf) :- \+neconex(Graf).
