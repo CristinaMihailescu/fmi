@@ -24,3 +24,4 @@ conex(Graf) :- \+neconex(Graf).
 
 aciclic(Graf) :- \+ciclic(Graf).
 ciclic(Graf) :- membru(X - Y, Graf), drum(X, Y, Graf, Drum), length(Drum, L), L > 2.
+arbore
