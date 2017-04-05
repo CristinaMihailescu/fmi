@@ -40,7 +40,7 @@ Having trouble with Pages? Check out our [documentation](https://help.github.com
 <html>
 <head>
 <style>
-  .color { color: #ff0000; }
+  .colorr { color: #ff0000; }
 </style>
 </head>
 <body> </body>
