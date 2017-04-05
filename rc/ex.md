@@ -1,8 +1,6 @@
-<link rel="stylesheet" href="path/to/module/css/colors.css">
-
 ### Input:
 <pre>
-<span color = "FF4136">173.16.191.210/18</span>
+<span class = "color">173.16.191.210/18</span>
 LAN 1 = 127 hosts = 2<sup>8</sup> - 2
 LAN 2 = 1023 hosts = 2<sup>11</sup> - 2
 LAN 3 = 255 hosts = 2<sup>9</sup> - 2
