@@ -8,9 +8,7 @@ LAN 4 = 2047 hosts = 2<sup>12</sup> - 2
 ROUTERE = 2 = 2<sup>2</sup> - 2
 </pre>
 
-```diff
-- Ordine descrescatoare a nr. de hosts!
-```
+<em>Ordine descrescatoare a nr. de hosts!</em>
 ### LAN 4
 
 IP: <b>173.16.191.210/18</b>
