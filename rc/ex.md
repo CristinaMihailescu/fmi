@@ -1,4 +1,4 @@
-### Input:
+## Input:
 <pre>
 173.16.191.210/18
 LAN 1 = 127 hosts = 2<sup>8</sup> - 2
@@ -7,6 +7,8 @@ LAN 3 = 255 hosts = 2<sup>9</sup> - 2
 LAN 4 = 2047 hosts = 2<sup>12</sup> - 2
 ROUTERE = 2 = 2<sup>2</sup> - 2
 </pre>
+
+## Output:
 
 <em>Ordine descrescatoare a nr. de hosts!</em>
 ### LAN 4
