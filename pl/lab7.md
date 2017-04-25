@@ -106,9 +106,8 @@ fmod EX4 is
   eq length(N L) = 1 + length(L) .
   
   op add : Int List -> List .
-  ***convetie: incepem numaratoarea de la 0
   eq add(X, nil) = nil .
-  eq add(X, N L) = if (length(L) rem 2) == 1 then X add(X, L) else N add(X, L) fi .
+  eq add(X, N L) = N X add(X, L) .
   
 endfm
 ```
