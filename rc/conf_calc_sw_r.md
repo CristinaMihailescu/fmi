@@ -60,7 +60,7 @@ SW1# enable
 SW1# show running-config
 </pre>
 
-4. Plaseaza R1 (Router 2911): conecteaza cu SW1 - copper straight through(SW1 G 0/1 ~ R1 G 0/0), conecteaza cu Laptop - console (Laptop RS 232 ~ R1 Console)
+4. Plaseaza R1 (Router 2911): schimba placa routerului cu HT-..., conecteaza cu SW1 - copper straight through(SW1 G 0/1 ~ R1 G 0/0), conecteaza cu Laptop - console (Laptop RS 232 ~ R1 Console)
 
 5. Configureaza R1 (in terminal - Laptop):
 
