@@ -60,7 +60,7 @@ SW1# enable
 SW1# show running-config
 </pre>
 
-4. Plaseaza R1 (Router 2911): schimba placa routerului cu HT-..., conecteaza cu SW1 - copper straight through(SW1 G 0/1 ~ R1 G 0/0), conecteaza cu Laptop - console (Laptop RS 232 ~ R1 Console)
+4. Plaseaza R1 (Router 2911): Schimba <i>physical device view</i> la ambele routere: opreste, scoate toate modulele, adauga HWIC-2T pe ultima pozitie, porneste; conecteaza cu SW1 - copper straight through(SW1 G 0/1 ~ R1 G 0/0), conecteaza cu Laptop - console (Laptop RS 232 ~ R1 Console)
 
 5. Configureaza R1 (in terminal - Laptop):
 
@@ -93,6 +93,32 @@ R1(config-if)# ip address 192.168.10.1 255.255.255.0//default gateway CALC1, sub
 <b>R1(config-if)# no shutdown</b>
 R1(config-if)# exit
 </pre>
+
+**CONFIGURARE LEGATURA CU ALT ROUTER**
+<pre>
+R1(config)# interface S 0/0/0
+R1(config-if)# description Legatura CHINA-SUA
+R1(config-if)# ip address 10.10.10.50 255.255.255.252 //ip legatura cu celalalt router
+R1(config-if)# no shutdown
+R1(config-if)# exit
+R1(config)# exit
+R1# copy running-config startup-config
+</pre>
+
+**CONFIGURARE LEGATURA CU COPII ROUTERULUI CU CARE AM FACUT LEGATURA**
+
+<pre>
+R1(config)# ip route NA_CALC_LEGAT_DE_R2 SM_CALC_LEGAT_DE_R2 Serial
+ex: R1(config)# ip route 173.16.152.0 255.255.254.0 Serial 0/0/0
+</pre>
+
+**CONFIGURARE LEGATURA CU O ALTA RETEA DE 2 ROUTERE**
+
+<pre>
+R1(config)# ip route NA_ROUTERS SM_ROUTERS Serial
+ex: R1(config)# ip route 173.16.152.0 255.255.254.0 Serial 0/0/0
+</pre>
+
 **SAVE ..**
 
 **TEST CONECTIVITATE**
@@ -100,7 +126,7 @@ R1(config-if)# exit
 R1# ping 192.168.10.10
 </pre>
 
-**CONECTARE REMOTE**
+**CONECTARE REMOTE: din router**
 <pre>
 R1# telnet 192.168.10.1 //ciscovtypass
 R1# enable //cisco123545
