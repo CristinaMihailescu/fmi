@@ -123,7 +123,8 @@ ex: R1(config)# ip route 173.16.152.0 255.255.254.0 Serial 0/0/0
 
 **TEST CONECTIVITATE**
 <pre>
-R1# ping 192.168.10.10
+R1# ping IP_C
+R1# telnet DG_C
 </pre>
 
 **CONECTARE REMOTE: din router**
