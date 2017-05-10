@@ -4,14 +4,14 @@
 + opreste pc, schimba placa de retea cu -1CGE, porneste PC
 + configurezi IP pe CALC1 - ip address, subnet mask, defult gateway
 + EMAIL:
-`
+<pre>
 Your name: user1
 Email Address: user1@fmi.cti.ro
 Incoming Mail Server: IP_Server
 Outgoing Mail Server: IP_Server
 User Name: user1
 Password: 123456
-`
+</pre>
 **SAVE**
 2. Plaseaza SW1 (Switch 2960): conecteaza cu CALC1 - copper straight through (CALC1 G 0 ~ SW1 G 0/2)
 
@@ -157,29 +157,29 @@ no shut ~ no shutdown
 + configurezi IP pe Server - ip address = ULTIMUL IP DIN RANGE, subnet mask, defult gateway.
 + HTTP: verifica daca HTTP On, HTTPS On
 + DHCP:
-`
+<pre>
 Interface: On
 Pool Name: LAN nume_router
 Default Gateway: default_gateway_server
 DNS Server: IP_server
 Start IP Address: _._._.10
 Maximum number of Users: 100
-`
+</pre>
 **ADD**
 + DNS:
-`
+<pre>
 DNS Service: On
 Name: fmi.cti.ro
 Address: IP_server
-`
+</pre>
 **SET**
 + EMAIL:
-`
+<pre>
 Domain Name: fmi.cti.ro
-`
+</pre>
 **Set**
-`
+<pre>
 User: user1 Password: 123456 Add
 User: user2 Password: 123456 Add
 ...
-`
+</pre>
