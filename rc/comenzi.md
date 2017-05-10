@@ -152,7 +152,7 @@ ip add ~ ip address
 no shut ~ no shutdown
 </pre>
 
-# CONFIGURARE SERVER
+# Configurare Server
 
 1. End devices: plaseaza Generic:
 + opreste Server, schimba placa de retea cu -1CGE, porneste Server
