@@ -103,7 +103,7 @@ R1(config)# banner motd #Text#
 R1(config)# interface GigabitEthernet 0/0 //SW1 G 0/1 ~ R1 G 0/0
 R1(config-if)# description Legatura LAN 1
 R1(config-if)# ip address 192.168.10.1 255.255.255.0//default gateway CALC1, subnet mask CALC 1
----DACA ROUTERUL CORESPUNDE UNUL SERVER
+---PENTRU ROUTERELE DE PE LAN-URILE PE CARE VREI DHCP
 R1(config-if)# ip helper-address 180.188.55.254 255.255.248.0 //IP Server, subnet mask Server
 ---
 <b>R1(config-if)# no shutdown</b>
