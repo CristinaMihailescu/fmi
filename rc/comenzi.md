@@ -1,7 +1,18 @@
 # Configurare Calculator-Switch-Router
 
-1. Plaseaza CALC1: opreste pc, schimba placa de retea cu -1CGE, porneste PC, configurezi IP pe CALC1 - ip address, subnet mask, defult gateway
-
+1. Plaseaza CALC1:
++ opreste pc, schimba placa de retea cu -1CGE, porneste PC
++ configurezi IP pe CALC1 - ip address, subnet mask, defult gateway
++ EMAIL:
+`
+Your name: user1
+Email Address: user1@fmi.cti.ro
+Incoming Mail Server: IP_Server
+Outgoing Mail Server: IP_Server
+User Name: user1
+Password: 123456
+`
+**SAVE**
 2. Plaseaza SW1 (Switch 2960): conecteaza cu CALC1 - copper straight through (CALC1 G 0 ~ SW1 G 0/2)
 
 3. Plaseaza Laptop: conecteaza cu SW1 - console (Laptop RS 232 ~ SW1 Console)
@@ -90,6 +101,9 @@ R1(config)# banner motd #Text#
 R1(config)# interface GigabitEthernet 0/0 //SW1 G 0/1 ~ R1 G 0/0
 R1(config-if)# description Legatura LAN 1
 R1(config-if)# ip address 192.168.10.1 255.255.255.0//default gateway CALC1, subnet mask CALC 1
+---DACA ROUTERUL CORESPUNDE UNUL SERVER
+R1(config-if)# ip helper-address 180.188.55.254 255.255.248.0 //IP Server, subnet mask Server
+---
 <b>R1(config-if)# no shutdown</b>
 R1(config-if)# exit
 </pre>
@@ -127,12 +141,6 @@ R1# ping IP_C
 R1# telnet DG_C
 </pre>
 
-**CONECTARE REMOTE: din router**
-<pre>
-R1# telnet 192.168.10.1 //ciscovtypass
-R1# enable //cisco123545
-</pre>
-
 **SCURTATURI**
 <pre>
 en ~ enable
@@ -141,3 +149,37 @@ int ~ interface
 ip add ~ ip address
 no shut ~ no shutdown
 </pre>
+
+# CONFIGURARE SERVER
+
+1. End devices: plaseaza Generic:
++ opreste Server, schimba placa de retea cu -1CGE, porneste Server
++ configurezi IP pe Server - ip address = ULTIMUL IP DIN RANGE, subnet mask, defult gateway.
++ HTTP: verifica daca HTTP On, HTTPS On
++ DHCP:
+`
+Interface: On
+Pool Name: LAN nume_router
+Default Gateway: default_gateway_server
+DNS Server: IP_server
+Start IP Address: _._._.10
+Maximum number of Users: 100
+`
+**ADD**
++ DNS:
+`
+DNS Service: On
+Name: fmi.cti.ro
+Address: IP_server
+`
+**SET**
++ EMAIL:
+`
+Domain Name: fmi.cti.ro
+`
+**Set**
+`
+User: user1 Password: 123456 Add
+User: user2 Password: 123456 Add
+...
+`
