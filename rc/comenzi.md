@@ -13,6 +13,7 @@ User Name: user1
 Password: 123456
 </pre>
 **SAVE**
+
 2. Plaseaza SW1 (Switch 2960): conecteaza cu CALC1 - copper straight through (CALC1 G 0 ~ SW1 G 0/2)
 
 3. Plaseaza Laptop: conecteaza cu SW1 - console (Laptop RS 232 ~ SW1 Console)
@@ -166,6 +167,7 @@ Start IP Address: _._._.10
 Maximum number of Users: 100
 </pre>
 **ADD**
+
 + DNS:
 <pre>
 DNS Service: On
@@ -173,6 +175,7 @@ Name: fmi.cti.ro
 Address: IP_server
 </pre>
 **SET**
+
 + EMAIL:
 <pre>
 Domain Name: fmi.cti.ro
