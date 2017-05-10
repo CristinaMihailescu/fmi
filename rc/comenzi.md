@@ -57,9 +57,8 @@ SW1(config-line)# exit
 </pre>
 **NO CDP RUN**
 <pre>
-no cdp run
+SW1(config)# no cdp run
 </pre>
-
 **INTERFATA**
 <pre>
 SW1(config)# interface range FastEthernet 0/1-24
@@ -102,6 +101,8 @@ R1(config)# banner motd #Text#
 **CONFIGURARE ACCES CONSOLA ..**
 
 **CONFIGURARE ACCES TELNET ..**
+
+**NO CDP RUN ..**
 
 **INTERFATA**
 <pre>
