@@ -168,13 +168,15 @@ no shut ~ no shutdown
 HTTP: Off
 </pre>
 + DHCP:
+Pentru fiecare LAN pe care vrei DHCP:
 <pre>
 Interface: On
-Pool Name: LAN nume_router
-Default Gateway: default_gateway_server
+Pool Name: NUME_LAN (ex: LAN CECENIA1)
+Default Gateway: default_gateway_C1
 DNS Server: IP_server
-Start IP Address: _._._.10
-Maximum number of Users: 100
+Start IP Address: default_gateway_C1 + 10 ip-uri
+Subnet Mask: subnet_mask_C1
+Maximum number of Users: cati sunt in cerinta asociati lanului CECENIA1
 
 ADD
 </pre>
@@ -198,3 +200,5 @@ User: user1 Password: 123456 Add
 User: user2 Password: 123456 Add
 ...
 </pre>
+
+2. Pentru fiecare calculator schimba de pe ip static pe dhcp la ip configuration.
