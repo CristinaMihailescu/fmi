@@ -11,8 +11,9 @@ Incoming Mail Server: IP_Server
 Outgoing Mail Server: IP_Server
 User Name: user1
 Password: 123456
+
+SAVE
 </pre>
-**SAVE**
 
 2. Plaseaza SW1 (Switch 2960): conecteaza cu CALC1 - copper straight through (CALC1 G 0 ~ SW1 G 0/2)
 
@@ -165,23 +166,25 @@ Default Gateway: default_gateway_server
 DNS Server: IP_server
 Start IP Address: _._._.10
 Maximum number of Users: 100
+
+ADD
 </pre>
-**ADD**
 
 + DNS:
 <pre>
 DNS Service: On
 Name: fmi.cti.ro
 Address: IP_server
+
+SET
 </pre>
-**SET**
 
 + EMAIL:
 <pre>
 Domain Name: fmi.cti.ro
-</pre>
-**Set**
-<pre>
+
+SET
+
 User: user1 Password: 123456 Add
 User: user2 Password: 123456 Add
 ...
