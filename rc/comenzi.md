@@ -156,8 +156,8 @@ no shut ~ no shutdown
 
 1. End devices: plaseaza Generic:
 + opreste Server, schimba placa de retea cu -1CGE, porneste Server
-+ configurezi IP pe Server - ip address = ULTIMUL IP DIN RANGE, subnet mask, defult gateway.
-+ HTTP: verifica daca HTTP On, HTTPS On
++ configurezi IP pe Server - ip address = ULTIMUL IP DIN RANGE, subnet mask, defult gateway
++ HTTP: HTTP On, HTTPS On
 + DHCP:
 <pre>
 Interface: On
