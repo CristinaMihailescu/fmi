@@ -22,22 +22,22 @@ a_doua_problema(arb(S, _, D)) :- a_doua_problema(S), a_doua_problema(D), !.
 
 % 3) Se da urmatorul predicat:
 % om(popescu, ana, 20).
-%om(georgescu, alex, 53).
-%om(ionescu, george, 14).
-%om(popescu, denisa, 6).
-%om(ionescu, liliana, 78).
-%om(georgescu, oana, 35).
-%om(georgescu, vlad, 14).
-%om(ionescu, anca, 2).
-%om(popescu, ioana, 40).
-%om(ionescu, dan, 16).
+% om(georgescu, alex, 53).
+% om(ionescu, george, 14).
+% om(popescu, denisa, 6).
+% om(ionescu, liliana, 78).
+% om(georgescu, oana, 35).
+% om(georgescu, vlad, 14).
+% om(ionescu, anca, 2).
+% om(popescu, ioana, 40).
+% om(ionescu, dan, 16).
 
-%Scrieti un predicat a_treia_problema care sa afiseze in fisierul "familii.txt", pe cate o linie,
-%numele de familie apoi prenumele si varsta pentru toti membrii acelei familii, ordonati crescator dupa varste.
+% Scrieti un predicat a_treia_problema care sa afiseze in fisierul "familii.txt", pe cate o linie,
+% numele de familie apoi prenumele si varsta pentru toti membrii acelei familii, ordonati crescator dupa varste.
 
-%popescu: denisa 6, ana 20, ioana 40
-%georgescu: vlad 14, oana 35, alex 53
-%ionescu: anca 2, george 14, dan 16, liliana 78
+% popescu: denisa 6, ana 20, ioana 40
+% georgescu: vlad 14, oana 35, alex 53
+% ionescu: anca 2, george 14, dan 16, liliana 78
 
 om(popescu, ana, 20).
 om(georgescu, alex, 53).
