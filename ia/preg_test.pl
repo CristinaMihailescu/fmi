@@ -95,11 +95,14 @@ rezolvare :- rezolva(arb(arb(arb(arb(nil, 8, nil), 18, arb(nil, 10, nil)), 2, ar
 
 %Ex 2: ti se da o lista. Pune pp din lista asta in lista rezultat.
 
-rezolva([], []).
-rezolva([E | L], [E | R]) :- A is sqrt(E), floor(A) * floor(A) =:= E, rezolva(L, R), !.
-rezolva([E | L], R) :- rezolva(L, R).
+sqrtaux(E, R) :- R * R =:= E, !.
+sqrtaux(E, R) :- R > 0, R1 is R - 1, sqrtaux(E, R1).
 
-%A is sqrt
+sqrtt(E) :- sqrtaux(E, E).
+
+rezolva([], []).
+rezolva([E | L], [E | R]) :- sqrtt(E), rezolva(L, R), !.
+rezolva([_ | L], R) :- rezolva(L, R).
 
 %Ex 3: ti se da pred elev. Pt fiecare elev afiseaza media.
 
