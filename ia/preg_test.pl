@@ -78,3 +78,26 @@ test2(L) :- bagof(E, Y ^ (membru(E, L), membru(Y, L), Y < E, Y =\= 1, mod(E, Y) 
 %%pentru fiecare divizor afisez toate numerele care il au ca divizor propriu + elimin duplicatele + ordonez
 %%Y ^ .. => nu mai afisez in functie de Y (echivalent cu findall/bagof + eliminare duplicate)
 test3(L) :- setof(E, Y ^ (membru(E, L), membru(Y, L), Y < E, Y =\= 1, mod(E, Y) =:= 0), R), write(R), write(" setof"), nl.
+
+%Test 244
+%Ex 3: ti se da pred elev. Pt fiecare elev afiseaza media.
+
+elev(bogdan, mate, 9).
+elev(andreea, engleza, 10).
+elev(matei, romana, 7).
+elev(bogdan, romana, 10).
+elev(matei, engleza, 8).
+elev(andreea, romana, 7).
+elev(bogdan, engleza, 8).
+elev(andreea, mate, 10).
+elev(matei, mate, 10).
+
+suma([], 0).
+suma([[N - _ ]| Sol], S) :- suma(Sol, S1), S is S1 + N.
+
+rezolva([]).
+rezolva([E | Elevi]) :- findall([N - E], elev(E, _, N), Sol), suma(Sol, S), length(Sol, N),
+			  M is div(S, N), write(E), write(" "), write(M), R is mod(S, N)*10,
+			  M1 is div(R, N), write("."), write(M1), nl, rezolva(Elevi).
+
+mc :- tell('C:\\Users\\Cristina Mihailescu\\Desktop\\output.txt'), setof(E, M ^ N ^ elev(E, M, N), Elevi), rezolva(Elevi), told.
