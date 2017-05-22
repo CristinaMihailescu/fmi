@@ -1,3 +1,5 @@
+Bagof, Setof si Findall: https://en.wikibooks.org/wiki/Prolog/Bagof,_Setof_and_Findall
+
 % 1) Scrieti un predicat prima_problema(L,R) care primeste L o lista de numere naturale nenule si calculeaza R o lista ce contine toate elementele E din L care au cel putin 2 divizori distincti proprii (diferiti de 1 si E) printre elementele lui L.
 
 verif(_, [], 0).
