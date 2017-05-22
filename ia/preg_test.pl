@@ -62,3 +62,19 @@ rezolva2([Familie | Lista]) :- setof([Age, Name], om(Familie, Name, Age), Result
 rezolva() :- setof(Familie, Name ^ Age ^ om(Familie, Name, Age), Lista), rezolva2(Lista).
 
 mc :- tell('C:\\RailsInstaller\\familii.txt'), rezolva, told.
+
+%findall vs bagof vs setof
+
+membru(E, [E | _]).
+membru(E, [_ | L]) :- membru(E, L).
+
+%toate numerele care au divizori proprii
+test1(L) :- findall(E, (membru(E, L), membru(Y, L), Y < E, Y =\= 1, mod(E, Y) =:= 0), R), write(R), write(" findall"), nl.
+
+%pentru fiecare divizor afisez toate numerele care il au ca divizor propriu
+%Y ^ .. => nu mai afisez in functie de Y (echivalent cu findall)
+test2(L) :- bagof(E, Y ^ (membru(E, L), membru(Y, L), Y < E, Y =\= 1, mod(E, Y) =:= 0), R), write(R), write(" bagof"), nl.
+
+%%pentru fiecare divizor afisez toate numerele care il au ca divizor propriu + elimin duplicatele + ordonez
+%%Y ^ .. => nu mai afisez in functie de Y (echivalent cu findall/bagof + eliminare duplicate)
+test3(L) :- setof(E, Y ^ (membru(E, L), membru(Y, L), Y < E, Y =\= 1, mod(E, Y) =:= 0), R), write(R), write(" setof"), nl.
