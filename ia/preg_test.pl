@@ -121,12 +121,11 @@ suma([[N - _ ]| Sol], S) :- suma(Sol, S1), S is S1 + N.
 
 rezolva([], []).
 rezolva([E | Elevi], NeOrd) :- findall([N - E], elev(E, _, N), Sol), suma(Sol, S), length(Sol, N),
-			  M is div(S, N), R is mod(S, N)*10,
-			  M1 is div(R, N), rezolva(Elevi, NeOrd1), NeOrd = [[M - M1 - E]|NeOrd1].
+			  M is S/N, rezolva(Elevi, NeOrd1), NeOrd = [[M - E]|NeOrd1].
 
 
 afisare([]).
-afisare([[M - M1 - E]|Ord]) :- write(E), write(" "), write(M), write("."), write(M1), nl, afisare(Ord).
+afisare([[M - E]|Ord]) :- write(E), write(" "), write(M), nl, afisare(Ord).
 
 mc :- tell('C:\\Users\\Cristina Mihailescu\\Desktop\\output.txt'), setof(E, M ^ N ^ elev(E, M, N), Elevi),
 			  rezolva(Elevi, NeOrd), sort(NeOrd, Ord), afisare(Ord), told.
