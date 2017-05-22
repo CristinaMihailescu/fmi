@@ -119,9 +119,14 @@ elev(matei, mate, 10).
 suma([], 0).
 suma([[N - _ ]| Sol], S) :- suma(Sol, S1), S is S1 + N.
 
-rezolva([]).
-rezolva([E | Elevi]) :- findall([N - E], elev(E, _, N), Sol), suma(Sol, S), length(Sol, N),
-			  M is div(S, N), write(E), write(" "), write(M), R is mod(S, N)*10,
-			  M1 is div(R, N), write("."), write(M1), nl, rezolva(Elevi).
+rezolva([], []).
+rezolva([E | Elevi], NeOrd) :- findall([N - E], elev(E, _, N), Sol), suma(Sol, S), length(Sol, N),
+			  M is div(S, N), R is mod(S, N)*10,
+			  M1 is div(R, N), rezolva(Elevi, NeOrd1), NeOrd = [[M - M1 - E]|NeOrd1].
 
-mc :- tell('C:\\Users\\Cristina Mihailescu\\Desktop\\output.txt'), setof(E, M ^ N ^ elev(E, M, N), Elevi), rezolva(Elevi), told.
+
+afisare([]).
+afisare([[M - M1 - E]|Ord]) :- write(E), write(" "), write(M), write("."), write(M1), nl, afisare(Ord).
+
+mc :- tell('C:\\Users\\Cristina Mihailescu\\Desktop\\output.txt'), setof(E, M ^ N ^ elev(E, M, N), Elevi),
+			  rezolva(Elevi, NeOrd), sort(NeOrd, Ord), afisare(Ord), told.
