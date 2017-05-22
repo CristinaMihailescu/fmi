@@ -80,6 +80,13 @@ test2(L) :- bagof(E, Y ^ (membru(E, L), membru(Y, L), Y < E, Y =\= 1, mod(E, Y) 
 test3(L) :- setof(E, Y ^ (membru(E, L), membru(Y, L), Y < E, Y =\= 1, mod(E, Y) =:= 0), R), write(R), write(" setof"), nl.
 
 %Test 244
+
+%Ex 2: ti se da o lista. Pune pp din lista asta in lista rezultat.
+
+rezolva([], []).
+rezolva([E | L], [E | R]) :- A is sqrt(E), floor(A) * floor(A) =:= E, rezolva(L, R), !.
+rezolva([E | L], R) :- rezolva(L, R).
+
 %Ex 3: ti se da pred elev. Pt fiecare elev afiseaza media.
 
 elev(bogdan, mate, 9).
