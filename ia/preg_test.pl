@@ -81,11 +81,25 @@ test3(L) :- setof(E, Y ^ (membru(E, L), membru(Y, L), Y < E, Y =\= 1, mod(E, Y) 
 
 %Test 244
 
+%Ex 1: Ceva cu arbori oarecare. Aici e afisat R daca R = S + D.
+
+rezolva(arb(nil, _, nil)).
+rezolva(arb(nil, _, D)) :- rezolva(D), !.
+rezolva(arb(S, _, nil)) :- rezolva(S), !.
+rezolva(arb(arb(S1, S, S2), R, arb(D1, D, D2))) :- R1 = S + D, R1 =:= R, write(R), nl, rezolva(arb(S1, S, S2)), rezolva(arb(D1, D, D2)), !.
+rezolva(arb(S, _, D)) :- rezolva(S), rezolva(D).
+
+%Nu uita sa scrii arb peste tot
+
+rezolvare :- rezolva(arb(arb(arb(arb(nil, 8, nil), 18, arb(nil, 10, nil)), 2, arb(nil, 4, arb(nil, 9, nil))), 7, arb(arb(nil, 1, nil), 6, arb(arb(nil, 13, nil), 5, arb(nil, 11, nil))))).
+
 %Ex 2: ti se da o lista. Pune pp din lista asta in lista rezultat.
 
 rezolva([], []).
 rezolva([E | L], [E | R]) :- A is sqrt(E), floor(A) * floor(A) =:= E, rezolva(L, R), !.
 rezolva([E | L], R) :- rezolva(L, R).
+
+%A is sqrt
 
 %Ex 3: ti se da pred elev. Pt fiecare elev afiseaza media.
 
