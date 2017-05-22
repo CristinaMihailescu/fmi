@@ -50,11 +50,14 @@ om(ionescu, anca, 2).
 om(popescu, ioana, 40).
 om(ionescu, dan, 16).
 
-scrie(ionescu) :- om(Fam, N1, V1), om(Fam, N2, V2), om(Fam, N3, V3), om(Fam, N4, V4),
-    		  N1 \= N2, N1 \= N3, N2 \= N3, N1 \= N4, N2 \= N4, N3 \= N4,
-    		  V1 =< V2, V2 =< V3, V3 =< V4,
-    		  write(Fam), write(": "), write(N1), write(" "), write(V1), write(" "), write(N2), write(" "), write(V2), write(" "), write(N3), write(" "), write(V3), write(" "), write(N4), write(" "), write(V4),  nl, !.
+scrie([]) :- nl.
+scrie([[Age, Name] | Result]) :- write(Name), write(" "), write(Age), write(" "), scrie(Result).
 
-scrie(Fam) :- om(Fam, N1, V1), om(Fam, N2, V2), om(Fam, N3, V3), N1 \= N2, N1 \= N3, N2 \= N3, V1 =< V2, V2 =< V3, write(Fam), write(": "), write(N1), write(" "), write(V1), write(" "), write(N2), write(" "), write(V2), write(" "), write(N3), write(" "), write(V3), nl, !.
+rezolva2([]).
+rezolva2([Familie | Lista]) :- setof([Age, Name], om(Familie, Name, Age), Result), write(Familie),
+                   write(": "), scrie(Result), rezolva2(Lista).
 
-mc :- tell('C:\\RailsInstaller\\familii.txt'), scrie(popescu), scrie(georgescu), scrie(ionescu), told.
+%Name ^ Age ^ .. = Nu afisa aceeasi Familie pentru Name si Age diferite.
+rezolva() :- setof(Familie, Name ^ Age ^ om(Familie, Name, Age), Lista), rezolva2(Lista).
+
+mc :- tell('C:\\RailsInstaller\\familii.txt'), rezolva, told.
