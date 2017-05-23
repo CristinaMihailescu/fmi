@@ -119,7 +119,7 @@ R1(config-if)# exit
 **CONFIGURARE LEGATURA CU ALT ROUTER**
 <pre>
 R1(config)# interface S 0/0/0
-R1(config-if)# description Legatura CHINA-SUA
+R1(config-if)# description Legatura dintre CHINA si SUA
 R1(config-if)# ip address 10.10.10.50 255.255.255.252 //ip legatura cu celalalt router
 R1(config-if)# no shutdown
 R1(config-if)# exit
