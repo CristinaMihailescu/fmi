@@ -202,3 +202,55 @@ User: user2 Password: 123456 Add
 </pre>
 
 2. Pentru fiecare calculator schimba de pe ip static pe dhcp la ip configuration.
+
+# Configurare Wi-Fi
+
+1. Asigura-te ca la GigabitEthernet 0/x (leg cu Wi-Fi) ai cel mai mic ip dintre cele doua.
+
+2. Plaseaza Wireless Devices -> WRT300N:
+
++ GUI
+<pre>
+Internet Connection Type: Static IP
+Internet IP Address: ip mai mare
+Subnet Mask: 255.255.255.252
+Default Gateway: ip mai mic
+
+SAVE
+</pre>
+
++ Wireless -> Basic Wireless Settings
+<pre>
+Network Name (SSID): Seria24
+
+SAVE
+</pre>
+
++ Wireless -> Wireless Security
+<pre>
+Security Mode: WPA2 Personal
+Encryption: TKIP
+Passphrase: Grupa243
+
+SAVE
+</pre>
+
++ Wireless -> Wireless MAC Filter
+<pre>
+Wireless MAC Filter: Enable
+Access Resolution: selecteaza a 2-a bulina
+
+SAVE
+</pre>
+
+3. Plaseaza PC:
+
++ Schimba placa cu Linksys-WMP300N module (cea mare de jos, din dreapta)
+
++ Desktop -> PC Wireless -> Profiles -> Edit -> Advanced Setup -> Wireless Network Name: Seria 24; next -> next -> Security: WPA2 Personal -> Pre-shared Key: Grupa243 -> SAVE.
+
++ Desktop -> Command Prompt -> ipconfig /all -> Copy la Physical Address.
+
++ Wi-Fi -> Wireless MAC Filter -> MAC 01: Paste aici; din 2 in 2 cifre pune ":".
+
++ PC -> Desktop -> PC Wireless -> Selecteaza conexiunea -> Edit -> Connect.
