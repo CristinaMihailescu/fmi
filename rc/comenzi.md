@@ -107,7 +107,7 @@ R1(config)# banner motd #Text#
 **INTERFATA**
 <pre>
 R1(config)# interface GigabitEthernet 0/0 //SW1 G 0/1 ~ R1 G 0/0
-R1(config-if)# description Legatura LAN 1
+R1(config-if)# description Legatura reteaua LAN1
 R1(config-if)# ip address 192.168.10.1 255.255.255.0//default gateway CALC1, subnet mask CALC 1
 ---PENTRU ROUTERELE DE PE LAN-URILE PE CARE VREI DHCP
 R1(config-if)# ip helper-address 180.188.55.254//IP Server
@@ -207,7 +207,7 @@ User: user2 Password: 123456 Add
 
 1. Asigura-te ca la GigabitEthernet 0/x (leg cu Wi-Fi) ai cel mai mic ip dintre cele doua.
 
-2. Plaseaza Wireless Devices -> WRT300N:
+2. Plaseaza Wireless Devices -> WRT300N: Conecteaza cu un Rounter folosing cablul Copper Cross-Over
 
 + GUI
 <pre>
