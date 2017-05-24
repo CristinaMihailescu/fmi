@@ -254,3 +254,7 @@ SAVE
 + Wi-Fi -> Wireless MAC Filter -> MAC 01: Paste aici; din 2 in 2 cifre pune ":".
 
 + PC -> Desktop -> PC Wireless -> Selecteaza conexiunea -> Edit -> Connect.
+
+PS: e normal sa nu mearga ping din orice calc/router/server in pc legat de WI-FI, DAR invers TREBUIE SA MEARGA
+
+PS2: daca faci o copie la un echipament se pastreaza comenzile (adica poti face copy-paste la switch-uri si sa schimbi doar hostname & poti configura un router pana la no cdp run, iar apoi sa-i faci mai multe copii)
