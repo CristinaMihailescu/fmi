@@ -8,4 +8,4 @@ Demonstrati urmatoarele enunturi:
 
 ### Subiectul II:
 
-Exercitii din sem 1, 2, 3, 5 (vezi aici sem https://sites.google.com/view/pl2017/home).
+Cate un ex din sem 1, 2, 3, 5 (vezi aici sem https://sites.google.com/view/pl2017/home).
