@@ -2,9 +2,9 @@
 
 Demonstrati urmatoarele enunturi:
 
-1) https://image.prntscr.com/image/iFwj4KeMQxmnGaAw7EFxiw.png
+1) ![](https://image.prntscr.com/image/iFwj4KeMQxmnGaAw7EFxiw.png)
 
-2) https://image.prntscr.com/image/9eLHwzxeQkugU3gfKP6dJw.png
+2) ![](https://image.prntscr.com/image/9eLHwzxeQkugU3gfKP6dJw.png)
 
 ### Subiectul II:
 
