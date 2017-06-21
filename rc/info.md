@@ -1,6 +1,10 @@
+Profesor: Dinu L
+
 Laborant: Mihaita Dragan
 
 2016-2017, an II, sem II
+
+PS: nota de la lab se poate cere profesorului de CURS imediat dupa examen.
 
 ---
 
