@@ -1,8 +1,14 @@
 Laborant: Maria Negru
 
+
+
 Profesor sem: Noaica Cristina
 
+
+
 Profesor curs: Hristea Florentina
+
+
 
 Teorie examen: https://www.vladionescu.me/ia.html#prezentare-generala-academica
 
