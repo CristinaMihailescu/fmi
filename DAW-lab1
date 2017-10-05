@@ -13,11 +13,11 @@ public partial class _Default : System.Web.UI.Page
     {
         if (Page.IsPostBack)
         {
-            Literal1.InnerText = "Page is postback!";
+            Literal1.Text = "Page is postback!";
         }
         else
         {
-            Literal1.InnerText = "Page is not postback!";
+            Literal1.Text = "Page is not postback!";
         }
     }
 
@@ -25,6 +25,12 @@ public partial class _Default : System.Web.UI.Page
     {
         Label1.InnerHtml = "Hello, " + Text1.Value + "!";
         Label1.Visible = true;
+    }
+
+    protected void WriteTextAsp(object sender, EventArgs e)
+    {
+        Literal2.Text = "Hello, " + TextBox2.Text + "!";
+        Literal2.Visible = true;
     }
 }
 
@@ -42,10 +48,16 @@ Default.aspx
 <body>
     <form id="form1" runat="server">
     <div>
-        <literal ID="Literal1" runat="server"></literal>
+        <asp:Literal ID="Literal1" runat="server" visible="false"></asp:Literal>
         <input id="Text1" type="text" runat="server"/>
         <input id="Button1" type="button" value="Enter" onserverclick="WriteText" runat="server"/>
-        <label ID="Label1" Text="Label" visible="false" runat="server"></label>
+        <label ID="Label1" visible="false" runat="server"></label>
+        
+        <br /> <br />
+
+        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+        <asp:Button ID="Button2" runat="server" Text="Button" OnClick="WriteTextAsp" />
+        <asp:Literal ID="Literal2" runat="server" visible="false"></asp:Literal>
     </div>
     </form>
 </body>
