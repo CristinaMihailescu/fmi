@@ -1,0 +1,52 @@
+Default.aspx.cs
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class _Default : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Page.IsPostBack)
+        {
+            Literal1.InnerText = "Page is postback!";
+        }
+        else
+        {
+            Literal1.InnerText = "Page is not postback!";
+        }
+    }
+
+    protected void WriteText(object sender, EventArgs e)
+    {
+        Label1.InnerHtml = "Hello, " + Text1.Value + "!";
+        Label1.Visible = true;
+    }
+}
+
+
+Default.aspx
+
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <literal ID="Literal1" runat="server"></literal>
+        <input id="Text1" type="text" runat="server"/>
+        <input id="Button1" type="button" value="Enter" onserverclick="WriteText" runat="server"/>
+        <label ID="Label1" Text="Label" visible="false" runat="server"></label>
+    </div>
+    </form>
+</body>
+</html>
