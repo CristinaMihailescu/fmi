@@ -1,0 +1,122 @@
+declare
+type vector is array(10) of number;
+x vector := vector(1, 2, 3);
+
+type tab_ind is table of number index by pls_integer; --no delete
+v tab_ind;
+i number;
+
+type tab_imb is table of number; --no trim; la initializare se comp ca vector, dar la parcurgere se comp ca tab ind
+w tab_imb := tab_imb();
+
+--type ciudat is varray(3) of tab_ind;
+--c ciudat := ciudat(tab_imb(1, 2, 3), tab_imb(5, 6), tab_imb(7, 8, 9));
+
+begin
+for i in 1..x.count loop
+  dbms_output.put_line(x(i));
+end loop;
+
+v(100) := 3;
+v(2) := 7;
+v(-5) := -2;
+v(11) := 2;
+
+i := v.first;
+while v.exists(i) loop
+  dbms_output.put_line(v(i));
+  i := v.next(i);
+end loop;
+
+i := v.first;
+while i <= v.last loop
+  dbms_output.put_line(v(i));
+  i := v.next(i);
+end loop;
+
+w.extend(100);
+dbms_output.put_line(w.count);
+w(1) := 1;
+w(2) := 2;
+w(3) := 3;
+w(4) := 4;
+w.delete(2);
+i := w.first;
+while i <= w.last loop
+  dbms_output.put_line(w(i));
+  i := w.next(i);
+end loop;
+
+--dbms_output.put_line(c(2)(2));
+end;
+--id, vector, tablou imb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create or replace type top3 is array(3) of number;
+create or replace type ang_id is table of number;
+
+create table lab2_tab(id number primary key, top top3, lista ang_id) --as alt nume ca sa nu dea eroare
+nested table lista store as lab2_tab_lista;
+
+inset into lab2_tab
+values (1, top3(11, 22, 33), ang_id(-1, -2, -3));
+
+rollback;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+declare
+angs ang_id := ang_id();
+v top3 := top3();
+begin
+for d in (select * from departments) loop
+  for a in (select employee_id
+            from employees
+            where department_id = d.department_id) loop
+    angs.extend;
+    angs(angs.last) := a.employee_id;
+  end loop;
+  for s in (select salary
+            from (select distinct nvl(salary, -1) salary
+            from employees
+            where department_id = d.department_id
+            order by salary desc)
+            where rownum < 4) loop
+    v.extend;
+    v(v.count) := s.salary; --sau v.last
+  end loop;
+  insert into lab2_tab values(d.department_id, v, angs);
+  angs.delete;
+  v.delete;
+end loop;
+end;
