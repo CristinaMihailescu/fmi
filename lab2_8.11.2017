@@ -1,0 +1,48 @@
+--varianta initiala pe fb;
+--varianta optimizata cu bulk collect => scapi de for
+--bulk collect initializeaza si pune variabilele consecutive := o sa fie de la 1 pana la count
+set serveroutput on
+
+declare
+
+angs ang_id := ang_id();
+v top3 := top3();
+type linie is record(dep number, top top3, lista ang_id);
+type t_linie is table of linie index by pls_integer;
+s t_linie;
+--dc scriu s linie => poate stoca doar o singura linie
+
+begin
+for d in (select * from departments) loop
+      select salary bulk collect into v
+      from (select distinct nvl(salary, -1) salary
+            from employees
+            where department_id = d.department_id
+            order by salary desc)
+      where rownum < 4;
+
+      select employee_id bulk collect into angs
+      from employees
+      where department_id = d.department_id
+      order by employee_id;
+    --insert into lab2_tab_2 values(d.department_id , v, angs); --in loc de asta trebuie o variabila aka record
+    
+    s(s.count + 1).dep := d.department_id; --count
+    s(s.count).top := v; --aici fara +1 pt ca deja am adaugat comp
+    s(s.count).lista := angs;
+    
+    
+    angs.delete;
+    v.delete;
+    
+end loop;
+
+forall i in 1..s.count
+  insert into lab2_tab_2 values (s(i).dep, s(i).top, s(i).lista);
+
+end;
+
+--tab_imb = ang id
+--vector = top3
+--v_sal = v
+--lista_ang = angs
