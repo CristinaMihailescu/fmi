@@ -46,3 +46,35 @@ end;
 --vector = top3
 --v_sal = v
 --lista_ang = angs
+
+
+
+
+
+
+
+
+
+
+
+
+
+create type lista_p is table of varchar(15);
+create table ang_p_vsl(id number, lista lista_p) nested table lista store as ang_p_lista_vsl;
+
+declare
+type linie is record(id number, lista lista_p);
+type linie_t is table of linie index by pls_integer;
+s linie_t;
+
+begin
+  for a in (select employee_id from employees) loop
+    s(s.count + 1).id := a.employee_id;
+    select project_name bulk collect into s(s.count).lista
+    from projects join works_on using(project_id)
+    where employee_id = a.employee_id;
+  end loop;
+  
+  forall i in 1..s.count
+  insert into ang_p_vsl values(s(i).id, s(i).lista);
+end;
