@@ -1,0 +1,122 @@
+<!DOCTYPE html><html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>Programare Declarativă – Laboratorul 2</title>
+  <link rel="stylesheet" type="text/css" href="https://www.dropbox.com/s/48bx1xvl42hr5gp/progdecl.css?dl=1">
+  <script type="text/javascript" src="https://www.dropbox.com/s/hk9x49z7vmznfp9/progdecl.js?dl=1"></script>
+</head>
+<body>
+<h1>Declarative Programming – Lab 3</h1>
+<h2>Comprehension and Recursion</h2>
+
+In these problems you’ll be asked to define several functions in two ways: first with a list comprehension and second with recursion. These two definitions should <i>not</i> depend on one another. The  recursive version should not mention the list-comprehension version, and vice-versa.  
+
+<p>To allow the two solutions to these problems to co-exist in one file, you need to give them different  names. For this tutorial, use the given name for the list-comprehension version, and append <tt>Rec</tt>  to the name for the recursive version. For example, <tt>halveEvens</tt> should be a function using a list  comprehension and <tt>halveEvensRec</tt> should be a recursive function that behaves the same.  
+
+<p>In addition, to verify that both functions work in the same way, you will write and run an appropriate  QuickCheck test.  You will find the skeletons of the functions in the file <tt>lab2.hs</tt>, which came packaged with this  document.  
+
+<p><b>Note:</b> for these exercises you may not use any library functions other than the ones stated. If you  have an additional solution using other library functions, you’re welcome to discuss it during the  tutorial.  
+
+<h4>Exercises</h4>
+<ol>
+<li>
+<ol type="a">
+<li> Write a function <tt>halveEvens :: [Int] -&gt; [Int]</tt> that returns half of each even number  
+in the list. For example,  
+<pre>
+halveEvens [0,2,1,7,8,56,17,18] == [0,1,4,28,9]<br/>
+</pre>
+Your definition should use a <i>list comprehension</i>, not recursion. You may use the functions
+<pre>div, mod :: Int -&gt; Int -&gt; Int.</pre>
+<li> Write an equivalent function <tt>halveEvensRec</tt>, this time using <i>recursion</i>, not a list comprehension. You may use <tt>div</tt> and <tt>mod</tt> again.
+<li> To confirm the two functions are equivalent, write a test function <tt>prop_halveEvens</tt> and
+run the appropriate QuickCheck test.
+</ol>
+<li>
+<ol type ="a">
+<li>Write a function <tt>inRange :: Int -&gt; Int -&gt; [Int] -&gt; [Int]</tt> to return all numbers
+in the input list within the range given by the first two arguments (inclusive). For example,
+<pre>
+inRange 5 10 [1..15] == [5,6,7,8,9,10]
+</pre>
+Your definition should use a <i>list comprehension</i>, not recursion.
+<li> Write an equivalent function <tt>inRangeRec</tt>, using <i>recursion</i>.
+<li> To confirm the two functions are equivalent, write a test function <tt>prop_inRange</tt> and
+run the appropriate QuickCheck test.
+</ol>
+<li>
+<ol type="a">
+<li> Write a function <tt>countPositives</tt> to count the positive numbers in a list (the ones
+strictly greater than 0). For example,
+<pre>
+countPositives [0,1,-3,-2,8,-1,6] == 3
+</pre>
+Your definition should use a <i>list comprehension</i>. You may not use recursion, but you will need a specific library function (there is an overview of the most common list functions in the tables <a href="prelude-fn1.png" target="_blank">prelude-fn1.png</a> and <a href="prelude-fn2.png" target="_blank">prelude-fn2.png</a>).
+<li> Write an equivalent function <tt>countPositivesRec</tt>, using <i>recursion</i> and without using
+any library functions.
+<li> To confirm the two functions are equivalent, write a test function <tt>prop_countPositives</tt>
+and run the appropriate QuickCheck test.
+<li> Why do you think it’s not possible to write countPositives using only list comprehension, without library functions?
+</ol>
+<li>
+<ol type="a">
+<li> Professor Pennypincher will not buy anything if he has to pay more than £199.00. But,
+as a member of the Generous Teachers Society, he gets a 10% discount on anything he buys. Write a function <tt>pennypincher</tt> that takes a list of prices and returns the total amount that Professor Pennypincher would have to pay, if he bought everything that was cheap enough for him.
+<p>Prices should be represented in Pence, not Pounds, by integers. To deduct 10% off them, you will need to convert them into floats first, using the function <tt>fromIntegral</tt>.
+To convert back to ints, you can use the function <tt>round</tt>, which rounds to the nearest integer.
+ You can write a helper function <tt>discount :: Int -&gt; Int</tt> to do this. For example,
+<pre>
+pennypincher [4500, 19900, 22000, 39900] == 41760<br/>
+</pre>
+Your solution should use a <i>list comprehension</i>, and you may use a library function to do the additions for you.
+<li>
+ Write an equivalent function <tt>pennypincherRec</tt>, using <i>recursion</i> and without using library functions. You may use your function <tt>discount</tt>.
+<li> To confirm the two functions are equivalent, write a test function <tt>prop_pennypincher</tt>
+and run the appropriate QuickCheck test.
+</ol>
+<li>
+<ol type="a">
+<li> Write a function <tt>multDigits :: String -&gt; Int</tt> that returns the product of all the
+digits in the input string. If there are no digits, your function should return 1. For example,
+<pre>
+multDigits &#34;The time is 4:25&#34; == 40<br/>
+multDigits &#34;No digits here!&#34; == 1<br/>
+</pre>
+Your definition should use a <i>list comprehension</i>. You’ll need a library function to determine if a character is a digit, one to convert a digit to an integer, and one to do the multiplication.
+<li> Write an equivalent function <tt>multDigitsRec</tt>, using <i>recursion</I>. You may use library
+functions that act on single characters or integers, but you may not use library functions that act on a list.
+<li> To confirm the two functions are equivalent, write a test function <tt>prop_multDigits</tt> and
+run the appropriate QuickCheck test.
+</oL>
+<li>
+<ol type="a">
+<li> Write a function <tt>capitalise :: String -&gt; String</tt> which, given a word, capitalises
+it. That means that the first character should be made uppercase and any other letters should be made lowercase. For example,
+<pre>
+capitalise &#34;edINBurgH&#34; == &#34;Edinburgh&#34;<br/>
+</pre>
+Your definition should use a <i>list comprehension</i> and library functions <tt>toUpper</tt> and <tt>toLower</tt> that change the case of a character.
+<li> Write a recursive function <tt>capitaliseRec</tt>. You may need to write a helper function; of
+the helper function and the main function only one needs to be recursive.
+<li> To confirm the two functions are equivalent, write a test function <tt>prop_capitalise</tt> and
+run the appropriate QuickCheck test.
+</ol>
+<li>
+<ol type="a">
+<li> Using the function <tt>capitalise</tt> from the previous problem, write a function
+<pre>
+title :: [String] -&gt; [String]<br/>
+</pre>
+which, given a list of words, capitalises them as a title should be capitalised. The proper capitalisation of a title (for our purposes) is as follows: The first word should be capitalised. Any other word should be capitalised if it is at least four letters long. For example,
+<pre>
+title [&#34;tHe&#34;, &#34;sOunD&#34;, &#34;ANd&#34;, &#34;thE&#34;, &#34;FuRY&#34;]<br/>
+== [&#34;The&#34;, &#34;Sound&#34;, &#34;and&#34;, &#34;the&#34;, &#34;Fury&#34;]<br/>
+</pre>
+Your function should use a <i>list comprehension</i>, and not recursion. Besides the <tt>capitalise</tt> function, you will probably need some other auxiliary functions. You may use library functions that change the case of a character and the function <tt>length</tt>.
+<lI> Write a <i>recursive</i> function <tt>titleRec</tt>. You may use <tt>capitaliseRec</tt> and any of its auxiliary functions.
+<li> To confirm the two functions are equivalent, write a test function prop_title and run<br/>
+the appropriate QuickCheck test.
+</ol>
+</ol>
+</body>
+</html>

@@ -1,0 +1,2213 @@
+<!DOCTYPE html>
+<html itemscope="" itemtype="http://schema.org/QAPage"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<title>scope - In Haskell, when do we use in with let? - Stack Overflow</title>
+    <link rel="shortcut icon" href="https://cdn.sstatic.net/Sites/stackoverflow/img/favicon.ico?v=4f32ecc8f43d">
+    <link rel="apple-touch-icon image_src" href="https://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="https://stackoverflow.com/opensearch.xml">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+        <meta name="twitter:domain" content="stackoverflow.com">
+
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="https://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded">
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="In Haskell, when do we use in with let?">
+    <meta name="twitter:description" property="og:description" itemprop="description" content="In the following code, the last phrase I can put an in in front. Will it change anything? 
+
+Another question: If I decide to put in in front of the last phrase, do I need to indent it? 
+
+I tried wi...">
+    <meta property="og:url" content="https://stackoverflow.com/questions/8274650/in-haskell-when-do-we-use-in-with-let">
+    <link rel="canonical" href="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/in-haskell-when-do-we-use-in-with-let_003.html">
+
+    
+    
+    <script src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/osd.js"></script><script src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/pubads_impl_rendering_167.js"></script><script src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/ads"></script><script src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/rules-p-c1rF4kxgLUzNc.js"></script><script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/quant.js"></script><script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/beacon.js"></script><script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/analytics.js"></script><script src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/jquery.js"></script>
+    <script src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/stub.js"></script>
+    <link rel="stylesheet" type="text/css" href="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/all.css">
+
+            <link rel="alternate" type="application/atom+xml" title="Feed for question 'In Haskell, when do we use in with let?'" href="https://stackoverflow.com/feeds/question/8274650">
+            <meta name="twitter:app:country" content="US">
+            <meta name="twitter:app:name:iphone" content="Stack Exchange iOS">
+            <meta name="twitter:app:id:iphone" content="871299723">
+            <meta name="twitter:app:url:iphone" content="se-zaphod://stackoverflow.com/questions/8274650/in-haskell-when-do-we-use-in-with-let">
+            <meta name="twitter:app:name:ipad" content="Stack Exchange iOS">
+            <meta name="twitter:app:id:ipad" content="871299723">
+            <meta name="twitter:app:url:ipad" content="se-zaphod://stackoverflow.com/questions/8274650/in-haskell-when-do-we-use-in-with-let">
+            <meta name="twitter:app:name:googleplay" content="Stack Exchange Android">
+            <meta name="twitter:app:url:googleplay" content="http://stackoverflow.com/questions/8274650/in-haskell-when-do-we-use-in-with-let">
+            <meta name="twitter:app:id:googleplay" content="com.stackexchange.marvin">
+        <script>
+        
+            StackExchange.ready(function () {
+                                    
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.initSnippetRenderer();
+                    });
+                    
+
+                StackExchange.using("postValidation", function () {
+                    StackExchange.postValidation.initOnBlurAndSubmit($('#post-form'), 2, 'answer');
+                });
+
+                
+                StackExchange.question.init({showAnswerHelp:true,totalCommentCount:4,shownCommentCount:4,highlightColor:'#F4A83D',backgroundColor:'#FFF',questionId:8274650});
+
+                styleCode();
+
+                    StackExchange.realtime.subscribeToQuestion('1', '8274650');
+                                                                    StackExchange.using("gps", function () { StackExchange.gps.trackOutboundClicks('#content', '.post-text', true); });
+
+            });
+        </script>
+
+
+    <script>
+        StackExchange.init({"locale":"en","serverTime":1510352166,"routeName":"Questions/Show","stackAuthUrl":"https://stackauth.com","networkMetaHostname":"meta.stackexchange.com","site":{"name":"Stack Overflow","description":"Q&A for professional and enthusiast programmers","isNoticesTabEnabled":true,"recaptchaPublicKey":"6LdchgIAAAAAAJwGpIzRQSOFaO0pU6s44Xt8aTwc","recaptchaAudioLang":"en","enableNewTagCreationWarning":true,"insertSpaceAfterNameTabCompletion":false,"id":1,"childUrl":"https://meta.stackoverflow.com","enableSocialMediaInSharePopup":true,"protocol":"https"},"user":{"fkey":"3c5fea3a02e2c8029dc87a5a24a10382","tid":"1f45db59-82dd-ceaa-3822-b20856c793dd","rep":0,"isAnonymous":true,"isAnonymousNetworkWide":true,"canSeeNewHeaderDesign":true},"events":{"postType":{"question":1},"postEditionSection":{"title":1,"body":2,"tags":3}},"story":{"minCompleteBodyLength":75,"likedTagsMaxLength":300,"dislikedTagsMaxLength":300},"jobPreferences":{"maxNumDeveloperRoles":2,"maxNumIndustries":4}}, {"site":{"allowImageUploads":true,"enableUserHovercards":true,"styleCode":true,"enableImgurHttps":true,"forceHttpsImages":true},"comments":{},"userProfile":{"openGraphAPIKey":"58740831ad23540e00c58987"},"tags":{},"accounts":{"currentPasswordRequiredForChangingStackIdPassword":true},"flags":{"allowRetractingFlags":true},"topBar":{"showNewFeatureNotice":true},"snippets":{"snippetsEnabled":true,"renderDomain":"stacksnippets.net"},"markdown":{"asteriskIntraWordEmphasis":true},"monitoring":{"clientTimingsAbsoluteTimeout":30000,"clientTimingsDebounceTimeout":1000}});
+        StackExchange.using.setCacheBreakers({"js/prettify-full.en.js":"3bea62609a93","js/moderator.en.js":"b85ebba71ba7","js/full-anon.en.js":"58e8a4767f87","js/full.en.js":"1913d13e342d","js/wmd.en.js":"2a82adcc56f3","js/third-party/jquery.autocomplete.min.js":"d3b8fa7fdf74","js/third-party/jquery.autocomplete.min.en.js":"","js/mobile.en.js":"70afd1576a6d","js/help.en.js":"42b954c86bdb","js/tageditor.en.js":"09862381cd28","js/tageditornew.en.js":"b3591374233b","js/inline-tag-editing.en.js":"3e63a01fd39b","js/revisions.en.js":"2faaeaae2529","js/review.en.js":"2d9c78891c05","js/tagsuggestions.en.js":"ddb0e41afe26","js/post-validation.en.js":"bb237ec104cb","js/explore-qlist.en.js":"e71f14781288","js/events.en.js":"43c8cccbaef2","js/keyboard-shortcuts.en.js":"2797c7818960","js/external-editor.en.js":"3e5baf662544","js/adops.en.js":"9a6a7812a212","js/external-editor.en.js":"3e5baf662544","js/snippet-javascript.en.js":"baa5f1a87f26","js/snippet-javascript-codemirror.en.js":"7f94199e8133"});
+        StackExchange.using("gps", function() {
+             StackExchange.gps.init(true);
+        });
+    </script>
+
+        <script>
+            StackExchange.ready(function () {
+                $('#nav-tour').click(function () {
+                    StackExchange.using("gps", function() {
+                        StackExchange.gps.track("aboutpage.click", { aboutclick_location: "headermain" }, true);
+                    });
+                });
+            });
+        </script>
+    <noscript id="noscript-css"><style>body,.top-bar{margin-top:1.9em}</style></noscript>
+<script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/full-anon.js"></script><link rel="stylesheet" href="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/clc.css" type="text/css"><link rel="preload" href="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/integrator.js" as="script"><script type="text/javascript" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/integrator.js"></script><script src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/pubads_impl_167.js" async=""></script><script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/snippet-javascript.js"></script><script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/post-validation.js"></script><script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/prettify-full.js"></script><script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/external-editor.js"></script><link rel="prefetch" href="https://securepubads.g.doubleclick.net/static/3p_cookie.html"></head>
+<body class="question-page new-topbar">
+            <script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/185901-159836282584097.js"></script>
+
+    <div id="notify-container"></div>
+    <div id="custom-header"></div>
+
+
+
+
+<header class="top-bar js-top-bar _fixed _scrolling">
+    <div class="-container">
+        <div class="-main">
+            
+                <a href="https://stackoverflow.com/" class="-logo js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:8})">
+                   <span class="-img">Stack Overflow</span>
+                </a>
+
+
+                <nav class="navigation" role="navigation" aria-label="site navigation">
+                    <ol class="-list">
+    <li class="-item _current">
+        <a id="nav-questions" href="https://stackoverflow.com/questions" class="-link js-gps-track" data-gps-track="top_nav.click({is_current:true, location:2, destination:1})">Questions</a>
+    </li>
+    <li class="-item">
+        <a id="nav-jobs" href="https://stackoverflow.com/jobs?med=site-ui&amp;ref=jobs-tab" class="-link js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:6})">Developer Jobs</a>
+    </li>
+    <li class="-item">
+        <a id="nav-tags" href="https://stackoverflow.com/tags" class="-link js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:2})">Tags</a>
+    </li>
+    <li class="-item">
+        <a id="nav-users" href="https://stackoverflow.com/users" class="-link js-gps-track" data-gps-track="top_nav.click({is_current:false, location:2, destination:3})">Users</a>
+    </li>
+                    </ol>
+                </nav>
+
+        </div>
+        
+            <form id="search" action="/search" method="get" class="searchbar" autocomplete="off" role="search">
+                <input name="q" placeholder="Search…" tabindex="1" autocomplete="off" maxlength="240" class="f-input js-search-field" type="text">
+                <button type="submit" aria-label="Search..." class="btn-topbar-primary js-search-submit"><svg aria-hidden="true" class="svg-icon iconSearch" width="18" height="18" viewBox="0 0 18 18"><path d="M12.86 11.32L18 16.5 16.5 18l-5.18-5.14v-.35a7 7 0 1 1 1.19-1.19h.35zM7 12A5 5 0 1 0 7 2a5 5 0 0 0 0 10z"></path></svg></button>
+            </form>
+
+        
+
+
+    
+
+<div class="-actions">
+    <nav class="secondary-nav">
+        <div class="-dialog-container js-topbar-dialog-corral">
+
+
+    <div class="topbar-dialog siteSwitcher-dialog dno">
+        <div class="header">
+            <h3><a href="https://stackoverflow.com/">current community</a>
+            </h3>
+        </div>
+        <div class="modal-content current-site-container">
+            <ul class="current-site">
+                    <li>
+                            <div class="related-links">
+            <a href="https://stackoverflow.com/help" class="js-gps-track" data-gps-track="site_switcher.click({ item_type:14 })">help</a>
+                    <a href="https://chat.stackoverflow.com/" class="js-gps-track" data-gps-track="site_switcher.click({ item_type:6 })">chat</a>
+            </div>
+    <a href="https://stackoverflow.com/" class="current-site-link site-link js-gps-track" data-id="1" data-gps-track="site_switcher.click({ item_type:3 })">
+        <div class="favicon favicon-stackoverflow site-icon" title="Stack Overflow"></div>
+        Stack Overflow
+    </a>
+
+                    </li>
+                    <li class="related-site">
+                            <div class="L-shaped-icon-container">
+        <span class="L-shaped-icon"></span>
+    </div>
+
+                            <a href="https://meta.stackoverflow.com/" class="site-link js-gps-track" data-id="552" data-gps-track="site.switch({ target_site:552, item_type:3 }),site_switcher.click({ item_type:4 })">
+        <div class="favicon favicon-stackoverflowmeta site-icon" title="Meta Stack Overflow"></div>
+        Meta Stack Overflow
+    </a>
+
+                    </li>
+            </ul>
+        </div>
+
+        <div class="header" id="your-communities-header">
+            <h3>
+your communities            </h3>
+
+        </div>
+        <div class="modal-content" id="your-communities-section">
+
+                <div class="call-to-login">
+<a href="https://stackoverflow.com/users/signup?ssrc=site_switcher&amp;returnurl=%2fusers%2fstory%2fcurrent&amp;amp;utm_source=stackoverflow.com&amp;amp;utm_medium=dev-story&amp;amp;utm_campaign=signup-redirect" class="login-link js-gps-track" data-gps-track="site_switcher.click({ item_type:10 })">Sign up</a> or <a href="https://stackoverflow.com/users/login?ssrc=site_switcher&amp;returnurl=https%3a%2f%2fstackoverflow.com%2fquestions%2f8274650%2fin-haskell-when-do-we-use-in-with-let" class="login-link js-gps-track" data-gps-track="site_switcher.click({ item_type:11 })">log in</a> to customize your list.
+                </div>
+        </div>
+
+        <div class="header">
+            <h3><a href="https://stackexchange.com/sites">more stack exchange communities</a>
+            </h3>
+            <a href="https://stackoverflow.blog/" class="fr">company blog</a>
+        </div>
+        <div class="modal-content">
+                <div class="child-content"></div>
+        </div>        
+    </div>
+                <div class="topbar-dialog help-dialog js-help-dialog dno">
+        <div class="modal-content">
+            <ul>
+                                    <li>
+                        <a href="https://stackoverflow.com/tour" class="js-gps-track" data-gps-track="help_popup.click({ item_type:1 })">
+                            Tour
+                            <span class="item-summary">
+                                Start here for a quick overview of the site
+                            </span>
+                        </a>
+                    </li>
+                <li>
+                    <a href="https://stackoverflow.com/help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:4 })">
+                        Help Center
+                        <span class="item-summary">
+                            Detailed answers to any questions you might have
+                        </span>
+                    </a>
+                </li>
+                        <li>
+                            <a href="https://meta.stackoverflow.com/" class="js-gps-track" data-gps-track="help_popup.click({ item_type:2 })">
+                                Meta
+                                <span class="item-summary">
+                                    Discuss the workings and policies of this site
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://stackoverflow.com/company/about" class="js-gps-track" data-gps-track="help_popup.click({ item_type:6 })">
+                                About Us
+                                <span class="item-summary">
+                                    Learn more about Stack Overflow the company
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.stackoverflowbusiness.com/?ref=topbar_help" class="js-gps-track" data-gps-track="help_popup.click({ item_type:7 })">
+                                Business
+                                <span class="item-summary">
+                                    Learn more about hiring developers or posting ads with us
+                                </span>
+                            </a>
+                        </li>
+            </ul>
+        </div>
+    </div>
+
+        </div>
+        <ol class="-list">
+
+
+    <li class="-item"><a href="#" class="-link js-help-button" title="Help Center and other resources">
+        <svg aria-hidden="true" class="svg-icon iconHelp" width="18" height="18" viewBox="0 0 18 18"><path d="M9 1a8 8 0 1 0 0 16A8 8 0 0 0 9 1zm.81 12.13c-.02.71-.55 1.15-1.24 1.13-.66-.02-1.17-.49-1.15-1.2.02-.72.56-1.18 1.22-1.16.7.03 1.2.51 1.17 1.23zM11.77 8a5.8 5.8 0 0 1-1.02.91l-.53.37c-.26.2-.42.43-.5.69a4 4 0 0 0-.09.75c0 .05-.03.16-.18.16H7.88c-.16 0-.18-.1-.18-.15.03-.66.12-1.21.4-1.66a5.29 5.29 0 0 1 1.43-1.22c.16-.12.28-.25.38-.39a1.34 1.34 0 0 0 .02-1.71c-.24-.31-.51-.46-1.03-.46-.51 0-.8.26-1.02.6-.21.33-.18.73-.18 1.1H5.75c0-1.38.35-2.25 1.1-2.76.52-.35 1.17-.5 1.93-.5 1 0 1.79.18 2.49.71.64.5.98 1.18.98 2.12 0 .57-.2 1.05-.48 1.44z"></path></svg>
+    </a></li>
+                <li class="-item">
+        <a href="https://stackexchange.com/" class="-link js-site-switcher-button js-gps-track" data-gps-track="site_switcher.show" title="A list of all 171 Stack Exchange sites">
+            <svg aria-hidden="true" class="svg-icon iconStackExchange" width="18" height="18" viewBox="0 0 18 18"><path d="M1 13c0 1.1.9 2 2 2h8v3l3-3h1a2 2 0 0 0 2-2v-2H1v2zM15 1H3a2 2 0 0 0-2 2v2h16V3a2 2 0 0 0-2-2zM1 6h16v4H1V6z"></path></svg>
+        </a>
+    </li>
+
+        </ol>
+    </nav>
+        <div class="-ctas">
+                <a href="https://stackoverflow.com/users/login?ssrc=head&amp;returnurl=https%3a%2f%2fstackoverflow.com%2fquestions%2f8274650%2fin-haskell-when-do-we-use-in-with-let" class="login-link btn-clear" rel="nofollow">Log In</a>
+                    <a href="https://stackoverflow.com/users/signup?ssrc=head&amp;returnurl=%2fusers%2fstory%2fcurrent&amp;utm_source=stackoverflow.com&amp;utm_medium=dev-story&amp;utm_campaign=signup-redirect" class="login-link btn-topbar-primary" rel="nofollow">Sign Up</a>
+
+        </div>
+</div>
+    </div>
+</header>
+
+    <script>
+        StackExchange.ready(function() { StackExchange.topbar.init(); });
+        StackExchange.scrollPadding.setPaddingTop(60, 10);     </script>
+
+    <div class="container _full ">
+        
+
+
+
+
+        <div id="content" class="snippet-hidden">
+
+
+
+
+            
+
+<div itemscope="" itemtype="http://schema.org/Question">
+    <link itemprop="image" href="https://cdn.sstatic.net/Sites/stackoverflow/img/apple-touch-icon.png?v=c78bd457575a">
+
+
+
+
+
+<div class="s-hero hero-container">
+    <div class="-container g-row jc-sp-between ai-center">
+        <div class="g-col6">
+            <h1 class="-title">Learn, Share, Build</h1>
+            <p class="-paragraph">Each month, over 50 million developers come to Stack Overflow to learn, share their knowledge, and build their careers.</p>
+            <p class="-paragraph">Join the world’s largest developer community.</p>
+        </div>
+        
+        <div class="s-signup _hero g-col5">
+
+            <div id="openid-buttons" class="-social">
+                    <div class="major-provider btn _block _medium _google" data-provider="google" data-oauthserver="https://accounts.google.com/o/oauth2/auth" data-oauthversion="2.0">Google</div>
+                    <div class="major-provider btn _block _medium _facebook" data-provider="facebook" data-oauthserver="https://www.facebook.com/v2.0/dialog/oauth" data-oauthversion="2.0">Facebook</div>
+                            </div>
+
+
+            <small class="-divider text-centered">or</small>
+
+            <form id="login-form" action="/users/signup?ssrc=hero&amp;returnurl=https%3a%2f%2fstackoverflow.com%2fquestions%2f8274650%2fin-haskell-when-do-we-use-in-with-let" method="POST">
+        
+                <input name="fkey" value="3c5fea3a02e2c8029dc87a5a24a10382" type="hidden">
+
+                <input name="ssrc" value="" type="hidden">
+
+                <input id="oauth_version" name="oauth_version" value="" type="hidden">
+                <input id="oauth_server" name="oauth_server" value="" type="hidden">
+
+                    <div id="se-login-fields">
+
+                        <input name="legalLinksShown" value="1" type="hidden">
+
+                        <div class="input-group">
+                            <div class="g-row">
+                                <label for="display-name" class="g-col -fill">Display name</label>
+                                <div class="g-col">
+                                    <input id="display-name" name="inline-display-name" class="f-input" placeholder="J. Doe" data-error-my="right top" data-error-at="left center" type="text">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="g-row">
+                                <label for="email" class="g-col -fill">Email address</label>
+                                <div class="g-col">
+                                    <input id="email" name="inline-email" maxlength="100" class="f-input" placeholder="you@example.com" data-error-my="right top" data-error-at="left center" type="email">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="g-row">
+                                <label for="password" class="g-col -fill">Password</label>
+                                <div class="g-col">
+                                    <input id="password" name="inline-password" class="js-inline-signup f-input" placeholder="********" data-error-my="right top" data-error-at="left center" type="password">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="button-group g-row ai-center jc-sp-between">
+                            <input id="submit-button" name="submit-button" class="btn-outlined -white _medium _block" value="Sign Up" type="button">
+
+                            <small class="g-col -policy js-terms">By registering, you agree to the <a href="https://stackexchange.com/legal/privacy-policy" name="privacy" target="_blank" class="-link">privacy policy</a> and <a href="https://stackexchange.com/legal/terms-of-service" name="tos" target="_blank" class="-link">terms of service</a>.</small>
+                        </div>
+                    </div>
+            </form>
+            <script>
+                StackExchange.ready(function () {
+                    StackExchange.InlineAuth.init();
+                })
+            </script>
+        </div>
+
+            <a id="close" href="#" class="js-dismiss -dismiss" title="dismiss"><svg aria-hidden="true" class="svg-icon iconClear" width="18" height="18" viewBox="0 0 18 18"><path d="M15 4.41L13.59 3 9 7.59 4.41 3 3 4.41 7.59 9 3 13.59 4.41 15 9 10.41 13.59 15 15 13.59 10.41 9z"></path></svg></a>
+    </div>
+</div><script>
+    StackExchange.ready(function () {
+
+        var location = 0;
+        if ($("body").hasClass("questions-page")) {
+            location = 7;
+        } else if ($("body").hasClass("question-page")) {
+            location = 7;
+        } else if ($("body").hasClass("faq-page")) {
+            location = 5;
+        } else if ($("body").hasClass("home-page")) {
+            location = 6;
+        }
+        
+        $('#tell-me-more').click(function () {
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.action", { hero_action_type: 'cta', location: location }, true);
+            });
+        });
+        
+        $('.hero-container #close').click(function () {
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.action", { hero_action_type: "minimize", location: location }, true);
+            });
+            
+            $.cookie("hero", "mini", { path: "/", expires: 365 });
+            $.ajax({
+                url: "/hero-mini",
+                success: function (data) {
+                    $(".hero-container").fadeOut("fast", function () {
+                        $(".hero-container").replaceWith(data);
+                        $("#herobox-mini").fadeIn("fast");
+                    });
+                }
+            });
+            return false;
+        });
+    });
+
+</script>    <div class="inner-content">
+        <div id="question-header">
+                <h1 itemprop="name"><a href="https://stackoverflow.com/questions/8274650/in-haskell-when-do-we-use-in-with-let" class="question-hyperlink">In Haskell, when do we use in with let?</a></h1>
+
+            
+<div class="aside-cta" role="navigation" aria-label="ask new question">
+    <a href="https://stackoverflow.com/questions/ask" class="btn-outlined">Ask Question</a>
+</div>
+        </div>
+            <div id="mainbar" role="main" aria-label="question and answers">
+
+            
+
+<div class="question" data-questionid="8274650" id="question">
+
+    <div id="dfp-tlb" class="everyonelovesstackoverflow" data-google-query-id="CL-Rn6OEtdcCFci1UQodG2QACQ" data-clc-prefilled="true" data-clc-ready="true"><div id="google_ads_iframe_/248424177/stackoverflow.com/lb/question-pages_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/248424177/stackoverflow.com/lb/question-pages_0" title="3rd party ad content" name="google_ads_iframe_/248424177/stackoverflow.com/lb/question-pages_0" scrolling="no" marginwidth="0" marginheight="0" style="border: 0px none; vertical-align: bottom;" srcdoc="" height="90" frameborder="0" width="728"></iframe></div></div>    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input name="_id_" value="8274650" type="hidden">
+        <a class="vote-up-off" title="This question shows research effort; it is useful and clear">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">43</span>
+        <a class="vote-down-off" title="This question does not show any research effort; it is unclear or not useful">down vote</a>
+
+        <a class="star-off" href="#">favorite</a>
+        <div class="favoritecount"><b>22</b></div>
+
+
+</div>
+
+            </td>
+            
+<td class="postcell">
+<div>
+    <div class="post-text" itemprop="text">
+
+<p>In the following code, the last phrase I can put an <code>in</code> in front. Will it change anything? </p>
+
+<p>Another question: If I decide to put <code>in</code> in front of the last phrase, do I need to indent it? </p>
+
+<p>I tried without indenting and hugs complains </p>
+
+<blockquote>
+  <p>Last generator in do {...} must be an expression</p>
+</blockquote>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">import</span><span class="pln"> Data.Char
+groupsOf </span><span class="kwd">_</span><span class="pln"> </span><span class="pun">[]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[]</span><span class="pln">
+groupsOf n xs </span><span class="pun">=</span><span class="pln"> 
+    take n xs </span><span class="pun">:</span><span class="pln"> groupsOf n </span><span class="pun">(</span><span class="pln"> tail xs </span><span class="pun">)</span><span class="pln">
+
+problem_8 x </span><span class="pun">=</span><span class="pln"> maximum </span><span class="pun">.</span><span class="pln"> map product </span><span class="pun">.</span><span class="pln"> groupsOf </span><span class="lit">5</span><span class="pln"> </span><span class="pun">$</span><span class="pln"> x
+main </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">do</span><span class="pln"> t </span><span class="pun">&lt;-</span><span class="pln"> readFile </span><span class="str">"p8.log"</span><span class="pln"> 
+          </span><span class="kwd">let</span><span class="pln"> digits </span><span class="pun">=</span><span class="pln"> map digitToInt </span><span class="pun">$</span><span class="pln">concat </span><span class="pun">$</span><span class="pln"> lines t
+          print </span><span class="pun">$</span><span class="pln"> problem_8 digits</span></code></pre>
+
+<hr>
+
+<h3>Edit</h3>
+
+<p>Ok, so people don't seem to understand what I'm saying. Let me rephrase:
+are the following two the same, given the context above?</p>
+
+<p>1.</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">let</span><span class="pln"> digits </span><span class="pun">=</span><span class="pln"> map digitToInt </span><span class="pun">$</span><span class="pln">concat </span><span class="pun">$</span><span class="pln"> lines t
+print </span><span class="pun">$</span><span class="pln"> problem_8 digits</span></code></pre>
+
+<p>2.</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">let</span><span class="pln"> digits </span><span class="pun">=</span><span class="pln"> map digitToInt </span><span class="pun">$</span><span class="pln">concat </span><span class="pun">$</span><span class="pln"> lines t
+</span><span class="kwd">in</span><span class="pln"> print </span><span class="pun">$</span><span class="pln"> problem_8 digits</span></code></pre>
+
+<p>Another question concerning the scope of bindings declared in <code>let</code>: I read <a href="http://www.haskell.org/tutorial/patterns.html" rel="noreferrer">here</a> that:</p>
+
+<blockquote>
+  <p><code>where</code> Clauses.</p>
+</blockquote>
+
+<p>Sometimes it is convenient to scope bindings over several guarded equations, which requires a where clause: </p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="pln">f x y  </span><span class="pun">|</span><span class="pln">  y</span><span class="pun">&gt;</span><span class="pln">z           </span><span class="pun">=</span><span class="pln">  </span><span class="pun">...</span><span class="pln">
+       </span><span class="pun">|</span><span class="pln">  y</span><span class="pun">==</span><span class="pln">z          </span><span class="pun">=</span><span class="pln">  </span><span class="pun">...</span><span class="pln">
+       </span><span class="pun">|</span><span class="pln">  y</span><span class="pun">&lt;</span><span class="pln">z           </span><span class="pun">=</span><span class="pln">  </span><span class="pun">...</span><span class="pln">
+     </span><span class="kwd">where</span><span class="pln"> z </span><span class="pun">=</span><span class="pln"> x</span><span class="pun">*</span><span class="pln">x</span></code></pre>
+
+<p>Note that this cannot be done with a let expression, which only scopes over the expression <strong>which it encloses</strong>.</p>
+
+<p>My question: so, the variable digits shouldn't be visible to the last print phrase. Do I miss something here?</p>
+    </div>
+    <div class="post-taglist">
+        <a href="https://stackoverflow.com/questions/tagged/haskell" class="post-tag js-gps-track" title="show questions tagged 'haskell'" rel="tag">haskell</a> <a href="https://stackoverflow.com/questions/tagged/scope" class="post-tag js-gps-track" title="show questions tagged 'scope'" rel="tag">scope</a> <a href="https://stackoverflow.com/questions/tagged/whitespace" class="post-tag js-gps-track" title="show questions tagged 'whitespace'" rel="tag">whitespace</a> <a href="https://stackoverflow.com/questions/tagged/where-clause" class="post-tag js-gps-track" title="show questions tagged 'where-clause'" rel="tag">where-clause</a> <a href="https://stackoverflow.com/questions/tagged/let" class="post-tag js-gps-track" title="show questions tagged 'let'" rel="tag">let</a> 
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="https://stackoverflow.com/q/8274650" title="short permalink to this question" class="short-link" id="link-post-8274650">share</a><span class="lsep">|</span><a href="https://stackoverflow.com/posts/8274650/edit" class="suggest-edit-post" title="">improve this question</a></div>        
+    </td>
+    <td class="post-signature" align="right">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="https://stackoverflow.com/posts/8274650/revisions" title="show all edits to this post">edited <span title="2017-03-15 14:50:38Z" class="relativetime">Mar 15 at 14:50</span></a>
+    </div>
+    <div class="user-gravatar32">
+        <a href="https://stackoverflow.com/users/3924118/nbro"><div class="gravatar-wrapper-32"><img src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/abb01e1c2a8e3d9e1534dca14b19b3d8.png" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="https://stackoverflow.com/users/3924118/nbro">nbro</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">4,742</span><span title="6 gold badges"><span class="badge1"></span><span class="badgecount">6</span></span><span title="35 silver badges"><span class="badge2"></span><span class="badgecount">35</span></span><span title="72 bronze badges"><span class="badge3"></span><span class="badgecount">72</span></span>
+        </div>
+    </div>
+</div>    </td>
+    <td class="post-signature owner">
+        <div class="user-info ">
+    <div class="user-action-time">
+        asked <span title="2011-11-25 22:06:10Z" class="relativetime">Nov 25 '11 at 22:06</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="https://stackoverflow.com/users/705510/osager"><div class="gravatar-wrapper-32"><img src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/820847ff900c61642c25e884e5966c6c.jpg" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="https://stackoverflow.com/users/705510/osager">osager</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score " dir="ltr">2,148</span><span title="5 gold badges"><span class="badge1"></span><span class="badgecount">5</span></span><span title="20 silver badges"><span class="badge2"></span><span class="badgecount">20</span></span><span title="42 bronze badges"><span class="badge3"></span><span class="badgecount">42</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</div>
+</td>
+        </tr>
+                
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-8274650" class="comments js-comments-container ">
+		        <table>
+                    <tbody class="js-comments-list" data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-10187401" class="comment js-comment ">
+        <td class="js-comment-actions comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of 'useful comment' votes received" class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Do you know what <code>do</code>
+ notation really means or is it a black box to you? Knowing its guts, 
+everything you mention seems perfectly intuitive to me. Of course, 
+intuition will only get one so far without understanding of the 
+prequisites...</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/395760/delnan" title="80,193 reputation" class="comment-user">delnan</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10187401_8274650"><span title="2011-11-25 22:14:23Z" class="relativetime-clean">Nov 25 '11 at 22:14</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+    <tr id="comment-10187454" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">OK Now i get the indentation 
+part. Basically if i don't indent, "do" will consider it as an 
+independent task, same level as let. Another question: do i have to use 
+let to declare variables ?</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/705510/osager" title="2,148 reputation" class="comment-user owner">osager</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10187454_8274650"><span title="2011-11-25 22:18:30Z" class="relativetime-clean">Nov 25 '11 at 22:18</span></a></span>
+                        <span class="edited-yes" title="this comment was edited 1 time"></span>
+                                                                            </div>
+        </td>
+    </tr>
+    <tr id="comment-10187884" class="comment js-comment ">
+        <td class="js-comment-actions comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of 'useful comment' votes received" class="cool">2</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@osager: Haskell doesn't 
+really have "variables". You can bind "values" to a given name. If you 
+really want to have a cell in memory that you can modify with different 
+values during the execution of your program, you'll need to use an <code>IORef</code>
+ or similar. But newbies are generally encouraged to learn about the 
+functional way of doing things, which vigorously avoids modifying the 
+value of a reference.</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/208257/dan-burton" title="34,654 reputation" class="comment-user">Dan Burton</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10187884_8274650"><span title="2011-11-25 23:04:40Z" class="relativetime-clean">Nov 25 '11 at 23:04</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+    <tr id="comment-10187939" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Thanks Dan. I also come to 
+realize(to my big surprise) that haskell doesn't really use the notion 
+of variable !  But still, i find the syntax of Haskell more difficult to
+ grasp than the mindset of functional programming !</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/705510/osager" title="2,148 reputation" class="comment-user owner">osager</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10187939_8274650"><span title="2011-11-25 23:12:55Z" class="relativetime-clean">Nov 25 '11 at 23:12</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+                    </tbody>
+		        </table>
+	    </div>
+
+        <div id="comments-link-8274650" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid answering questions in comments.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="#" onclick=""></a>
+        </div>         
+    </td>
+</tr>        </tbody></table>
+</div>
+
+            <div id="answers">
+
+                <a name="tab-top"></a>
+                <div id="answers-header">
+                    <div class="subheader answers-subheader">
+                        <h2>
+                                4 Answers
+                                <span style="display:none;" itemprop="answerCount">4</span>
+                        </h2>
+                        <div>
+                            <div id="tabs">
+        <a href="https://stackoverflow.com/questions/8274650/in-haskell-when-do-we-use-in-with-let?answertab=active#tab-top" data-nav-xhref="" title="Answers with the latest activity first" data-value="active" data-shortcut="A">
+            active</a>
+        <a href="https://stackoverflow.com/questions/8274650/in-haskell-when-do-we-use-in-with-let?answertab=oldest#tab-top" data-nav-xhref="" title="Answers in the order they were provided" data-value="oldest" data-shortcut="O">
+            oldest</a>
+        <a class="youarehere" href="https://stackoverflow.com/questions/8274650/in-haskell-when-do-we-use-in-with-let?answertab=votes#tab-top" data-nav-xhref="" title="Answers with the highest score first" data-value="votes" data-shortcut="V">
+            votes</a>
+</div>
+                        </div>
+                    </div>    
+                </div>    
+
+
+
+
+  
+<a name="8274846"></a>
+<div id="answer-8274846" class="answer accepted-answer" data-answerid="8274846" itemscope="" itemtype="http://schema.org/Answer" itemprop="acceptedAnswer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input name="_id_" value="8274846" type="hidden">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">89</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+        <span class="vote-accepted-on load-accepted-answer-date" title="loading when this answer was accepted...">accepted</span>
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p><strong>Short answer</strong>: Use <code>let</code> without <code>in</code> in the body of a do-block, and in the part after the <code>|</code> in a list comprehension. Anywhere else, use <code>let ... in ...</code>.</p>
+
+<hr>
+
+<p>The keyword <code>let</code> is used in three ways in Haskell.</p>
+
+<ol>
+<li><p>The first form is a <em>let-expression</em>.</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">let</span><span class="pln"> variable </span><span class="pun">=</span><span class="pln"> expression </span><span class="kwd">in</span><span class="pln"> expression</span></code></pre>
+
+<p>This can be used wherever an expression is allowed, e.g.</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="pun">&gt;</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">let</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="kwd">in</span><span class="pln"> x</span><span class="pun">*</span><span class="lit">2</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="lit">3</span><span class="pln">
+</span><span class="lit">7</span></code></pre></li>
+<li><p>The second is a <em>let-statement</em>. This form is only used inside of do-notation, and does not use <code>in</code>.</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">do</span><span class="pln"> statements
+   </span><span class="kwd">let</span><span class="pln"> variable </span><span class="pun">=</span><span class="pln"> expression
+   statements</span></code></pre></li>
+<li><p>The third is similar to number 2 and is used inside of list comprehensions. Again, no <code>in</code>.</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="pun">&gt;</span><span class="pln"> </span><span class="pun">[(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">|</span><span class="pln"> x </span><span class="pun">&lt;-</span><span class="pln"> </span><span class="pun">[</span><span class="lit">1</span><span class="pun">..</span><span class="lit">3</span><span class="pun">],</span><span class="pln"> </span><span class="kwd">let</span><span class="pln"> y </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">*</span><span class="pln">x</span><span class="pun">]</span><span class="pln">
+</span><span class="pun">[(</span><span class="lit">1</span><span class="pun">,</span><span class="lit">2</span><span class="pun">),(</span><span class="lit">2</span><span class="pun">,</span><span class="lit">4</span><span class="pun">),(</span><span class="lit">3</span><span class="pun">,</span><span class="lit">6</span><span class="pun">)]</span></code></pre>
+
+<p>This form binds a variable which is in scope in subsequent generators and in the expression before the <code>|</code>.</p></li>
+</ol>
+
+<hr>
+
+<p>The reason for your confusion here is that expressions (of the correct type) can be used as statements within a do-block, and <code>let .. in ..</code> is just an expression.</p>
+
+<p>Because of the indentation rules of haskell, a line indented further 
+than the previous one means it's a continuation of the previous line, so
+ this</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">do</span><span class="pln"> </span><span class="kwd">let</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">42</span><span class="pln"> </span><span class="kwd">in</span><span class="pln">
+     foo</span></code></pre>
+
+<p>gets parsed as</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">do</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">let</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">42</span><span class="pln"> </span><span class="kwd">in</span><span class="pln"> foo</span><span class="pun">)</span></code></pre>
+
+<p>Without indentation, you get a parse error:</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">do</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">let</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="lit">42</span><span class="pln"> </span><span class="kwd">in</span><span class="pun">)</span><span class="pln">
+   foo</span></code></pre>
+
+<p>In conclusion, never use <code>in</code> in a list comprehension or a do-block. It is unneccesary and confusing, as those constructs already have their own form of <code>let</code>.</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="https://stackoverflow.com/a/8274846" title="short permalink to this answer" class="short-link" id="link-post-8274846">share</a><span class="lsep">|</span><a href="https://stackoverflow.com/posts/8274846/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2011-11-25 22:41:15Z" class="relativetime">Nov 25 '11 at 22:41</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="https://stackoverflow.com/users/98117/hammar"><div class="gravatar-wrapper-32"><img src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/4704a2a1d16b276070962ee01fb6149f.png" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="https://stackoverflow.com/users/98117/hammar">hammar</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 118,882" dir="ltr">119k</span><span title="12 gold badges"><span class="badge1"></span><span class="badgecount">12</span></span><span title="241 silver badges"><span class="badge2"></span><span class="badgecount">241</span></span><span title="345 bronze badges"><span class="badge3"></span><span class="badgecount">345</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+    
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-8274846" class="comments js-comments-container ">
+		        <table>
+                    <tbody class="js-comments-list" data-remaining-comments-count="1" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-10190795" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Is there any difference between forms 2 and 3 at all? I though they were actually the same, after expanding <code>[RET | SRC1, SRC2, ...]</code> to <code>do SRC1 ⏎ SRC2 ⏎ ... ⏎ return RET</code>.</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/745903/leftaroundabout" title="65,409 reputation" class="comment-user">leftaroundabout</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10190795_8274846"><span title="2011-11-26 07:23:58Z" class="relativetime-clean">Nov 26 '11 at 7:23</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+    <tr id="comment-10190971" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@leftaroundabout: They used 
+to be in an older version of Haskell. Then list comprehensions were 
+limited to lists only, while do-notation worked for any monad. However, 
+GHC 7.2.1 brings this feature back again <code>MonadComprehensions</code> extension.</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/98117/hammar" title="118,882 reputation" class="comment-user">hammar</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10190971_8274846"><span title="2011-11-26 07:53:51Z" class="relativetime-clean">Nov 26 '11 at 7:53</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+    <tr id="comment-10192625" class="comment js-comment ">
+        <td class="js-comment-actions comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                <span title="number of 'useful comment' votes received" class="cool">1</span>
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Very minor: the LHS in a let-binding is a pattern match, not just a variable binding.</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/370541/john-l" title="25,629 reputation" class="comment-user">John L</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10192625_8274846"><span title="2011-11-26 11:55:38Z" class="relativetime-clean">Nov 26 '11 at 11:55</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+    <tr id="comment-10194027" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">This answer just needs a small comment about GHCi kinda being in a perpetual do block now.</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/90511/hugomg" title="46,354 reputation" class="comment-user">hugomg</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10194027_8274846"><span title="2011-11-26 14:53:18Z" class="relativetime-clean">Nov 26 '11 at 14:53</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+    <tr id="comment-46304878" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">I realised that you cannot write something like <code>let x = x + 1</code>. I assumed it was like variable assignment like <code>let x = 1 ; let x = x +1</code>
+ would increment x to 2. But since let is recursive, x just becomes an 
+infinite expression. You cannot reassign variables unless you do 
+something like <code>x &lt;- return (x + 1)</code>. Is there a way to make let non-recursive?</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/582917/cmcdragonkai" title="2,582 reputation" class="comment-user">CMCDragonkai</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment46304878_8274846"><span title="2015-03-13 12:17:41Z" class="relativetime-clean">Mar 13 '15 at 12:17</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+                    </tbody>
+		        </table>
+	    </div>
+
+        <div id="comments-link-8274846" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link  dno" title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”."></a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link " title="expand to show all comments on this post" href="#" onclick="">show <b>1</b> more comment</a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+<div id="dfp-mlb" class="everyonelovesstackoverflow" data-google-query-id="CMCRn6OEtdcCFci1UQodG2QACQ" data-clc-prefilled="true" data-clc-ready="true"><div id="google_ads_iframe_/248424177/stackoverflow.com/mlb/question-pages_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/248424177/stackoverflow.com/mlb/question-pages_0" title="3rd party ad content" name="google_ads_iframe_/248424177/stackoverflow.com/mlb/question-pages_0" scrolling="no" marginwidth="0" marginheight="0" style="border: 0px none; vertical-align: bottom;" srcdoc="" height="90" frameborder="0" width="728"></iframe></div></div>
+  
+<a name="8274951"></a>
+<div id="answer-8274951" class="answer" data-answerid="8274951" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input name="_id_" value="8274951" type="hidden">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">15</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>First off, why hugs? The <a href="http://hackage.haskell.org/platform/" rel="noreferrer">Haskell Platform</a> is generally the recommended way to go for newbies, which comes with GHC.</p>
+
+<p>Now then, on to the <code>let</code>keyword. The simplest form of this keyword is meant to <em>always</em> be used with <code>in</code>.</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">let</span><span class="pln"> </span><span class="pun">{</span><span class="pln">assignments</span><span class="pun">}</span><span class="pln"> </span><span class="kwd">in</span><span class="pln"> </span><span class="pun">{</span><span class="pln">expression</span><span class="pun">}</span></code></pre>
+
+<p>For example,</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">let</span><span class="pln"> two </span><span class="pun">=</span><span class="pln"> </span><span class="lit">2</span><span class="pun">;</span><span class="pln"> three </span><span class="pun">=</span><span class="pln"> </span><span class="lit">3</span><span class="pln"> </span><span class="kwd">in</span><span class="pln"> two </span><span class="pun">*</span><span class="pln"> three</span></code></pre>
+
+<p><strong>The <code>{assignments}</code> are <em>only</em> in scope in the corresponding <code>{expression}</code>.</strong> Regular layout rules apply, meaning that <code>in</code> must be indented at least as much as the <code>let</code> that it corresponds to, and any sub-expressions pertaining to the <code>let</code>
+ expression must likewise be indented at least as much. This isn't 
+actually 100% true, but is a good rule of thumb; Haskell layout rules 
+are something you will just get used to over time as you read and write 
+Haskell code. Just keep in mind that the amount of indentation is the 
+main way to indicate which code pertains to what expression.</p>
+
+<p>Haskell provides two convenience cases where you <em>don't</em> have to write <code>in</code>:
+ do notation and list comprehensions (actually, monad comprehensions). 
+The scope of the assignments for these convenience cases is predefined.</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">do</span><span class="pln"> foo
+   </span><span class="kwd">let</span><span class="pln"> </span><span class="pun">{</span><span class="pln">assignments</span><span class="pun">}</span><span class="pln">
+   bar
+   baz</span></code></pre>
+
+<p>For <code>do</code> notation, the <code>{assignments}</code> are in scope for any statements that follow, in this case, <code>bar</code> and <code>baz</code>, but not <code>foo</code>. It is as if we had written</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">do</span><span class="pln"> foo
+   </span><span class="kwd">let</span><span class="pln"> </span><span class="pun">{</span><span class="pln">assignments</span><span class="pun">}</span><span class="pln">
+   </span><span class="kwd">in</span><span class="pln"> </span><span class="kwd">do</span><span class="pln"> bar
+         baz</span></code></pre>
+
+<p>List comprehensions (or really, any monad comprehension) desugar into do notation, so they provide a similar facility.</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="pun">[</span><span class="pln"> baz </span><span class="pun">|</span><span class="pln"> foo</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">let</span><span class="pln"> </span><span class="pun">{</span><span class="pln">assignments</span><span class="pun">},</span><span class="pln"> bar </span><span class="pun">]</span></code></pre>
+
+<p>The <code>{assignments}</code> are in scope for the expressions <code>bar</code> and <code>baz</code>, but not for <code>foo</code>.</p>
+
+<hr>
+
+<p><code>where</code> is somewhat different. If I'm not mistaken, the scope of <code>where</code> lines up with a particular function definition. So</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="pln">someFunc x y </span><span class="pun">|</span><span class="pln"> guard1 </span><span class="pun">=</span><span class="pln"> blah1
+             </span><span class="pun">|</span><span class="pln"> guard2 </span><span class="pun">=</span><span class="pln"> blah2
+  </span><span class="kwd">where</span><span class="pln"> </span><span class="pun">{</span><span class="pln">assignments</span><span class="pun">}</span></code></pre>
+
+<p>the <code>{assignments}</code> in this <code>where</code> clause have access to <code>x</code> and <code>y</code>. <code>guard1</code>, <code>guard2</code>, <code>blah1</code>, and <code>blah2</code> <em>all</em> have access to the <code>{assignments}</code> of this <code>where</code> clause. As is mentioned in the tutorial you linked, this can be helpful if multiple guards reuse the same expressions.</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="https://stackoverflow.com/a/8274951" title="short permalink to this answer" class="short-link" id="link-post-8274951">share</a><span class="lsep">|</span><a href="https://stackoverflow.com/posts/8274951/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info user-hover">
+    <div class="user-action-time">
+        answered <span title="2011-11-25 23:00:03Z" class="relativetime">Nov 25 '11 at 23:00</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="https://stackoverflow.com/users/208257/dan-burton"><div class="gravatar-wrapper-32"><img src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/8d59503078761ba50620cbee4348882e.jpg" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="https://stackoverflow.com/users/208257/dan-burton">Dan Burton</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 34,654" dir="ltr">34.7k</span><span title="16 gold badges"><span class="badge1"></span><span class="badgecount">16</span></span><span title="94 silver badges"><span class="badge2"></span><span class="badgecount">94</span></span><span title="168 bronze badges"><span class="badge3"></span><span class="badgecount">168</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+    
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-8274951" class="comments js-comments-container ">
+		        <table>
+                    <tbody class="js-comments-list" data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-10187952" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Thanks this is also quite clear.</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/705510/osager" title="2,148 reputation" class="comment-user owner">osager</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10187952_8274951"><span title="2011-11-25 23:14:16Z" class="relativetime-clean">Nov 25 '11 at 23:14</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+    <tr id="comment-10188387" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Also i chose Hugs because it 
+offers a little bit more features than winghci such as code browsing. I 
+DO wonder if these two are compatible or not, especially for third party
+ libraries. The other day i've installed a library and winghci found it 
+but not Hugs.</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/705510/osager" title="2,148 reputation" class="comment-user owner">osager</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10188387_8274951"><span title="2011-11-26 00:17:13Z" class="relativetime-clean">Nov 26 '11 at 0:17</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+    <tr id="comment-33363843" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Thanks. This was also the only place I found the semi-colon, e.g. <code>let a = 1; b = 2 in ...</code></span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/1993366/vikingsteve" title="21,193 reputation" class="comment-user">vikingsteve</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment33363843_8274951"><span title="2014-02-25 10:42:07Z" class="relativetime-clean">Feb 25 '14 at 10:42</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+                    </tbody>
+		        </table>
+	    </div>
+
+        <div id="comments-link-8274951" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="8274821"></a>
+<div id="answer-8274821" class="answer" data-answerid="8274821" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input name="_id_" value="8274821" type="hidden">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">6</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>In <code>do</code> notation, you can indeed use <code>let</code> with and without <code>in</code>. For it to be equivalent (in your case, I'll later show an example where you need to add a second <code>do</code>
+ and thus more indentation), you need to indent it as you discovered (if
+ you're using layout - if you use explicit braces and semicolons, 
+they're exactly equivalent).</p>
+
+<p>To understand <em>why</em> it's equivalent, you have to actually grok monads (at least to some degree) and look at the desugaring rules for <code>do</code> notation. In particular, code like this:</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">do</span><span class="pln"> </span><span class="kwd">let</span><span class="pln"> x </span><span class="pun">=</span><span class="pln"> </span><span class="pun">...</span><span class="pln">
+   stmts </span><span class="com">-- the rest of the do block</span></code></pre>
+
+<p>is translated to <code>let x = ... in do { stmts }</code>. In your case, <code>stmts = print (problem_8 digits)</code>. Evaluating the whole desugared <code>let</code> binding results in an IO action (from <code>print $ ...</code>). And here, you need understanding of monads to intuitively agree that there's no difference between <code>do</code> notations and "regular" language elements describing a computation resulting in monadic values.</p>
+
+<p>As for both why are possible: Well, <code>let ... in ...</code> has a broad range of applications (most of which have nothing to do with monads in particular), and a long history to boot. <code>let</code> without <code>in</code> for <code>do</code>
+ notation, on the other hand, seems to be nothing but a small piece of 
+syntactic sugar. The advantage is obvious: You can bind the results of 
+pure (as in, not monadic) computations to a name without resorting to a 
+pointless <code>val &lt;- return $ ...</code> and without splitting up the <code>do</code> block in two:</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="kwd">do</span><span class="pln"> stuff
+   </span><span class="kwd">let</span><span class="pln"> val </span><span class="pun">=</span><span class="pln"> </span><span class="pun">...</span><span class="pln">
+    </span><span class="kwd">in</span><span class="pln"> </span><span class="kwd">do</span><span class="pln"> more
+          stuff </span><span class="pun">$</span><span class="pln"> using val</span></code></pre>
+
+<p>The reason you don't need an extra <code>do</code> block for what follows the <code>let</code> is that you only got a single line. Remember, <code>do e</code> is <code>e</code>.</p>
+
+<p>Regarding your edit: <code>digit</code> being visible in the next line is the whole point. And there's no exception for it or anything. <code>do</code> notation becomes one single expression, and <code>let</code> works just fine in a single expression. <code>where</code> is only needed for things which aren't expressions.</p>
+
+<p>For the sake of demonstration, I'll show the desugared version of your <code>do</code> block. If you aren't too familiar with monads yet (something you should change soon IMHO), ignore the <code>&gt;&gt;=</code> operator and focus on the <code>let</code>. Also note that indentation doesn't matter any more.</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="pln">main </span><span class="pun">=</span><span class="pln"> readFile </span><span class="str">"p8.log"</span><span class="pln"> </span><span class="pun">&gt;&gt;=</span><span class="pln"> </span><span class="pun">(\</span><span class="pln">t </span><span class="pun">-&gt;</span><span class="pln">
+  </span><span class="kwd">let</span><span class="pln"> digits </span><span class="pun">=</span><span class="pln"> map digitToInt </span><span class="pun">$</span><span class="pln"> concat </span><span class="pun">$</span><span class="pln"> lines t
+  </span><span class="kwd">in</span><span class="pln"> print </span><span class="pun">(</span><span class="pln">problem_8 digits</span><span class="pun">))</span></code></pre>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="https://stackoverflow.com/a/8274821" title="short permalink to this answer" class="short-link" id="link-post-8274821">share</a><span class="lsep">|</span><a href="https://stackoverflow.com/posts/8274821/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+    <td class="post-signature" align="right">
+<div class="user-info ">
+    <div class="user-action-time">
+        <a href="https://stackoverflow.com/posts/8274821/revisions" title="show all edits to this post">edited <span title="2011-11-25 22:41:19Z" class="relativetime">Nov 25 '11 at 22:41</span></a>
+    </div>
+    <div class="user-gravatar32">
+        
+    </div>
+    <div class="user-details">
+        
+        <div class="-flair">
+            
+        </div>
+    </div>
+</div>    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2011-11-25 22:36:10Z" class="relativetime">Nov 25 '11 at 22:36</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="https://stackoverflow.com/users/395760/delnan"><div class="gravatar-wrapper-32"><img src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/ce3278f4dfbb7287c89d749c95d6f805.png" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="https://stackoverflow.com/users/395760/delnan">delnan</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 80,193" dir="ltr">80.2k</span><span title="8 gold badges"><span class="badge1"></span><span class="badgecount">8</span></span><span title="132 silver badges"><span class="badge2"></span><span class="badgecount">132</span></span><span title="210 bronze badges"><span class="badge3"></span><span class="badgecount">210</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+    
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-8274821" class="comments js-comments-container ">
+		        <table>
+                    <tbody class="js-comments-list" data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+
+
+    <tr id="comment-10187750" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">Thanks for the explanation. I'd probably hang myself before i can even reach the monad chapter.</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/705510/osager" title="2,148 reputation" class="comment-user owner">osager</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment10187750_8274821"><span title="2011-11-25 22:48:10Z" class="relativetime-clean">Nov 25 '11 at 22:48</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+    <tr id="comment-34185846" class="comment js-comment ">
+        <td class="js-comment-actions">
+            <table>
+                <tbody>
+                    <tr>
+                        <td class=" comment-score">
+                                &nbsp;&nbsp;
+                        </td>
+                        <td>
+                                &nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </td>
+        <td class="comment-text js-comment-text-and-form">
+            <div style="display: block;" class="comment-body">
+                <span class="comment-copy">@osager Bind and return are 
+the 2 functions that make monads useful, but when it comes to building 
+an understanding of what monads actually are it's better to think of 
+them in terms of fmap and join.</span>
+                    –&nbsp;<a href="https://stackoverflow.com/users/1840613/jeremy-list" title="1,390 reputation" class="comment-user">Jeremy List</a>
+                <span class="comment-date" dir="ltr"><a class="comment-link" href="#comment34185846_8274821"><span title="2014-03-18 08:23:32Z" class="relativetime-clean">Mar 18 '14 at 8:23</span></a></span>
+                                                                            </div>
+        </td>
+    </tr>
+                    </tbody>
+		        </table>
+	    </div>
+
+        <div id="comments-link-8274821" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+
+  
+<a name="8274828"></a>
+<div id="answer-8274828" class="answer" data-answerid="8274828" itemscope="" itemtype="http://schema.org/Answer">
+    <table>
+        <tbody><tr>
+            <td class="votecell">
+                
+
+<div class="vote">
+        <input name="_id_" value="8274828" type="hidden">
+        <a class="vote-up-off" title="This answer is useful">up vote</a>
+        <span itemprop="upvoteCount" class="vote-count-post ">1</span>
+        <a class="vote-down-off" title="This answer is not useful">down vote</a>
+
+
+
+
+</div>
+
+            </td>
+            
+
+
+<td class="answercell">
+    <div class="post-text" itemprop="text">
+<p>Some beginner notes about "are following two the same".</p>
+
+<p>For example, <code>add1</code> is a function, that add 1 to number:</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="pln">add1 </span><span class="pun">::</span><span class="pln"> Int </span><span class="pun">-&gt;</span><span class="pln"> Int
+add1 x </span><span class="pun">=</span><span class="pln">
+    </span><span class="kwd">let</span><span class="pln"> inc </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pln">
+    </span><span class="kwd">in</span><span class="pln"> x </span><span class="pun">+</span><span class="pln"> inc</span></code></pre>
+
+<p>So, it's like <code>add1 x = x + inc</code> with substitution inc by 1 from <code>let</code> keyword.</p>
+
+<p>When you try to suppress <code>in</code> keyword</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="pln">add1 </span><span class="pun">::</span><span class="pln"> Int </span><span class="pun">-&gt;</span><span class="pln"> Int
+add1 x </span><span class="pun">=</span><span class="pln">
+    </span><span class="kwd">let</span><span class="pln"> inc </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1</span><span class="pln">
+    x </span><span class="pun">+</span><span class="pln"> inc</span></code></pre>
+
+<p>you've got parse error.</p>
+
+<p>From <a href="http://haskell.org/haskellwiki/Keywords#let" rel="nofollow">documentation</a>:</p>
+
+<pre class="lang-hs prettyprint prettyprinted" style=""><code><span class="pln">Within </span><span class="kwd">do</span><span class="pun">-</span><span class="pln">blocks or list comprehensions 
+</span><span class="kwd">let</span><span class="pln"> </span><span class="pun">{</span><span class="pln"> d1 </span><span class="pun">;</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">;</span><span class="pln"> dn </span><span class="pun">}</span><span class="pln"> 
+without </span><span class="pun">`</span><span class="kwd">in</span><span class="pun">`</span><span class="pln"> serves to introduce local bindings</span><span class="pun">.</span><span class="pln"> </span></code></pre>
+
+<p>Btw, there are <a href="http://learnyouahaskell.com/syntax-in-functions#where" rel="nofollow">nice explanation</a> with many examples about what <code>where</code> and <code>in</code> keyword actually do.</p>
+    </div>
+    <table class="fw">
+    <tbody><tr>
+    <td class="vt">
+<div class="post-menu"><a href="https://stackoverflow.com/a/8274828" title="short permalink to this answer" class="short-link" id="link-post-8274828">share</a><span class="lsep">|</span><a href="https://stackoverflow.com/posts/8274828/edit" class="suggest-edit-post" title="">improve this answer</a></div>                    </td>
+            
+
+
+    <td class="post-signature" align="right">   
+       
+
+    <div class="user-info ">
+    <div class="user-action-time">
+        answered <span title="2011-11-25 22:37:05Z" class="relativetime">Nov 25 '11 at 22:37</span>
+    </div>
+    <div class="user-gravatar32">
+        <a href="https://stackoverflow.com/users/570689/%d0%94%d0%9c%d0%98%d0%a2%d0%a0%d0%98%d0%99-%d0%9c%d0%90%d0%9b%d0%98%d0%9a%d0%9e%d0%92"><div class="gravatar-wrapper-32"><img src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/4eed5285039322bafbeee9102367b0a4.jpg" alt="" height="32" width="32"></div></a>
+    </div>
+    <div class="user-details">
+        <a href="https://stackoverflow.com/users/570689/%d0%94%d0%9c%d0%98%d0%a2%d0%a0%d0%98%d0%99-%d0%9c%d0%90%d0%9b%d0%98%d0%9a%d0%9e%d0%92">ДМИТРИЙ МАЛИКОВ</a>
+        <div class="-flair">
+            <span class="reputation-score" title="reputation score 13,007" dir="ltr">13k</span><span title="6 gold badges"><span class="badge1"></span><span class="badgecount">6</span></span><span title="50 silver badges"><span class="badge2"></span><span class="badgecount">50</span></span><span title="107 bronze badges"><span class="badge3"></span><span class="badgecount">107</span></span>
+        </div>
+    </div>
+</div>
+    </td>
+    </tr>
+    </tbody></table>
+</td>
+        </tr>
+    
+<tr>
+    <td class="votecell"></td>
+    <td>
+	    <div id="comments-8274828" class="comments js-comments-container  dno">
+		        <table>
+                    <tbody class="js-comments-list" data-remaining-comments-count="0" data-canpost="false" data-cansee="true" data-comments-unavailable="false" data-addlink-disabled="true">
+
+                            <tr><td></td><td></td></tr>
+                    </tbody>
+		        </table>
+	    </div>
+
+        <div id="comments-link-8274828" data-rep="50" data-anon="true">
+
+                <a class="js-add-link comments-link disabled-link " title="Use comments to ask for more information or suggest improvements. Avoid comments like “+1” or “thanks”.">add a comment</a><span class="js-link-separator dno">&nbsp;|&nbsp;</span>
+            <a class="js-show-link comments-link dno" title="expand to show all comments on this post" href="#" onclick=""></a>
+        </div>         
+    </td>
+</tr>    </tbody></table>
+</div>
+                                    <a name="new-answer"></a>
+                        <form id="post-form" action="/questions/8274650/answer/submit" method="post" class="post-form">
+                            <input id="post-id" value="8274650" type="hidden">
+                            <input id="qualityBanWarningShown" name="qualityBanWarningShown" value="false" type="hidden">
+                            <input name="referrer" value="https://www.google.ro/" type="hidden">
+                            <h2 class="space">Your Answer</h2>
+
+
+            <script>
+            StackExchange.ifUsing("editor", function () {
+                StackExchange.using("externalEditor", function () {
+                    StackExchange.using("snippets", function () {
+                        StackExchange.snippets.init();
+                    });
+                });
+            }, "code-snippets");
+        </script>
+    
+
+<script>
+    StackExchange.ready(function() {
+        initTagRenderer("".split(" "), "".split(" "));
+       
+        StackExchange.using("externalEditor", function() {
+                // Have to fire editor after snippets, if snippets enabled
+                if (StackExchange.settings.snippets.snippetsEnabled) {
+                    StackExchange.using("snippets", function() {
+                        createEditor();
+                    });
+                }
+                else {
+                    createEditor();
+                }
+            });
+
+            function createEditor() {
+                StackExchange.prepareEditor({
+                    heartbeatType: 'answer',
+                convertImagesToLinks: true,
+                reputationToPostImages: 10,
+                bindNavPrevention: true,
+                postfix: "",
+                    onDemand: true,
+                    discardSelector: ".discard-answer"
+                    ,immediatelyShowMarkdownHelp:true
+                    });
+                
+
+        }
+    });
+</script>
+
+
+<div id="post-editor" class="post-editor js-post-editor">
+
+    <div style="position: relative;"> 
+        <div class="wmd-container">
+            <div id="wmd-button-bar" class="wmd-button-bar"><ul id="wmd-button-row" class="wmd-button-row"><li id="wmd-bold-button" class="wmd-button" style="left: 0px;"><span style="background-position: 0px -20px;"></span></li><li id="wmd-italic-button" class="wmd-button" style="left: 25px;"><span style="background-position: -20px -20px;"></span></li><li id="wmd-spacer1" class="wmd-spacer" style="left: 50px;"><span style="background-position: -40px -20px;"></span></li><li id="wmd-link-button" class="wmd-button" style="left: 75px;"><span style="background-position: -40px -20px;"></span></li><li id="wmd-quote-button" class="wmd-button" style="left: 100px;"><span style="background-position: -60px -20px;"></span></li><li id="wmd-code-button" class="wmd-button" style="left: 125px;"><span style="background-position: -80px -20px;"></span></li><li id="wmd-image-button" class="wmd-button" style="left: 150px;"><span style="background-position: -100px -20px;"></span></li><li id="wmd-spacer2" class="wmd-spacer" style="left: 175px;"><span style="background-position: -120px -20px;"></span></li><li id="wmd-olist-button" class="wmd-button" style="left: 200px;"><span style="background-position: -120px -20px;"></span></li><li id="wmd-ulist-button" class="wmd-button" style="left: 225px;"><span style="background-position: -140px -20px;"></span></li><li id="wmd-heading-button" class="wmd-button" style="left: 250px;"><span style="background-position: -160px -20px;"></span></li><li id="wmd-hr-button" class="wmd-button" style="left: 275px;"><span style="background-position: -180px -20px;"></span></li><li id="wmd-spacer3" class="wmd-spacer" style="left: 300px;"><span style="background-position: -200px -20px;"></span></li><li id="wmd-undo-button" class="wmd-button" style="left: 325px;"><span style="background-position: -200px -20px;"></span></li><li id="wmd-redo-button" class="wmd-button" style="left: 350px;"><span style="background-position: -220px -20px;"></span></li></ul></div>
+            <textarea id="wmd-input" class="wmd-input" name="post-text" cols="92" rows="15" tabindex="101" data-min-length=""></textarea>
+        </div>
+    </div>
+
+    <div class="fl" style="margin-top: 8px; height:24px;">&nbsp;</div>
+    <div id="draft-saved" class="draft-saved community-option fl" style="margin-top: 8px; height:24px; display:none;">draft saved</div>
+
+    <div id="draft-discarded" class="draft-discarded community-option fl" style="margin-top: 8px; height:24px; display:none;">draft discarded</div>
+
+
+
+    <div id="wmd-preview" class="wmd-preview"></div>
+    <div></div>
+    <div class="edit-block">
+        <input id="fkey" name="fkey" value="3c5fea3a02e2c8029dc87a5a24a10382" type="hidden">
+        <input id="author" name="author" type="text">
+    </div>
+
+
+
+</div>
+
+                            <div style="position: relative;">
+                                
+                                            <div class="form-item new-post-login">
+        
+                <div class="new-login-form">
+                    <div class="new-login-left">
+                        <h3>Sign up or <a id="login-link" href="https://stackoverflow.com/users/login?ssrc=question_page&amp;returnurl=https%3a%2f%2fstackoverflow.com%2fquestions%2f8274650%2fin-haskell-when-do-we-use-in-with-let%23new-answer">log in</a></h3>
+                        <script>
+                            StackExchange.ready(function () {
+                                StackExchange.helpers.onClickDraftSave('#login-link');
+                            });
+                        </script>
+                        <div class="preferred-login google-login">
+                            <p><span class="icon"></span><span>Sign up using Google</span></p>
+                        </div>
+                        <div class="preferred-login facebook-login">
+                            <p><span class="icon"></span><span>Sign up using Facebook</span></p>
+                        </div>
+                        <div class="preferred-login stackexchange-login">
+                            <p><span class="icon"></span><span>Sign up using Email and Password</span></p>
+                        </div>
+                    </div>
+                    <input name="manual-openid" class="manual-openid" type="hidden">
+                    <input name="use-facebook" class="use-facebook" value="false" type="hidden">
+                    <input name="use-google" class="use-google" value="false" type="hidden">
+                    <input class="submit-openid" value="Submit" style="display:none" type="button">
+                    <div class="new-login-right">
+                                <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tbody><tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" size="30" maxlength="30" tabindex="105" type="text">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" size="30" maxlength="100" tabindex="106" placeholder="required, but never shown" type="email">
+                </div>
+            </td>
+        </tr>
+        </tbody></table>
+    </div>
+
+                    </div>
+                </div>
+            </div>
+            <script>
+                StackExchange.ready(
+                    function () {
+                        
+StackExchange.openid.initPostLogin('.new-post-login', 
+'https%3a%2f%2fstackoverflow.com%2fquestions%2f8274650%2fin-haskell-when-do-we-use-in-with-let%23new-answer',
+ 'question_page');
+                    }
+                );
+            </script>
+            <noscript>
+                        <h3>Post as a guest</h3>
+    <div class="form-item">
+        <table>
+        <tr>
+                    <td class="vm">
+                <div>
+                    <label for="display-name">Name</label>
+                    <input id="display-name" name="display-name" 
+type="text" size="30" maxlength="30" value="" tabindex="105">
+                </div>
+                <div>
+                    <label for="m-address">Email</label>
+                    <input id="m-address" name="m-address" type="email" 
+size="30" maxlength="100" value="" tabindex="106" placeholder="required,
+ but never shown" />
+                </div>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+            </noscript>
+
+                            </div>
+           
+                                                            <div class="form-submit cbt">
+                                    <input id="submit-button" value="Post Your Answer" tabindex="110" type="submit">
+                                    <a href="#" class="btn-clear discard-answer dno">discard</a>
+
+<p class="privacy-policy-agreement">
+By posting your answer, you agree to the <a href="https://stackexchange.com/legal/privacy-policy" name="privacy" target="_blank">privacy policy</a> and <a href="https://stackexchange.com/legal/terms-of-service" name="tos" target="_blank">terms of service</a>.</p>
+<input name="legalLinksShown" value="1" type="hidden">                                </div>
+                        </form>
+
+
+
+                        <h2 class="bottom-notice" data-loc="1">
+Not the answer you're looking for?                            Browse other questions tagged <a href="https://stackoverflow.com/questions/tagged/haskell" class="post-tag" title="show questions tagged 'haskell'" rel="tag">haskell</a> <a href="https://stackoverflow.com/questions/tagged/scope" class="post-tag" title="show questions tagged 'scope'" rel="tag">scope</a> <a href="https://stackoverflow.com/questions/tagged/whitespace" class="post-tag" title="show questions tagged 'whitespace'" rel="tag">whitespace</a> <a href="https://stackoverflow.com/questions/tagged/where-clause" class="post-tag" title="show questions tagged 'where-clause'" rel="tag">where-clause</a> <a href="https://stackoverflow.com/questions/tagged/let" class="post-tag" title="show questions tagged 'let'" rel="tag">let</a>  or <a href="https://stackoverflow.com/questions/ask">ask your own question</a>.                        </h2>
+            </div>
+        </div>
+                <div id="sidebar" class="show-votes" role="complementary" aria-label="sidebar">
+                            <div class="module question-stats">
+                    <table id="qinfo">
+                        <tbody><tr>
+                            <td>
+                                <p class="label-key">asked</p>
+                            </td>
+                            <td style="padding-left: 10px">
+                                <p class="label-key" title="2011-11-25 22:06:10Z"><b>5 years, 11 months ago</b></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="label-key">viewed</p>
+                            </td>
+
+                            <td style="padding-left: 10px">
+                                <p class="label-key">
+                                    <b>24,709 times</b>
+                                </p>
+                            </td>
+                        </tr>
+                            <tr>
+                                <td>
+                                    <p class="label-key">active</p>
+                                </td>
+                                <td style="padding-left: 10px">
+                                    <p class="label-key"><b><a href="https://stackoverflow.com/questions/8274650/in-haskell-when-do-we-use-in-with-let?lastactivity" class="lastactivity-link" title="2017-03-15 14:50:38Z">8 months ago</a></b></p>
+                                </td>
+                            </tr>
+                    </tbody></table>
+                </div>
+            <div class="module community-bulletin" data-tracker="cb=1">
+    <div class="related">
+                <div class="bulletin-title">
+                    Blog
+                </div>
+                <hr>
+    <div class="spacer">
+        <div class="bulletin-item-type">
+                <a href="https://stackoverflow.blog/2017/11/09/why-channels/?cb=1" class="question-hyperlink">
+<div class="favicon favicon-stackexchangemeta" title="Meta Stack Exchange"></div>                </a>
+            </div>
+                <div class="bulletin-item-content">
+                    <a href="https://stackoverflow.blog/2017/11/09/why-channels/?cb=1" class="question-hyperlink">Why Channels?</a>
+                </div>
+                <br class="cbt">
+            </div>
+    </div>
+</div>            
+            <div id="dfp-tsb" class="everyonelovesstackoverflow" style="min-height: auto; height: auto; display: block;" data-google-query-id="CMGRn6OEtdcCFci1UQodG2QACQ" data-clc-ready="true"><div id="google_ads_iframe_/248424177/stackoverflow.com/sb/question-pages_0__container__" style="border: 0pt none; min-height: auto; height: auto; display: block;"><iframe id="google_ads_iframe_/248424177/stackoverflow.com/sb/question-pages_0" title="3rd party ad content" name="google_ads_iframe_/248424177/stackoverflow.com/sb/question-pages_0" scrolling="no" marginwidth="0" marginheight="0" style="border: 0px none; vertical-align: bottom; min-height: auto; height: auto; display: none;" srcdoc="" height="250" frameborder="0" width="300"></iframe></div></div>
+            <div id="hireme" class="blue tagged tex2jax_ignore clc-jobs-multi"><a class="top " href="https://stackoverflow.com/jobs" target="_blank" data-clc-click="https://clc.stackoverflow.com/click?an=43IT4VjSoXHVQzX6in8QExPLrdafzKfEZug72CwxzWb86Hc74HggAzNDzwYGhgZ7RkYGFm6mE4s5Hv7mPLxQCCjOcKD01UpLbqbtSzi-_OF8vBgklnKggCMVKLbrBfu99Zy3ugXBYnV3I4Fiv_o4rj7knPMOJMZ8QLB0hqWaKcsJQSYGBlYGBgZzISYGLhDD6gsjhFHFzsTADGK813jBvmbpNOanNwA&amp;cr=10439&amp;ct=1&amp;url=https%3A%2F%2Fstackoverflow.com%2Fjobs%3Fmed=clc&amp;sig=J1v5QcVA_KDu5w"><span>Looking for a job?</span></a><div class="middle"><ul class="jobs"><li class="&quot;clc-dismissable&quot;"><div class="job-wrap"><a class="job" title="Web Designer (Remote, Europe) at C4Media. Click to learn more." href="https://stackoverflow.com/jobs/159868/web-designer-remote-europe-c4media" target="_blank" data-clc-click="https://clc.stackoverflow.com/click?an=43IT4VjSoXHVQzX6in8QExPLrdafzKfEZug72CwxzWb86Hc74HggAzNDzwYGhgZ7RkYGFm6mE4s5Hv7mPLxQCCjOcKD01UpLbqbtSzi-_OF8vBgklnKggCMVKLbrBfu99Zy3ugXBYnV3I4Fiv_o4rj7knPMOJMZ8QLB0hqWaKcsJQSYGBlYGBgZzISYGLhDD6gsjhFHFzsTADGK813jBvmbpNOanNwA&amp;cr=299203&amp;ct=0&amp;url=https%3A%2F%2Fstackoverflow.com%2Fjobs%2F159868%2Fweb-designer-remote-europe-c4media%3Fmed=clc&amp;sig=GuUBLmAe0SKYeQ"><div class="title">Web Designer (Remote, Europe)</div><div><span class="company">C4Media</span><span class="location"><svg viewBox="0 0 12 12"><path d="M6 5.7c.4 0 .7-.1.9-.4.3-.3.4-.6.4-.9 0-.4-.1-.7-.4-.9-.2-.3-.5-.4-.9-.4s-.7.1-.9.4c-.3.2-.4.5-.4.9s.1.7.4.9c.2.3.5.4.9.4zm0-5c1 0 1.9.4 2.6 1.1.7.7 1.1 1.6 1.1 2.6 0 .5-.1 1.1-.4 1.8s-.5 1.3-.9 1.9c-.4.5-.7 1.1-1.1 1.6-.4.5-.7.9-.9 1.2l-.4.4c-.1-.1-.2-.3-.4-.5s-.5-.6-.9-1.2c-.4-.5-.8-1-1.1-1.6s-.7-1.1-.9-1.8c-.3-.7-.4-1.3-.4-1.8 0-1 .4-1.9 1.1-2.6S5 .7 6 .7z"></path></svg><span>Bucharest, Romania</span></span></div><div class="opts"><span class="opt remote"><svg viewBox="0 0 12 12"><path d="M6 9.8L3.9 7.7c1.3-.9 3-.9 4.2 0L6 9.8zm3-3a4.81 4.81 0 0 0-6 0L2.2 6c2.2-1.8 5.5-1.8 7.7 0l-.9.8zm1.7-1.7a7.27 7.27 0 0 0-9.4 0l-.9-.8c3.2-2.8 7.9-2.8 11.1 0l-.8.8z"></path></svg><span>Remote</span></span></div><span class="post-tag">javascript</span><span class="post-tag">sketch</span><div></div></a></div><a class="clc-dismiss" data-clc-click="https://clc.stackoverflow.com/click?an=43IT4VjSoXHVQzX6in8QExPLrdafzKfEZug72CwxzWb86Hc74HggAzNDzwYGhgZ7RkYGFm6mE4s5Hv7mPLxQCCjOcKD01UpLbqbtSzi-_OF8vBgklnKggCMVKLbrBfu99Zy3ugXBYnV3I4Fiv_o4rj7knPMOJMZ8QLB0hqWaKcsJQSYGBlYGBgZzISYGLhDD6gsjhFHFzsTADGK813jBvmbpNOanNwA&amp;cr=299203&amp;ct=-1&amp;sig=XqE0OAqSr0Xs0w" data-clc-meta-target="-1"><svg viewBox="0 0 13.6 13.6"><path d="M11.4 2.3C8.9-.2 4.8-.2 2.3 2.3s-2.5 6.6 0 9.1 6.6 2.5 9.1 0 2.5-6.6 0-9.1zM8.6 9.5L6.8 7.7 5 9.5l-.9-.9 1.8-1.8L4.1 5l.9-.9 1.8 1.8 1.8-1.8.9.9-1.8 1.8 1.8 1.8-.9.9z"></path></svg><span class="clc-tooltip above-left">dismiss this job</span></a></li><li class="&quot;clc-dismissable&quot;"><div class="job-wrap"><a class="job" title="Azure Function .Net Engineer at Gig Economy Group. Click to learn more." href="https://stackoverflow.com/jobs/144113/azure-function-net-engineer-gig-economy-group" target="_blank" data-clc-click="https://clc.stackoverflow.com/click?an=43IT4VjSoXHVQzX6in8QExPLrdafzKfEZug72CwxzWb86Hc74HggAzNDzwYGhgZ7RkYGFm6mE4s5Hv7mPLxQCCjOcKD01UpLbqbtSzi-_OF8vBgklnKggCMVKLbrBfu99Zy3ugXBYnV3I4Fiv_o4rj7knPMOJMZ8QLB0hqWaKcsJQSYGBlYGBgZzISYGLhDD6gsjhFHFzsTADGK813jBvmbpNOanNwA&amp;cr=299491&amp;ct=0&amp;url=https%3A%2F%2Fstackoverflow.com%2Fjobs%2F144113%2Fazure-function-net-engineer-gig-economy-group%3Fmed=clc&amp;sig=ZNrXsMD6iapoYw"><div class="title">Azure Function .Net Engineer</div><div><span class="company">Gig Economy Group</span><span class="location"><svg viewBox="0 0 12 12"><path d="M6 5.7c.4 0 .7-.1.9-.4.3-.3.4-.6.4-.9 0-.4-.1-.7-.4-.9-.2-.3-.5-.4-.9-.4s-.7.1-.9.4c-.3.2-.4.5-.4.9s.1.7.4.9c.2.3.5.4.9.4zm0-5c1 0 1.9.4 2.6 1.1.7.7 1.1 1.6 1.1 2.6 0 .5-.1 1.1-.4 1.8s-.5 1.3-.9 1.9c-.4.5-.7 1.1-1.1 1.6-.4.5-.7.9-.9 1.2l-.4.4c-.1-.1-.2-.3-.4-.5s-.5-.6-.9-1.2c-.4-.5-.8-1-1.1-1.6s-.7-1.1-.9-1.8c-.3-.7-.4-1.3-.4-1.8 0-1 .4-1.9 1.1-2.6S5 .7 6 .7z"></path></svg><span>No office location</span></span></div><div class="opts"><span class="opt salary"><span>$173k - $192k</span></span><span class="opt remote"><svg viewBox="0 0 12 12"><path d="M6 9.8L3.9 7.7c1.3-.9 3-.9 4.2 0L6 9.8zm3-3a4.81 4.81 0 0 0-6 0L2.2 6c2.2-1.8 5.5-1.8 7.7 0l-.9.8zm1.7-1.7a7.27 7.27 0 0 0-9.4 0l-.9-.8c3.2-2.8 7.9-2.8 11.1 0l-.8.8z"></path></svg><span>Remote</span></span></div><span class="post-tag">rest</span><span class="post-tag">http</span><div></div></a></div><a class="clc-dismiss" data-clc-click="https://clc.stackoverflow.com/click?an=43IT4VjSoXHVQzX6in8QExPLrdafzKfEZug72CwxzWb86Hc74HggAzNDzwYGhgZ7RkYGFm6mE4s5Hv7mPLxQCCjOcKD01UpLbqbtSzi-_OF8vBgklnKggCMVKLbrBfu99Zy3ugXBYnV3I4Fiv_o4rj7knPMOJMZ8QLB0hqWaKcsJQSYGBlYGBgZzISYGLhDD6gsjhFHFzsTADGK813jBvmbpNOanNwA&amp;cr=299491&amp;ct=-1&amp;sig=VTMnsPEeT-QyIA" data-clc-meta-target="-1"><svg viewBox="0 0 13.6 13.6"><path d="M11.4 2.3C8.9-.2 4.8-.2 2.3 2.3s-2.5 6.6 0 9.1 6.6 2.5 9.1 0 2.5-6.6 0-9.1zM8.6 9.5L6.8 7.7 5 9.5l-.9-.9 1.8-1.8L4.1 5l.9-.9 1.8 1.8 1.8-1.8.9.9-1.8 1.8 1.8 1.8-.9.9z"></path></svg><span class="clc-tooltip above-left">dismiss this job</span></a></li><li class="&quot;clc-dismissable&quot;"><div class="job-wrap"><a class="job" title="Technical Writer at Auth0. Click to learn more." href="https://stackoverflow.com/jobs/150457/technical-writer-auth0" target="_blank" data-clc-click="https://clc.stackoverflow.com/click?an=43IT4VjSoXHVQzX6in8QExPLrdafzKfEZug72CwxzWb86Hc74HggAzNDzwYGhgZ7RkYGFm6mE4s5Hv7mPLxQCCjOcKD01UpLbqbtSzi-_OF8vBgklnKggCMVKLbrBfu99Zy3ugXBYnV3I4Fiv_o4rj7knPMOJMZ8QLB0hqWaKcsJQSYGBlYGBgZzISYGLhDD6gsjhFHFzsTADGK813jBvmbpNOanNwA&amp;cr=280026&amp;ct=0&amp;url=https%3A%2F%2Fstackoverflow.com%2Fjobs%2F150457%2Ftechnical-writer-auth0%3Fmed=clc&amp;sig=3bYQeSdDo-L5Tg"><div class="title">Technical Writer</div><div><span class="company">Auth0</span><span class="location"><svg viewBox="0 0 12 12"><path d="M6 5.7c.4 0 .7-.1.9-.4.3-.3.4-.6.4-.9 0-.4-.1-.7-.4-.9-.2-.3-.5-.4-.9-.4s-.7.1-.9.4c-.3.2-.4.5-.4.9s.1.7.4.9c.2.3.5.4.9.4zm0-5c1 0 1.9.4 2.6 1.1.7.7 1.1 1.6 1.1 2.6 0 .5-.1 1.1-.4 1.8s-.5 1.3-.9 1.9c-.4.5-.7 1.1-1.1 1.6-.4.5-.7.9-.9 1.2l-.4.4c-.1-.1-.2-.3-.4-.5s-.5-.6-.9-1.2c-.4-.5-.8-1-1.1-1.6s-.7-1.1-.9-1.8c-.3-.7-.4-1.3-.4-1.8 0-1 .4-1.9 1.1-2.6S5 .7 6 .7z"></path></svg><span>Buenos Aires, Argentina</span></span></div><div class="opts"><span class="opt remote"><svg viewBox="0 0 12 12"><path d="M6 9.8L3.9 7.7c1.3-.9 3-.9 4.2 0L6 9.8zm3-3a4.81 4.81 0 0 0-6 0L2.2 6c2.2-1.8 5.5-1.8 7.7 0l-.9.8zm1.7-1.7a7.27 7.27 0 0 0-9.4 0l-.9-.8c3.2-2.8 7.9-2.8 11.1 0l-.8.8z"></path></svg><span>Remote</span></span></div><span class="post-tag">reactjs</span><span class="post-tag">c#</span><div></div></a></div><a class="clc-dismiss" data-clc-click="https://clc.stackoverflow.com/click?an=43IT4VjSoXHVQzX6in8QExPLrdafzKfEZug72CwxzWb86Hc74HggAzNDzwYGhgZ7RkYGFm6mE4s5Hv7mPLxQCCjOcKD01UpLbqbtSzi-_OF8vBgklnKggCMVKLbrBfu99Zy3ugXBYnV3I4Fiv_o4rj7knPMOJMZ8QLB0hqWaKcsJQSYGBlYGBgZzISYGLhDD6gsjhFHFzsTADGK813jBvmbpNOanNwA&amp;cr=280026&amp;ct=-1&amp;sig=OH89iXggp5xo5Q" data-clc-meta-target="-1"><svg viewBox="0 0 13.6 13.6"><path d="M11.4 2.3C8.9-.2 4.8-.2 2.3 2.3s-2.5 6.6 0 9.1 6.6 2.5 9.1 0 2.5-6.6 0-9.1zM8.6 9.5L6.8 7.7 5 9.5l-.9-.9 1.8-1.8L4.1 5l.9-.9 1.8 1.8 1.8-1.8.9.9-1.8 1.8 1.8 1.8-.9.9z"></path></svg><span class="clc-tooltip above-left">dismiss this job</span></a></li><li class="&quot;clc-dismissable&quot;"><div class="job-wrap"><a class="job" title="C++ Software Developer at Ivanti. Click to learn more." href="https://stackoverflow.com/jobs/156692/c-plus-plus-software-developer-ivanti" target="_blank" data-clc-click="https://clc.stackoverflow.com/click?an=43IT4VjSoXHVQzX6in8QExPLrdafzKfEZug72CwxzWb86Hc74HggAzNDzwYGhgZ7RkYGFm6mE4s5Hv7mPLxQCCjOcKD01UpLbqbtSzi-_OF8vBgklnKggCMVKLbrBfu99Zy3ugXBYnV3I4Fiv_o4rj7knPMOJMZ8QLB0hqWaKcsJQSYGBlYGBgZzISYGLhDD6gsjhFHFzsTADGK813jBvmbpNOanNwA&amp;cr=292636&amp;ct=0&amp;url=https%3A%2F%2Fstackoverflow.com%2Fjobs%2F156692%2Fc-plus-plus-software-developer-ivanti%3Fmed=clc&amp;sig=wzpfqoXU6e1i3Q"><div class="title">C++ Software Developer</div><div><span class="company">Ivanti</span><span class="location"><svg viewBox="0 0 12 12"><path d="M6 5.7c.4 0 .7-.1.9-.4.3-.3.4-.6.4-.9 0-.4-.1-.7-.4-.9-.2-.3-.5-.4-.9-.4s-.7.1-.9.4c-.3.2-.4.5-.4.9s.1.7.4.9c.2.3.5.4.9.4zm0-5c1 0 1.9.4 2.6 1.1.7.7 1.1 1.6 1.1 2.6 0 .5-.1 1.1-.4 1.8s-.5 1.3-.9 1.9c-.4.5-.7 1.1-1.1 1.6-.4.5-.7.9-.9 1.2l-.4.4c-.1-.1-.2-.3-.4-.5s-.5-.6-.9-1.2c-.4-.5-.8-1-1.1-1.6s-.7-1.1-.9-1.8c-.3-.7-.4-1.3-.4-1.8 0-1 .4-1.9 1.1-2.6S5 .7 6 .7z"></path></svg><span>București, Romania</span></span></div><span class="post-tag">c++</span><span class="post-tag">sql</span><div></div></a></div><a class="clc-dismiss" data-clc-click="https://clc.stackoverflow.com/click?an=43IT4VjSoXHVQzX6in8QExPLrdafzKfEZug72CwxzWb86Hc74HggAzNDzwYGhgZ7RkYGFm6mE4s5Hv7mPLxQCCjOcKD01UpLbqbtSzi-_OF8vBgklnKggCMVKLbrBfu99Zy3ugXBYnV3I4Fiv_o4rj7knPMOJMZ8QLB0hqWaKcsJQSYGBlYGBgZzISYGLhDD6gsjhFHFzsTADGK813jBvmbpNOanNwA&amp;cr=292636&amp;ct=-1&amp;sig=AbGYtvA27Vqe7A" data-clc-meta-target="-1"><svg viewBox="0 0 13.6 13.6"><path d="M11.4 2.3C8.9-.2 4.8-.2 2.3 2.3s-2.5 6.6 0 9.1 6.6 2.5 9.1 0 2.5-6.6 0-9.1zM8.6 9.5L6.8 7.7 5 9.5l-.9-.9 1.8-1.8L4.1 5l.9-.9 1.8 1.8 1.8-1.8.9.9-1.8 1.8 1.8 1.8-.9.9z"></path></svg><span class="clc-tooltip above-left">dismiss this job</span></a></li></ul></div><img src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/impression.gif" class="impression" style="display: none;"></div>
+                <script>var clc={options:{svc:'dfp'}};</script>
+<script>;window.clc=window.clc||{},window.clc.init=window.clc.init||function(a){var
+ 
+b=window,c=b.document;try{if("function"!=typeof[].indexOf||!window.addEventListener||!a.allowed)return;var
+ d=new 
+RegExp(a.allowed);if(!d.test(location.hostname))return;if(b.clc.options)for(var
+ e in b.clc.options)a[e]=b.clc.options[e];b.clc.cmd="undefined"==typeof 
+b.clc.cmd?[]:b.clc.cmd,b.clc.autoload=b.clc.autoload||function(){"function"==typeof
+ b.clc.load?b.clc.load():b.clc.cmd.push(function(a){a.load()})};var 
+f=a.wv;if(c.hidden&&f)return void 
+c.addEventListener("visibilitychange",function 
+b(){c.hidden||(window.clc.init(a),c.removeEventListener("visibilitychange",b))});b.clc.options=a,a.al&&b.clc.autoload();var
+ 
+g=/Trident/i.test(navigator.userAgent)?a.lib.replace(/(\.min)?\.js(\?v=[0-9a-fA-F]+)?$/,".ie$1.js$2"):a.lib,h=c.createElement("script");h.async=!0,h.src=g,c.body.appendChild(h)}catch(a){}},window.clc.loadDisplayAds=window.clc.loadDisplayAds||function(){function
+ 
+a(b){b.style.height=b.style.maxHeight=b.style.minHeight="auto",b.style.display="IFRAME"===b.tagName?"none":"block",[].forEach.call(b.children,a)}function
+ b(a){new Image().src="https://"+e+"/stalled.gif?"+a}var 
+c=window,d=c.document,e="clc.stackoverflow.com",f={slots:{lb:[[728,90]],mlb:[[728,90]],sb:[[300,250],[300,600]],"tag-sponsorship":[[730,135]]},ids:{"dfp-tlb":"lb","dfp-mlb":"mlb","dfp-tsb":"sb","dfp-tag":"tag-sponsorship","clc-tlb":"lb","clc-mlb":"mlb","clc-tsb":"sb"}},g=/^\/tags\//.test(location.pathname)||/^\/questions\/tagged\//.test(location.pathname)?"tag-pages":"question-pages",h=location.hostname;/^clc\./.test(location.hostname)&&(h="test/dev.stackoverflow.com");var
+ i=[4385506061,4386578282,4386579572];return function(e){var 
+j=(e&&0<e.length?e:Object.keys(f.ids)).map(function(a){return 
+d.getElementById(a)}).filter(function(a){return!!a&&/^\s*$/.test(a.innerHTML)}).map(function(a){return
+ 
+a.id});if(0!==j.length){c.googletag=c.googletag||{},c.googletag.cmd=c.googletag.cmd||[],c.googletag.cmd.push(function(){var
+ 
+e=c.googletag,k=d.createElement("div");k.className="adsbox",k.id="clc-abd",k.style.position="absolute",k.style.pointerEvents="none",k.innerHTML="&nbsp;",d.body.appendChild(k);var
+ 
+l=e.pubads();l.enableSingleRequest(),l.addEventListener("slotRenderEnded",function(c){var
+ e=c.serviceName,f=c.slot,g=c.lineItemId;try{var 
+h=f.getSlotElementId(),j=[];h||j.push("id=0");var 
+k=d.getElementById(h);if(!h||k?k.hasAttribute("data-clc-stalled")&&j.push("st=1"):j.push("el=0"),0!==j.length)return
+ void 
+b(j.join("&"));-1===i.indexOf(g)?k.setAttribute("data-clc-prefilled","true"):a(k),k.setAttribute("data-clc-ready","true")}catch(a){var
+ 
+l=d.getElementById("dfp-tsb")||d.getElementById("clc-tsb");l&&l.setAttribute("data-clc-ready","true"),b("e=1")}});var
+ 
+m=c.dfp_targeting||{};m&&Object.keys(m).forEach(function(a){l.setTargeting(a,m[a])});for(var
+ n=0,o=j;n<o.length;n++){var 
+p=o[n],q=f.ids[p],r=f.slots[q],s="/"+"248424177"+"/"+h+"/"+q+"/"+g,t=e.defineSlot(s,r,p);("tag-sponsorship"===q||"sb"==q)&&t.setCollapseEmptyDiv(!0,!0),t.addService(l),!1}e.enableServices();for(var
+ p,u=0,v=j;u<v.length;u++)p=v[u],e.display(p)});var 
+k=d.createElement("script");k.async=!0,k.src="https://www.googletagservices.com/tag/js/gpt.js",document.body.appendChild(k)}}}(),window.clc.init.call(null,
+ 
+{"lib":"https://cdn.sstatic.net/clc/clc.min.js?v=d51f72c16bf2","style":"https://cdn.sstatic.net/clc/styles/clc.min.css?v=b18b3a2258df","u":"https://clc.stackoverflow.com/markup.js","wa":true,"kt":2000,"tto":true,"h":"clc.stackoverflow.com","allowed":"^(((talent\\.)?stackoverflow)|(blog\\.codinghorror)|(serverfault|askubuntu)|([^\\.]+\\.stackexchange))\\.com$","wv":true,"al":false});</script>            <script>
+window.clc_request='AtRVW6OIKNUIAAAAANpCfgACAAAAAgAAAAArAAAAfGhhc2tlbGx8c2NvcGV8d2hpdGVzcGFjZXx3aGVyZS1jbGF1c2V8bGV0fABVlSzHvNTe6vtr';
+                    clc.autoload();
+                var 
+dfp_targeting={Registered:['false'],'so-tag':['haskell','scope','whitespace','where-clause','let']};
+                                    clc.loadDisplayAds();
+            </script>
+            
+
+            <div class="module sidebar-linked">
+	<h4 id="h-linked">Linked</h4>
+	<div class="linked" data-tracker="lq=1">
+
+<div class="spacer">
+	<a href="https://stackoverflow.com/q/14052093?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">25</div>
+	</a>
+	<a href="https://stackoverflow.com/questions/14052093/ghci-let-what-does-it-do?noredirect=1&amp;lq=1" class="question-hyperlink">GHCi “let” — what does it do?</a>
+</div>
+<div class="spacer">
+	<a href="https://stackoverflow.com/q/8366093?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">11</div>
+	</a>
+	<a href="https://stackoverflow.com/questions/8366093/how-do-i-parse-a-matrix-of-integers-in-haskell?noredirect=1&amp;lq=1" class="question-hyperlink">How do I parse a matrix of integers in Haskell?</a>
+</div>
+<div class="spacer">
+	<a href="https://stackoverflow.com/q/35690218?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">0</div>
+	</a>
+	<a href="https://stackoverflow.com/questions/35690218/how-do-i-define-a-value-with-type-in-haskells-let-expression?noredirect=1&amp;lq=1" class="question-hyperlink">How do I define a value with “type” in Haskell's “let” expression?</a>
+</div>
+<div class="spacer">
+	<a href="https://stackoverflow.com/q/24234003?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes  default">2</div>
+	</a>
+	<a href="https://stackoverflow.com/questions/24234003/using-let-in-with-function?noredirect=1&amp;lq=1" class="question-hyperlink">Using `let … in` with Function</a>
+</div>
+<div class="spacer">
+	<a href="https://stackoverflow.com/q/45322085?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">1</div>
+	</a>
+	<a href="https://stackoverflow.com/questions/45322085/why-this-variable-is-invisible-in-where?noredirect=1&amp;lq=1" class="question-hyperlink">Why this variable is invisible in where</a>
+</div>
+<div class="spacer">
+	<a href="https://stackoverflow.com/q/41776876?lq=1" title="Vote score (upvotes - downvotes)">
+		<div class="answer-votes answered-accepted default">0</div>
+	</a>
+	<a href="https://stackoverflow.com/questions/41776876/haskell-boolean-expressions-parse-error-possibly-incorrect-indentation-or-mis?noredirect=1&amp;lq=1" class="question-hyperlink">Haskell boolean expressions : parse error (possibly incorrect indentation or mismatched brackets)</a>
+</div>			</div>
+</div>
+
+                <div class="module sidebar-related">
+                    <h4 id="h-related">Related</h4>
+                    <div class="related js-gps-related-questions" data-tracker="rq=1">
+                        <div class="spacer js-gps-track"><a href="https://stackoverflow.com/q/151969?rq=1" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted extra-large">1653</div></a><a href="https://stackoverflow.com/questions/151969/when-to-use-self-over-this?rq=1" class="question-hyperlink">When to use self over $this?</a></div><div class="spacer js-gps-track"><a href="https://stackoverflow.com/q/762011?rq=1" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted extra-large">2519</div></a><a href="https://stackoverflow.com/questions/762011/whats-the-difference-between-using-let-and-var-to-declare-a-variable?rq=1" class="question-hyperlink">What's the difference between using “let” and “var” to declare a variable?</a></div><div class="spacer js-gps-track"><a href="https://stackoverflow.com/q/1012573?rq=1" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted large">761</div></a><a href="https://stackoverflow.com/questions/1012573/getting-started-with-haskell?rq=1" class="question-hyperlink">Getting started with Haskell</a></div><div class="spacer js-gps-track"><a href="https://stackoverflow.com/q/4362328?rq=1" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">84</div></a><a href="https://stackoverflow.com/questions/4362328/haskell-where-vs-let?rq=1" class="question-hyperlink">Haskell: Where vs. Let</a></div><div class="spacer js-gps-track"><a href="https://stackoverflow.com/q/10148642?rq=1" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">9</div></a><a href="https://stackoverflow.com/questions/10148642/how-to-nest-let-statements-in-haskell?rq=1" class="question-hyperlink">How to nest let statements in Haskell?</a></div><div class="spacer js-gps-track"><a href="https://stackoverflow.com/q/19102719?rq=1" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">1</div></a><a href="https://stackoverflow.com/questions/19102719/haskell-defining-multiple-variables-under-one-condition?rq=1" class="question-hyperlink">Haskell defining multiple variables under one condition?</a></div><div class="spacer js-gps-track"><a href="https://stackoverflow.com/q/20493751?rq=1" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">3</div></a><a href="https://stackoverflow.com/questions/20493751/where-within-let-haskell-scoping?rq=1" class="question-hyperlink">Where within Let, Haskell Scoping,</a></div><div class="spacer js-gps-track"><a href="https://stackoverflow.com/q/23452343?rq=1" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">8</div></a><a href="https://stackoverflow.com/questions/23452343/stripping-out-let-in-haskell?rq=1" class="question-hyperlink">Stripping out let in Haskell</a></div><div class="spacer js-gps-track"><a href="https://stackoverflow.com/q/35267871?rq=1" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">0</div></a><a href="https://stackoverflow.com/questions/35267871/correct-syntax-of-let-in-and-where-clauses-in-haskell?rq=1" class="question-hyperlink">Correct syntax of let … in and where clauses in Haskell</a></div><div class="spacer js-gps-track"><a href="https://stackoverflow.com/q/43008176?rq=1" title="Vote score (upvotes - downvotes)"><div class="answer-votes answered-accepted default">0</div></a><a href="https://stackoverflow.com/questions/43008176/haskell-let-in-let-in-let?rq=1" class="question-hyperlink">Haskell let … in let … in let</a></div>
+                    </div>
+                </div>
+
+<div id="hot-network-questions" class="module tex2jax_ignore">
+    <h4>
+        <a href="https://stackexchange.com/questions?tab=hot" class="js-gps-track" data-gps-track="posts_hot_network.click({ item_type:1, location:11 })">
+            Hot Network Questions
+        </a>
+    </h4>
+    <ul>
+            <li>
+                <div class="favicon favicon-android" title="Android Enthusiasts Stack Exchange"></div><a href="https://android.stackexchange.com/questions/186164/what-is-this-adb-utility-i-keep-getting-advice-to-use" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:139 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What is this `adb` utility I keep getting advice to use?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-worldbuilding" title="Worldbuilding Stack Exchange"></div><a href="https://worldbuilding.stackexchange.com/questions/97507/could-this-sort-of-castle-defense-work" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:579 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Could This Sort of Castle Defense Work?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-stats" title="Cross Validated"></div><a href="https://stats.stackexchange.com/questions/313105/what-formula-to-calculate-fx-y-function" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:65 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    what formula to calculate F(x,y) function?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-rpg" title="Role-playing Games Stack Exchange"></div><a href="https://rpg.stackexchange.com/questions/109739/cant-i-just-attack-the-unarmored-mice" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:122 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can't I just attack the unarmored mice?
+                </a>
+
+            </li>
+            <li>
+                <div class="favicon favicon-travel" title="Travel Stack Exchange"></div><a href="https://travel.stackexchange.com/questions/105052/in-qu%c3%a9bec-are-restaurants-legally-required-to-provide-free-potable-water-upon-r" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:273 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    In Québec, are restaurants legally required to provide free potable water upon request?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-lifehacks" title="Lifehacks Stack Exchange"></div><a href="https://lifehacks.stackexchange.com/questions/17730/cat-proofing-flexible-air-ducts" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:593 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Cat-proofing flexible air ducts
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-aviation" title="Aviation Stack Exchange"></div><a href="https://aviation.stackexchange.com/questions/45556/why-dont-we-see-business-jets-with-wingtip-fuel-tanks-anymore" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:528 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why don't we see business jets with wingtip fuel tanks anymore?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-askubuntu" title="Ask Ubuntu"></div><a href="https://askubuntu.com/questions/975007/how-to-check-password-strength" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:89 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to check password strength
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-aviation" title="Aviation Stack Exchange"></div><a href="https://aviation.stackexchange.com/questions/45583/do-the-wheels-of-taxi-capable-helicopters-have-power" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:528 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Do the wheels of taxi-capable helicopters have power?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-diy" title="Home Improvement Stack Exchange"></div><a href="https://diy.stackexchange.com/questions/126817/how-should-i-repair-a-burned-outlet" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:73 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How should I repair a burned outlet?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-mathematica" title="Mathematica Stack Exchange"></div><a href="https://mathematica.stackexchange.com/questions/159668/drawing-clifford-attractors-in-mathematica" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:387 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Drawing Clifford Attractors in Mathematica
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-tex" title="TeX - LaTeX Stack Exchange"></div><a href="https://tex.stackexchange.com/questions/400631/discretionary-hyphen-destroys-kerning-and-ligature" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:85 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Discretionary hyphen destroys kerning and ligature
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-aviation" title="Aviation Stack Exchange"></div><a href="https://aviation.stackexchange.com/questions/45507/if-my-parachute-fails-to-open-why-should-i-aim-for-land-rather-than-water" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:528 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    If my parachute fails to open, why should I aim for land rather than water?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-movies" title="Movies &amp; TV Stack Exchange"></div><a href="https://movies.stackexchange.com/questions/82501/how-did-tony-stark-know-that-peter-parker-is-spider-man" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:367 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How did Tony Stark know that Peter Parker is Spider-Man?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-mechanics" title="Motor Vehicle Maintenance &amp; Repair Stack Exchange"></div><a href="https://mechanics.stackexchange.com/questions/49367/why-dont-we-rotate-tyres-but-you-rotate-tires" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:224 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Why don't we rotate tyres but you rotate tires?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-interpersonal" title="Interpersonal Skills Stack Exchange"></div><a href="https://interpersonal.stackexchange.com/questions/6326/as-a-pedestrian-how-to-get-someone-to-stop-following-you-in-a-car" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:680 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    As a pedestrian, how to get someone to stop following you in a car?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-interpersonal" title="Interpersonal Skills Stack Exchange"></div><a href="https://interpersonal.stackexchange.com/questions/6565/how-to-politely-handle-support-requests-which-lack-some-basic-understanding" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:680 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    How to politely handle support requests which lack some basic understanding?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-gis" title="Geographic Information Systems Stack Exchange"></div><a href="https://gis.stackexchange.com/questions/261439/label-formatting-tag-escape-characters-in-arcgis-pro-with-vb" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:79 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Label formatting tag escape characters in ArcGIS Pro with VB?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-rpg" title="Role-playing Games Stack Exchange"></div><a href="https://rpg.stackexchange.com/questions/109686/can-held-torches-be-lit-by-magic" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:122 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can held torches be lit by magic?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-law" title="Law Stack Exchange"></div><a href="https://law.stackexchange.com/questions/23939/what-does-it-mean-to-pirate-a-game-app-or-other-digital-resource" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:617 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What does it mean to "pirate" a game, app, or other digital resource?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-cooking" title="Seasoned Advice"></div><a href="https://cooking.stackexchange.com/questions/85518/can-i-use-cooking-sherry-instead-of-red-wine-in-my-stew" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:49 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Can I use cooking sherry instead of red wine in my stew?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-codegolf" title="Programming Puzzles &amp; Code Golf Stack Exchange"></div><a href="https://codegolf.stackexchange.com/questions/147668/determinant-of-an-integer-matrix" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:200 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Determinant of an Integer Matrix
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-interpersonal" title="Interpersonal Skills Stack Exchange"></div><a href="https://interpersonal.stackexchange.com/questions/6588/what-to-do-if-you-are-accidentally-following-someone" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:680 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    What to do if you are accidentally following someone?
+                </a>
+
+            </li>
+            <li class="dno js-hidden" style="display: list-item;">
+                <div class="favicon favicon-biology" title="Biology Stack Exchange"></div><a href="https://biology.stackexchange.com/questions/67735/is-a-walnut-a-nut-or-a-drupe" class="js-gps-track" data-gps-track="site.switch({ item_type:11, target_site:375 }); posts_hot_network.click({ item_type:2, location:11 })">
+                    Is a walnut a nut or a drupe?
+                </a>
+
+            </li>
+    </ul>
+
+        
+</div>
+        </div>
+    <div id="feed-link">
+    <div id="feed-link-text">
+        <a href="https://stackoverflow.com/feeds/question/8274650" title="feed of this question and its answers">
+            <svg aria-hidden="true" class="svg-icon iconRss" width="18" height="18" viewBox="0 0 18 18"><path d="M1 3c0-1.1.9-2 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3zm14.5 12C15.5 8.1 9.9 2.5 3 2.5V5a10 10 0 0 1 10 10h2.5zm-5 0A7.5 7.5 0 0 0 3 7.5V10a5 5 0 0 1 5 5h2.5zm-5 0A2.5 2.5 0 0 0 3 12.5V15h2.5z"></path></svg>
+            question feed
+        </a>
+    </div>
+</div>    </div>
+<script>
+StackExchange.ready(function(){$.get('/posts/8274650/ivc/b5b5');});
+</script>
+<noscript>
+    <div><img src="/posts/8274650/ivc/b5b5" class="dno" alt="" width="0" height="0"></div>
+</noscript><div style="display:none" id="prettify-lang">lang-hs</div></div>
+
+
+        </div>
+    </div><script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/clc.js"></script><script async="" src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/gpt.js"></script>
+
+    <footer id="footer" class="s-footer js-footer" role="contentinfo">
+        <div class="-container">
+            <div class="g-row">
+                    <div class="-logo">
+
+                        <a href="https://stackoverflow.com/"><svg aria-hidden="true" class="svg-icon native iconLogo" width="150" height="30" viewBox="0 0 150 30"><g><path d="M33.9 18.6l-1.7-.2c-1.3-.1-1.9-.6-1.9-1.6 0-1.1.8-1.8 2.4-1.8 1.1 0 2.1.3 2.8.8l1-1c-1-.8-2.3-1.1-3.8-1.1-2.3 0-3.9 1.2-3.9 3.1 0 1.8 1.1 2.7 3.2 2.9l1.8.2c1.2.1 1.8.6 1.8 1.6 0 1.3-1.1 1.9-2.8 1.9-1.3 0-2.5-.3-3.3-1.2l-1 1c1.2 1.1 2.6 1.5 4.4 1.5 2.6 0 4.3-1.2 4.3-3.2-.2-2-1.5-2.7-3.3-2.9zm13.3-4.8c-1.7 0-2.8.3-3.7 1.5l1 1c.6-.9 1.3-1.2 2.7-1.2 1.9 0 2.7.8 2.7 2.3v1h-3.2c-2.4 0-3.7 1.2-3.7 3.1 0 .8.3 1.6.8 2.2.7.7 1.5 1 3 1 1.4 0 2.2-.3 3.1-1.1v1h1.6v-7.2c-.1-2.4-1.5-3.6-4.3-3.6zm2.7 7c0 .9-.2 1.5-.5 1.8-.7.6-1.5.7-2.4.7-1.7 0-2.4-.6-2.4-1.8 0-1.2.8-1.9 2.4-1.9h3l-.1 1.2zm7.6-5.6c1 0 1.6.3 2.4 1.2l1-1c-1.1-1.2-2-1.6-3.5-1.6-2.7 0-4.7 1.8-4.7 5.5 0 3.6 2 5.5 4.7 5.5 1.5 0 2.4-.4 3.5-1.6l-1.1-1c-.8.9-1.4 1.2-2.4 1.2s-1.9-.4-2.5-1.2c-.5-.7-.7-1.5-.7-2.9 0-1.3.2-2.2.7-2.9.7-.8 1.6-1.2 2.6-1.2zm13.4-1.3H69l-4.8 4.7V9.1h-1.6v15.4h1.6v-3.9l1.9-1.9 3.6 5.8h1.9l-4.4-6.9 3.7-3.7zm7.3-.33c-1.6 0-2.7.6-3.4 1.4-1 1-1.3 2.3-1.3 4.3s.3 3.3 1.3 4.3c.7.7 1.8 1.4 3.4 1.4 1.6 0 2.8-.6 3.4-1.4 1-1 1.3-2.3 1.3-4.3s-.3-3.3-1.3-4.3c-.6-.8-1.7-1.4-3.4-1.4zm1.3 8.3c-.3.3-.7.5-1.3.5-.6 0-1-.2-1.3-.5-.6-.6-.6-1.6-.6-2.7 0-1.2.1-2.1.6-2.7.3-.3.7-.5 1.3-.5.6 0 1 .2 1.3.5.6.6.6 1.5.6 2.7.1 1.2 0 2.2-.6 2.7zm10.8-8.2l-2.2 6.9-2.3-6.9h-2.9l4.1 11.1h2.2l4.1-11.1h-3zm7.6-.1c-2.9 0-4.8 2-4.8 5.7 0 4.5 2.5 5.7 5.1 5.7 2 0 3.1-.6 4.2-1.7l-1.7-1.6c-.7.7-1.3 1-2.5 1-1.6 0-2.4-1-2.4-2.5h6.9v-1.2c0-3.2-1.7-5.4-4.8-5.4zm-2.1 4.6c0-.5.1-.8.3-1.2.3-.7.9-1.2 1.9-1.2.9 0 1.6.5 1.9 1.2.2.4.2.7.3 1.2h-4.4zm11-3.4v-1.1h-2.7v11.1h2.8v-6.7c0-1.4.9-2 1.8-2 .7 0 1 .2 1.5.7l2.1-2.1c-.8-.8-1.5-1-2.6-1-1.3-.1-2.3.4-2.9 1.1zm6.3-2.3v12.3h2.8v-8.8h2v-2.1h-2v-1.2c0-.6.3-1 1-1h1.1v-2.3h-1.6c-2.3 0-3.3 1.6-3.3 3.1zm16.2 1.1c-1.6 0-2.7.6-3.4 1.4-1 1-1.3 2.3-1.3 4.3s.3 3.3 1.3 4.3c.7.7 1.8 1.4 3.4 1.4 1.6 0 2.8-.6 3.4-1.4 1-1 1.3-2.3 1.3-4.3s-.3-3.3-1.3-4.3c-.6-.8-1.8-1.4-3.4-1.4zm1.3 8.3c-.3.3-.7.5-1.3.5-.6 0-1-.2-1.3-.5-.6-.6-.6-1.6-.6-2.7 0-1.2.1-2.1.6-2.7.3-.3.7-.5 1.3-.5.6 0 1 .2 1.3.5.6.6.6 1.5.6 2.7 0 1.2 0 2.2-.6 2.7zm16.5-8.2l-1.8 6.9-2.3-6.9h-2l-2.3 6.9-1.8-6.9H134l3.4 11.1h2.3l2.3-7 2.3 7h2.3l3.4-11.1h-2.9zm-25.1 7.7V9.27h-2.8v12.3c0 1.6 1 3.2 3.2 3.2h1.6v-2.3h-1c-.7 0-1-.4-1-1.1zM41.3 15.6l1.4-1.4h-3v-3.5h-1.6v11.1c0 1.6.9 2.9 2.7 2.9h1.1v-1.3h-.8c-1 0-1.5-.6-1.5-1.6v-6.1h1.7v-.1z" fill="#222426"></path><path fill="#BCBBBB" d="M21 27v-8h3v11H0V19h3v8z"></path><path d="M5.4 19.1l13.56 1.96.17-2.38-13.26-2.55-.47 2.97zm1.8-6.8l12 5.6 1.1-2.4-12-5.6-1.1 2.4zm3.4-5.9l10.2 8.5 1.7-2-10.2-8.5-1.7 2zM17.1.2L15 1.8l7.9 10.6 2.1-1.6L17.1.2zM5 25h14v-3H5v3z" fill="#F48024"></path></g></svg></a>
+                    </div>
+                
+                    <nav class="-nav js-category _visible" data-name="default">
+                        <h5 class="-title"><a href="https://stackoverflow.com/" class="js-gps-track" data-gps-track="footer.click({ location: 2, link: 15})">Stack Overflow</a></h5>
+                        <ul class="-list">
+                            <li class="-item"><a href="https://stackoverflow.com/questions" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 16})">Questions</a></li>
+                                <li class="-item"><a href="https://stackoverflow.com/jobs" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 17})">Jobs</a></li>
+                                <li class="-item"><a href="https://stackoverflow.com/jobs/directory/developer-jobs" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 11})">Developer Jobs Directory</a></li>
+                                     <li class="-item"><a href="https://stackoverflow.com/jobs/salary" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 28})">Salary Calculator</a></li>
+                                                            <li class="-item"><a href="https://stackoverflow.com/help" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 3 })">Help</a></li>
+                                <li class="-item"><a onclick='StackExchange.switchMobile("on")' class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 12 })">Mobile</a></li>
+                        </ul>
+                    </nav>
+                    <nav class="-nav js-category _visible" data-name="default">
+                        <h5 class="-title"><a href="https://www.stackoverflowbusiness.com/?utm_source=so-footer&amp;utm_medium=referral&amp;utm_campaign=brand-activation&amp;utm_term=sotob2b-footer-business-category" class="js-gps-track" data-gps-track="footer.click({ location: 2, link: 19 })">Stack Overflow<br> Business</a></h5>
+                        <ul class="-list">
+                            <li class="-item"><a href="https://www.stackoverflowbusiness.com/talent?utm_source=so-footer&amp;utm_medium=referral&amp;utm_campaign=brand-activation&amp;utm_term=sotob2b-footer-talent" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 20 })">Talent</a></li>
+                            <li class="-item"><a href="https://www.stackoverflowbusiness.com/advertise?utm_source=so-footer&amp;utm_medium=referral&amp;utm_campaign=brand-activation&amp;utm_term=sotob2b-footer-advertise" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 21 })">Ads</a></li>
+                            <li class="-item"><a href="https://www.stackoverflowbusiness.com/enterprise?utm_source=so-footer&amp;utm_medium=referral&amp;utm_campaign=brand-activation&amp;utm_term=sotob2b-footer-enterprise" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 22 })">Enterprise</a></li>
+                            <li class="-item"><a href="https://www.stackoverflowbusiness.com/insights?utm_source=so-footer&amp;utm_medium=referral&amp;utm_campaign=brand-activation&amp;utm_term=sotob2b-footer-insights" class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 23 })">Insights</a></li>
+                        </ul>
+                    </nav>
+                <nav class="-nav js-category _visible" data-name="default">
+                    <h5 class="-title"><a class="js-gps-track" data-gps-track="footer.click({ location: 2, link: 1 })" href="https://stackoverflow.com/company/about">Company</a></h5>
+                    <ul class="-list">
+                            <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 1 })" href="https://stackoverflow.com/company/about">About</a></li>
+                                                <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 27 })" href="https://stackoverflow.com/company/press">Press</a></li>
+                            <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 9 })" href="https://stackoverflow.com/company/work-here">Work Here</a></li>
+                        <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 7 })" href="https://stackexchange.com/legal">Legal</a></li>
+                        <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 8 })" href="https://stackexchange.com/legal/privacy-policy">Privacy Policy</a></li>
+                            <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link: 13 })" href="https://stackoverflow.com/company/contact">Contact Us</a></li>
+                    </ul>
+                </nav>
+                <div class="-network g-row">
+                    <a href="#" class="-back-trigger js-back"><svg aria-hidden="true" class="svg-icon iconArrowLeftAlt" width="18" height="18" viewBox="0 0 18 18"><path d="M10.58 16L12 14.59 6.4 9 12 3.41 10.57 2l-7 7z"></path></svg></a>
+                    <div>
+                        <h5 class="-title"><a href="https://stackexchange.com/">Stack Exchange<br> Network</a></h5>
+                        <ul class="-list">
+                            <li class="-item"><a href="#" class="-link _expandable js-category-trigger js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })" data-target="Technology">Technology</a></li>
+                            <li class="-item"><a href="#" class="-link _expandable js-category-trigger js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })" data-target="Life / Arts">Life / Arts</a></li>
+                            <li class="-item"><a href="#" class="-link _expandable js-category-trigger js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })" data-target="Culture / Recreation">Culture / Recreation</a></li>
+                            <li class="-item"><a href="#" class="-link _expandable js-category-trigger js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })" data-target="Science">Science</a></li>
+                            <li class="-item"><a href="#" class="-link _expandable js-category-trigger js-gps-track" data-gps-track="footer.click({ location: 2, link: 24 })" data-target="Other">Other</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <nav class="-nav js-category" data-name="Technology">
+        <ul class="-list">
+                <li class="-item"><a href="https://stackoverflow.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="professional and enthusiast programmers">Stack Overflow</a></li>
+                <li class="-item"><a href="https://serverfault.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="system and network administrators">Server Fault</a></li>
+                <li class="-item"><a href="https://superuser.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="computer enthusiasts and power users">Super User</a></li>
+                <li class="-item"><a href="https://webapps.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="power users of web applications">Web Applications</a></li>
+                <li class="-item"><a href="https://askubuntu.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="Ubuntu users and developers">Ask Ubuntu</a></li>
+                <li class="-item"><a href="https://webmasters.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="pro webmasters">Webmasters</a></li>
+                <li class="-item"><a href="https://gamedev.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="professional and independent game developers">Game Development</a></li>
+                    </ul></nav><nav class="-nav js-category" data-name="Technology"><ul class="-list">
+                <li class="-item"><a href="https://tex.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="users of TeX, LaTeX, ConTeXt, and related typesetting systems">TeX - LaTeX</a></li>
+                <li class="-item"><a href="https://softwareengineering.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="professionals, academics, and students working within the systems development life cycle">Software Engineering</a></li>
+                <li class="-item"><a href="https://unix.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="users of Linux, FreeBSD and other Un*x-like operating systems">Unix &amp; Linux</a></li>
+                <li class="-item"><a href="https://apple.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="power users of Apple hardware and software">Ask Different (Apple)</a></li>
+                <li class="-item"><a href="https://wordpress.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="WordPress developers and administrators">WordPress Development</a></li>
+                <li class="-item"><a href="https://gis.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="cartographers, geographers and GIS professionals">Geographic Information Systems</a></li>
+                <li class="-item"><a href="https://electronics.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="electronics and electrical engineering professionals, students, and enthusiasts">Electrical Engineering</a></li>
+                    </ul></nav><nav class="-nav js-category" data-name="Technology"><ul class="-list">
+                <li class="-item"><a href="https://android.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="enthusiasts and power users of the Android operating system">Android Enthusiasts</a></li>
+                <li class="-item"><a href="https://security.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="information security professionals">Information Security</a></li>
+                <li class="-item"><a href="https://dba.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="database professionals who wish to improve their database skills and learn from others in the community">Database Administrators</a></li>
+                <li class="-item"><a href="https://drupal.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="Drupal developers and administrators">Drupal Answers</a></li>
+                <li class="-item"><a href="https://sharepoint.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="SharePoint enthusiasts">SharePoint</a></li>
+                <li class="-item"><a href="https://ux.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="user experience researchers and experts">User Experience</a></li>
+                <li class="-item"><a href="https://mathematica.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="users of Wolfram Mathematica">Mathematica</a></li>
+                    </ul></nav><nav class="-nav js-category" data-name="Technology"><ul class="-list">
+                <li class="-item"><a href="https://salesforce.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="Salesforce administrators, implementation experts, developers and anybody in-between">Salesforce</a></li>
+                <li class="-item"><a href="https://expressionengine.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="administrators, end users, developers and designers for ExpressionEngine® CMS">ExpressionEngine® Answers</a></li>
+                <li class="-item"><a href="https://pt.stackoverflow.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="programadores profissionais e entusiastas">Stack Overflow em Português</a></li>
+                <li class="-item"><a href="https://blender.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="people who use Blender to create 3D graphics, animations, or games">Blender</a></li>
+                <li class="-item"><a href="https://networkengineering.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="network engineers">Network Engineering</a></li>
+                <li class="-item"><a href="https://crypto.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="software developers, mathematicians and others interested in cryptography">Cryptography</a></li>
+                <li class="-item"><a href="https://codereview.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="peer programmer code reviews">Code Review</a></li>
+                    </ul></nav><nav class="-nav js-category" data-name="Technology"><ul class="-list">
+                <li class="-item"><a href="https://magento.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="users of the Magento e-Commerce platform">Magento</a></li>
+                <li class="-item"><a href="https://softwarerecs.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="people seeking specific software recommendations">Software Recommendations</a></li>
+                <li class="-item"><a href="https://dsp.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="practitioners of the art and science of signal, image and video processing">Signal Processing</a></li>
+                <li class="-item"><a href="https://emacs.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="those using, extending or developing Emacs">Emacs</a></li>
+                <li class="-item"><a href="https://raspberrypi.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="users and developers of hardware and software for Raspberry Pi">Raspberry Pi</a></li>
+                <li class="-item"><a href="https://ru.stackoverflow.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="программистов">Stack Overflow на русском</a></li>
+                <li class="-item"><a href="https://codegolf.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="programming puzzle enthusiasts and code golfers">Programming Puzzles &amp; Code Golf</a></li>
+                    </ul></nav><nav class="-nav js-category" data-name="Technology"><ul class="-list">
+                <li class="-item"><a href="https://es.stackoverflow.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="programadores y profesionales de la informática">Stack Overflow en español</a></li>
+                <li class="-item"><a href="https://ethereum.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="users of Ethereum, the decentralized application platform and smart contract enabled blockchain">Ethereum</a></li>
+                <li class="-item"><a href="https://datascience.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="Data science professionals, Machine Learning specialists, and those interested in learning more about the field">Data Science</a></li>
+                <li class="-item"><a href="https://arduino.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="developers of open-source hardware and software that is compatible with Arduino">Arduino</a></li>
+                <li class="-item"><a href="https://bitcoin.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="Bitcoin crypto-currency enthusiasts">Bitcoin</a></li>
+                            <li class="-item">
+                    <a href="https://stackexchange.com/sites#technology" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 26 })">
+                        <strong>
+                            more (26)
+                        </strong>
+                    </a>
+                </li>
+        </ul>
+    </nav>
+    <nav class="-nav js-category" data-name="Life / Arts">
+        <ul class="-list">
+                <li class="-item"><a href="https://photo.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="professional, enthusiast and amateur photographers">Photography</a></li>
+                <li class="-item"><a href="https://scifi.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="science fiction and fantasy enthusiasts">Science Fiction &amp; Fantasy</a></li>
+                <li class="-item"><a href="https://graphicdesign.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="Graphic Design professionals, students, and enthusiasts">Graphic Design</a></li>
+                <li class="-item"><a href="https://movies.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="movie and tv enthusiasts">Movies &amp; TV</a></li>
+                <li class="-item"><a href="https://music.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="musicians, students, and enthusiasts">Music: Practice &amp; Theory</a></li>
+                <li class="-item"><a href="https://worldbuilding.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="writers/artists using science, geography and culture to construct imaginary worlds and settings">Worldbuilding</a></li>
+                <li class="-item"><a href="https://cooking.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="professional and amateur chefs">Seasoned Advice (cooking)</a></li>
+                    </ul></nav><nav class="-nav js-category" data-name="Life / Arts"><ul class="-list">
+                <li class="-item"><a href="https://diy.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="contractors and serious DIYers">Home Improvement</a></li>
+                <li class="-item"><a href="https://money.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="people who want to be financially literate">Personal Finance &amp; Money</a></li>
+                <li class="-item"><a href="https://academia.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="academics and those enrolled in higher education">Academia</a></li>
+                <li class="-item"><a href="https://law.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="legal professionals, students, and others with experience or interest in law">Law</a></li>
+                            <li class="-item">
+                    <a href="https://stackexchange.com/sites#lifearts" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 26 })">
+                        <strong>
+                            more (16)
+                        </strong>
+                    </a>
+                </li>
+        </ul>
+    </nav>
+    <nav class="-nav js-category" data-name="Culture / Recreation">
+        <ul class="-list">
+                <li class="-item"><a href="https://english.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="linguists, etymologists, and serious English language enthusiasts">English Language &amp; Usage</a></li>
+                <li class="-item"><a href="https://skeptics.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="scientific skepticism">Skeptics</a></li>
+                <li class="-item"><a href="https://judaism.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="those who base their lives on Jewish law and tradition and anyone interested in learning more">Mi Yodeya (Judaism)</a></li>
+                <li class="-item"><a href="https://travel.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="road warriors and seasoned travelers">Travel</a></li>
+                <li class="-item"><a href="https://christianity.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="committed Christians, experts in Christianity and those interested in learning more">Christianity</a></li>
+                <li class="-item"><a href="https://ell.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="speakers of other languages learning English">English Language Learners</a></li>
+                <li class="-item"><a href="https://japanese.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="students, teachers, and linguists wanting to discuss the finer points of the Japanese language">Japanese Language</a></li>
+                    </ul></nav><nav class="-nav js-category" data-name="Culture / Recreation"><ul class="-list">
+                <li class="-item"><a href="https://gaming.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="passionate videogamers on all platforms">Arqade (gaming)</a></li>
+                <li class="-item"><a href="https://bicycles.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="people who build and repair bicycles, people who train cycling, or commute on bicycles">Bicycles</a></li>
+                <li class="-item"><a href="https://rpg.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="gamemasters and players of tabletop, paper-and-pencil role-playing games">Role-playing Games</a></li>
+                <li class="-item"><a href="https://anime.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="anime and manga fans">Anime &amp; Manga</a></li>
+                <li class="-item"><a href="https://puzzling.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="those who create, solve, and study puzzles">Puzzling</a></li>
+                <li class="-item"><a href="https://mechanics.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="mechanics and DIY enthusiast owners of cars, trucks, and motorcycles">Motor Vehicle Maintenance &amp; Repair</a></li>
+                            <li class="-item">
+                    <a href="https://stackexchange.com/sites#culturerecreation" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 26 })">
+                        <strong>
+                            more (32)
+                        </strong>
+                    </a>
+                </li>
+        </ul>
+    </nav>
+    <nav class="-nav js-category" data-name="Science">
+        <ul class="-list">
+                <li class="-item"><a href="https://mathoverflow.net/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="professional mathematicians">MathOverflow</a></li>
+                <li class="-item"><a href="https://math.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="people studying math at any level and professionals in related fields">Mathematics</a></li>
+                <li class="-item"><a href="https://stats.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="people interested in statistics, machine learning, data analysis, data mining, and data visualization">Cross Validated (stats)</a></li>
+                <li class="-item"><a href="https://cstheory.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="theoretical computer scientists and researchers in related fields">Theoretical Computer Science</a></li>
+                <li class="-item"><a href="https://physics.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="active researchers, academics and students of physics">Physics</a></li>
+                <li class="-item"><a href="https://chemistry.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="scientists, academics, teachers and students">Chemistry</a></li>
+                <li class="-item"><a href="https://biology.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="biology researchers, academics, and students">Biology</a></li>
+                    </ul></nav><nav class="-nav js-category" data-name="Science"><ul class="-list">
+                <li class="-item"><a href="https://cs.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="students, researchers and practitioners of computer science">Computer Science</a></li>
+                <li class="-item"><a href="https://philosophy.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="those interested in the study of the fundamental nature of knowledge, reality, and existence">Philosophy</a></li>
+                            <li class="-item">
+                    <a href="https://stackexchange.com/sites#science" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 26 })">
+                        <strong>
+                            more (10)
+                        </strong>
+                    </a>
+                </li>
+        </ul>
+    </nav>
+    <nav class="-nav js-category" data-name="Other">
+        <ul class="-list">
+                <li class="-item"><a href="https://meta.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="meta-discussion of the Stack Exchange family of Q&amp;A websites">Meta Stack Exchange</a></li>
+                <li class="-item"><a href="https://stackapps.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="apps, scripts, and development with the Stack Exchange API">Stack Apps</a></li>
+                <li class="-item"><a href="https://api.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="programmatic interaction with Stack Exchange sites">API</a></li>
+                <li class="-item"><a href="https://data.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="querying Stack Exchange data using SQL">Data</a></li>
+                <li class="-item"><a href="https://area51.stackexchange.com/" class="-link js-gps-track" data-gps-track="footer.click({ location: 2, link: 25 })" title="proposing new sites in the Stack Exchange network">Area 51</a></li>
+                    </ul>
+    </nav>
+                <div class="-copyright g-row jc-end">
+                    <div class="g-column jc-sp-between">
+                        <ul class="-list">
+                            <li class="-item"><a class="js-gps-track -link" data-gps-track="footer.click({ location: 2, link:4 })" href="https://stackoverflow.blog/?blb=1">Blog</a></li>
+                            <li class="-item"><a href="https://www.facebook.com/officialstackoverflow/" class="-link">Facebook</a></li>
+                            <li class="-item"><a href="https://twitter.com/stackoverflow" class="-link">Twitter</a></li>
+                            <li class="-item"><a href="https://linkedin.com/company/stack-overflow" class="-link">LinkedIn</a></li>
+                        </ul>
+
+                        <div>
+                            <p>
+                                site design / logo © 2017 Stack Exchange Inc; user contributions licensed under <a href="https://creativecommons.org/licenses/by-sa/3.0/" rel="license" class="-link">cc by-sa 3.0</a>
+                                with <a href="https://stackoverflow.blog/2009/06/25/attribution-required/" rel="license" class="-link">attribution required</a>.
+                                <span id="svnrev">rev&nbsp;2017.11.10.27691</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                    </div>
+    </footer>
+
+    <noscript>
+        <div id="noscript-warning">Stack Overflow works best with JavaScript enabled
+            <img src="https://pixel.quantserve.com/pixel/p-c1rF4kxgLUzNc.gif" alt="" class="dno">
+        </div>
+    </noscript>
+
+    <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || 
+function() { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new
+ Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = 
+g; m.parentNode.insertBefore(a, m);
+            })(window, document, 'script', 
+'https://www.google-analytics.com/analytics.js', 'ga');
+                ga('create', 'UA-5620270-1');
+                ga('create', 'UA-5620270-59', {name: 'pageData', 
+sampleRate: 5 });
+                ga('set', 'dimension2', 
+'|haskell|scope|whitespace|where-clause|let|');
+                ga('pageData.set', 'dimension2', 
+'|haskell|scope|whitespace|where-clause|let|');
+                ga('send', 'pageview');
+                ga('pageData.send', 'pageview');
+        var _qevents = _qevents || [],
+            _comscore = _comscore || [];
+        (function () {
+            var ssl='https:'==document.location.protocol,
+                s=document.getElementsByTagName('script')[0],
+                qc=document.createElement('script');
+                qc.async = true;
+                qc.src = (ssl ? 'https://secure' : 'http://edge') + 
+'.quantserve.com/quant.js';
+                s.parentNode.insertBefore(qc, s);
+                _qevents.push({ qacct: "p-c1rF4kxgLUzNc" });
+                            var sc=document.createElement('script');
+                sc.async=true;
+                sc.src=(ssl?'https://sb':'http://b') + 
+'.scorecardresearch.com/beacon.js';
+                s.parentNode.insertBefore(sc, s);
+                _comscore.push({ c1: "2", c2: "17440561" });
+        })();
+
+    </script>
+        
+    
+            <script type="text/javascript">
+                
+                (function(appendChild) {
+                    Node.prototype.appendChild = function() {
+                        var parent = this;
+                        var newNode = arguments[0];
+                        if (parent.nodeName === 'HEAD'
+                            && newNode
+                            && newNode.nodeName === 'SCRIPT'
+                            && newNode.src) {
+                            
+                            window.setTimeout(function() {
+                                var result = 
+newNode.src.match(/^https:\/\/maps\.googleapis\.com\/maps\/api\/place\/js\/(\w+)Service\./i)
+ || [];
+                                var service = result[1];
+                                if (service) {
+                                    if (service === 'Autocompletion') 
+service =  2;
+                                    else if (service === 'Place') 
+service = 1;
+                                    else service = 0;
+                                    StackExchange.using('gps', 
+function() {
+                                        
+StackExchange.gps.track('google_maps_places_api.call', { service: 
+service });
+                                    });
+                                }
+                            }, 0);
+                        }
+                        return appendChild.apply(this, arguments);
+                    };
+                })(Node.prototype.appendChild);
+            </script>
+    
+
+<div class="adsbox" id="clc-abd" style="position: absolute; pointer-events: none;">&nbsp;</div><script src="scope%20-%20In%20Haskell,%20when%20do%20we%20use%20in%20with%20let%20%20-%20Stack%20Overflow_files/markup.js" async=""></script><iframe id="google_osd_static_frame_8268739827167" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;"></iframe></body></html>

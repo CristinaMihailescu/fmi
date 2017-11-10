@@ -1,0 +1,379 @@
+<!DOCTYPE html><html>
+<head>
+<title>Lab 1</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="https://www.dropbox.com/s/48bx1xvl42hr5gp/progdecl.css?dl=1">
+  <script type="text/javascript" src="https://www.dropbox.com/s/hk9x49z7vmznfp9/progdecl.js?dl=1">
+  </script>
+</head>
+<body>
+<h1> Declarative Programming - Lab 1</h1>
+Based on the Informatics 1 &mdash; Functional Programming @ University of Edinburgh
+
+<h2>Welcome</h2>
+Welcome to your first functional programming exercise! This document will explain how to get<br/>started writing Haskell. The exercise consists of three parts:
+<ol>
+<li>The system<br/>
+In the first part you will set up the system and get to know the basic tools for programming.
+<li> Getting started<br/>
+The second part is a simple exercise where you will write some arithmetic functions in Haskell.
+<li> Chess<br/>
+Part three is an exercise where you will compose and manipulate images of chess pieces.
+</ol>
+It is important to complete all three parts and start getting used to the computer labs.<br/>
+<a name=2></a>
+<h2>The system</h2>
+The first part of the exercise will explain how to set up and use the GHCi Haskell interpreter.
+<h3>GHCi</h3>
+GHCi is an implementation of the Haskell programming language. GHCi is interactive: it evaluates each Haskell expression that you type and prints the result. You can start GHCi by typing “<tt>ghci</tt>” at a shell prompt.
+<h4>Exercises</h4>
+<ol>
+<li> Open a terminal window (right-click, then “open in terminal”) and type “ghci”. After you press “enter”, the screen should display:
+<pre>
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+Prelude>
+</pre>
+This is the interactive environment of GHCi. We will let it do some simple arithmetic first.
+<ol type="a">
+<li> Type “3 + 4” at the prompt. What does it say?
+<li> Try “3 + 4 * 5” and “(3 + 4) * 5”. Does arithmetic in Haskell work as expected?
+</ol>
+</ol>
+The interactive environment can handle any Haskell expression, not just arithmetic:
+<pre>
+Prelude&gt; length &#34;This is a string&#34;
+16
+Prelude&gt; reverse &#34;This is not a palindrome&#34;
+&#34;emordnilap a ton si sihT&#34;
+</pre>
+In addition to Haskell expressions, GHCi understands a number of commands, for example:
+<br/>
+<tt>
+:load filename
+</tt>
+Load a file containing Haskell definitions
+<br/>
+<tt>
+:reload
+</tt>
+Reload the most recently-loaded file
+<br/>
+<tt>
+:type expression
+</tt>
+Display the type of expression
+<br/>
+<tt>
+:?
+</tt>
+Display a list of commands
+<h4>Exercises</h4>
+<ol start="2">
+<li> Find the command to quit GHCi and use it.
+</ol>
+<h3> Editor </h3>
+You can use any text editor.  Editors with syntax highlighting for Haskell (gedit, gvim, Emacs) are preferable.
+
+<p> The usual working cycle would be Editing a file and the (re)loading it into GHCi</p>
+
+<h4>Help with indentation</h4>
+Haskell is sensitive to the way code is indented: a single misplaced space
+or tab character can change a correct program into an incorrect one, or even change the meaning of your program without warning from GHCi. 
+<h2>Getting started</h2>
+The current directory should contain the files <tt>labweekexercise.hs</tt>, <tt>labweekchess.hs</tt> and <tt>PicturesSVG.hs</tt>.
+<p>Open the file <tt>labweekexercise.hs</tt>. Below the introductory comments and the phrase <tt>import Test.QuickCheck</tt>, which loads the QuickCheck library that we will use later, you should see the following function definition:
+<pre>
+double :: Int -&gt; Int
+double x = x + x
+</pre>
+<h4>Exercises</h4>
+<ol start="3">
+<li>
+<ol type="a">
+<li> Part of the definition (the line <tt>double x = x + x</tt>) is incorrectly indented: it should be
+vertically aligned with its type signature (the line above). Edit this line to correct the indentation.
+<li> Load the file labweekexercise.hs into GHCi.  Use GHCi to display 
+<ol type="i">
+<li> the value of <tt>double 21</tt>
+<li> the type of <tt>double</tt>
+<li> the type of <tt>double 21</tt>
+</ol>
+<li> What happens if you ask GHCi to evaluate <tt>double &#34;three&#34;</tt>?
+<li> Complete the definition of <tt>square :: Int -&gt; Int</tt> in <tt>labweekexercise.hs</tt> so it computes the square of a number (you should replace the word “<tt>undefined</tt>”). Reload the file and test your definition.
+</ol>
+</ol>
+<h3>Pythagorean Triples</h3>
+Pythagoras was a Greek mystic who lived from around 570 to 490 BC. He is known to generations of schoolchildren as the discoverer of the relationship between the sides of a right-angled triangle. There is little evidence, however, that Pythagoras was a geometer at all. Early references to Pythagoras make no mention of his putative mathematical achievements, but refer instead to his pronouncements on dietary matters (he prohibited his followers from eating beans) or his less cerebral achievements such as biting a snake to death.
+<p>Whether or not Pythagoras had anything to do with the discovery of the theorem that bears his name, it was evidently known in antiquity. A stone tablet from Mesopotamia which predates Pythagoras by 1000 years, “Plimpton 322”, appears to contain part of a list of “Pythagorean triples”: positive integers corresponding to the lengths of the sides of a right-angled triangle. Back with the Greeks, Euclid (325 – 265BC) described a method for generating Pythagorean triples in his famous treatise<i>The Elements.</i>
+<p>In this part of the exercise we’ll be taking a more modern approach to the ancient problem, using Haskell to generate and verify Pythagorean triples.
+<p>First, a formal definition: a Pythagorean triple is a set of three integers (a, b, c) which satisfy the equation a<sup>2</sup> +b<sup>2</sup> = c<sup>2</sup>.
+ For example, (3, 4, 5) is a Pythagorean triple, since 3<sup>2</sup> +4<sup>2</sup> = 9+16 = 25 = 5<sup>2</sup>. 
+<h4>Exercises</h4>
+<ol start="4">
+<li> Write a function <tt>isTriple</tt> that tests for Pythagorean triples. You don’t need to worry about
+triples with sides of negative or zero length.
+<ol type="a">
+<li>Find the skeleton declaration of <tt>isTriple :: Int -&gt; Int -&gt; Int -&gt; Bool</tt> and replace undefined with a suitable definition (use ‘==’ to compare two values).
+<li> Load the file into GHCi. Test your function on some suitable input numbers. Make
+sure that it returns <tt>True</tt> for numbers that satisfy the equation (such as 3, 4 and 5) and <tt>False</tt> for numbers that don’t (such as 3, 4 and 6).
+<pre>
+Main&gt; isTriple 3 4 5
+True
+Main&gt; isTriple 3 4 6
+False
+</pre>
+</ol>
+</ol>
+Next we’ll create some triples automatically. One simple formula for finding Pythagorean triples is as follows: <i>(x<sup>2</sup> − y<sup>2</sup>, 2yx, x<sup>2</sup> + y<sup>2</sup>)</i> is a Pythagorean triple for all positive integers x and y with x &gt; y. The requirements that x and y are positive and that x &gt; y ensure that the sides of the triangle are positive; for this exercise, we will forget about that.
+<h4>Exercises</h4>
+<ol start="5">
+<li> Write functions <tt>leg1</tt>, <tt>leg2</tt> and <tt>hyp</tt> that generate the components of Pythagorean triples
+using the above formulas.
+<ol type="a">
+<li> Using the formulas above, add suitable definitions of
+<pre>
+leg1 :: Int -&gt; Int -&gt; Int
+leg2 :: Int -&gt; Int -&gt; Int
+hyp :: Int -&gt; Int -&gt; Int
+</pre>
+to your <tt>labweekexercise.hs</tt> and reload the file.
+<li> Test your functions on suitable input numbers. Verify that the generated triples are
+valid.
+<pre>
+Main&gt; leg1 5 4
+9
+Main&gt; leg2 5 4
+40
+Main&gt; hyp 5 4
+41
+Main&gt; isTriple 9 40 41
+True
+</pre>
+</ol>
+</ol>
+<h3>QuickCheck</h3>
+Now we will use QuickCheck to test whether our combination of <tt>leg1</tt>, <tt>leg2</tt>, and <tt>hyp</tt> does indeed create a Pythagorean triple. QuickCheck can try your function out on large amounts of random data, which it creates itself. But before we start using it, we will try to get a flavour of what it does by testing your functions manually.
+<h4>Exercises</h4>
+<ol start="6">
+<li> The function <tt>prop_triple</tt>—the name starts with <tt>prop</tt>(erty) to indicate that it is for use
+with QuickCheck—uses the functions <tt>leg1</tt>, <tt>leg2</tt>, <tt>hyp</tt> to generate a Pythagorean triple, and uses the function <tt>isTriple</tt> to check whether it is indeed a Pythagorean triple.
+<ol type="a">
+<li> How does this function work? What kind of input does it expect, and what kind of
+output does it generate?
+<li> Test this function on at least 3 sets of suitable inputs. Think: what results do you
+expect for various inputs?
+<li> Type the following at the GHCi-prompt (mind the capital ‘C’):
+<pre>
+Main&gt; quickCheck prop_triple
+</pre>
+</ol>
+</ol>
+The previous command makes QuickCheck perform a hundred random tests with your test function. If it says:
+<pre>
+OK, passed 100 tests.
+</pre>
+then all is well. If, on the other hand, QuickCheck responds with an answer like this:
+<pre>
+Falsifiable, after 0 tests:
+5
+6
+</pre>
+then your function failed when QuickCheck tried to evaluate it with the values 5 and 6 as arguments—when testing manually, that would be:
+<pre>
+Main&gt; prop_triple 5 6<br/>False<br/>
+</pre>
+If this happens, at least one of your previous functions <tt>isTriple</tt>, <tt>leg1</tt>, <tt>leg2</tt> and <tt>hyp</tt> contains a mistake, which you should find and correct.
+<h2>Chess</h2>
+In this final part of the tutorial we will get more familiar with Haskell, by drawing pictures of chess pieces on a board.
+<p>First, open the file <tt>showPic.html</tt> in your web-browser. Next, open the file <tt>labweekchess.hs</tt>. Load it into GHCi and type this at the prompt:
+<pre>
+Main&gt; render knight<br/>
+</pre>
+The webpage (which refreshes every second) should now show a picture of a white knight chess piece:
+<center><img src="images/knight.png" width="50"/></center>
+<b>Note:</b> If you don't see the pictrue you were rendering try refreshing the webpage.
+<p>The tutorial file labweekchess.hs is able to draw pictures using the module <tt>PicturesSVG</tt>, contained in the file <tt>PicturesSVG.hs</tt>, by means of the line:
+<pre>
+import PicturesSVG
+</pre>
+<b>Note:</b> If you get an error that GHCi can’t find a module, see if the problem is solved by putting your files in the same directory (folder).
+<p>All in all the PicturesSVG module includes all chess pieces and white and grey squares to create a chessboard, and some functions to manipulate the images. The following tables show the basic pictures:
+<table>
+<th><td colspan="3">Chess pieces</td>
+<td colspan="3">Board squares</td>
+</th>
+<tr>
+<td><tt>bishop</tt>&nbsp;&nbsp;</td>
+<td>A bishop</td>
+<td><img src="images/bishop.png" width="50"/></td>
+<td><tt>blackSquare</tt></td>
+<td>A black (grey) square*</td>
+<td><img src="images/black.jpg" width="50"/></td>
+</tr>
+<tr>
+<td><tt>king</tt></td>
+<td>A king</td>
+<td><img src="images/king.png" width="50"/></td>
+<td><tt>whiteSquare</tt></td>
+<td>A white square</td>
+<td><img border=1 src="images/white.jpg" width="50"/></td>
+</tr>
+<tr>
+<td><tt>knight</tt></td>
+<td>A knight</td>
+<td><img src="images/knight.png" width="50"/></td>
+</tr>
+<tr>
+<td><tt>pawn</tt></td>
+<td>A pawn</td>
+<td><img src="images/pawn.png" width="50"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td colspan="2" rowspan="2">* The black square is grey so that you can see <br/>the
+black pieces on it.</td>
+</tr>
+<tr>
+<td><tt>queen</tt></td>
+<td>A queen</td>
+<td><img src="images/queen.png" width="50"/></td>
+</tr>
+<tr>
+<td><tt>rook</tt></td>
+<td>A rook</td>
+<td><img src="images/rook.png" width="50"/></td>
+</table>
+All the basic pictures above have the type <tt>Picture</tt>. Below are the functions for arranging pictures:<br/>
+<table>
+<tr>
+<td><tt>flipV</tt></td>
+<td>reflection in the vertical axis</td>
+</tr>
+<tr>
+<td><tt>flipH</tt></td>
+<td>reflection in the horizontal axis</td>
+</tr>
+<tr>
+<td><tt>invert</tt></td>
+<td>change black to white and vice versa</td>
+</tr>
+<tr>
+<td><tt>over</tt></td>
+<td>place one picture onto another</td>
+</tr>
+<tr>
+<td><tt>beside</tt></td>
+<td>place one picture next to another</td>
+</tr>
+<tr>
+<td><tt>above</tt></td>
+<td>place one picture above another</td>
+</tr>
+<tr>
+<td><tt>repeatH</tt></td>
+<td>place several copies of a picture side by side</td>
+</tr>
+<tr>
+<td><tt>repeatV</tt></td>
+<td>stack several copies of a picture vertically</td>
+</tr>
+</table>
+<h4>Exercises</h4>
+<ol start="7">
+<li> Ask GHCi to show the types of these functions.
+</ol>
+Try applying the functions in various combinations to learn how they behave (for instance: what happens if you put pictures of different height side by side). Just as with the simple picture <tt>knight</tt>, you can see the modified pictures by using the <tt>render</tt> function. You’ll probably need some parentheses, for example:
+<pre>
+Main&gt; render (beside knight (flipV knight))<br/>
+</pre>
+<h4>Exercises</h4>
+<ol start="8">
+<li>Use the knight picture and the above transformation functions to create the following two
+pictures:<br/>
+<img src="html/Labweek-10_1.png"/>
+&nbsp;
+&nbsp;
+&nbsp;
+<img src="html/Labweek-10_2.png"/>
+<br/>
+Feel free to use convenient intermediate pictures.
+</ol>
+The fourth function, <tt>over</tt>, can place a piece on a square, like this:
+<pre>
+Main&gt; render (over rook blackSquare)<br/>
+</pre>
+<img src="html/Labweek-10_3.png"/>
+<br/>
+You can use <tt>over</tt> to put any picture on top of another, but the result looks best if you simply put pieces on squares.
+<h3>The full chessboard</h3>
+Next, we will build a picture of a fully populated chessboard. The functions <tt>repeatH</tt> and <tt>repeatV</tt> create a row or column of identical pictures, in the following way (try this out):
+<pre>
+Main&gt; render (repeatH 4 queen)<br/>
+</pre>
+<img src="html/Labweek-10_4.png"/>
+
+<p><b>Notes:</b>
+<ul>
+<li> When a problem says “... using the function (or picture) <tt>foo</tt>,” you <i>must</i> use the function <tt>foo</tt>.
+A solution that does not use that function will not be accepted, but of course you can use other functions as well.
+<li> Unless an exercise says you can’t, you are free to define intermediate functions, or pictures in
+this case, if that makes it easier to define the solution to an exercise.
+</ul>
+<h4>Exercises</h4>
+<ol start="9">
+<li>
+<ol type="a">
+<li> Using the <tt>repeatH</tt> function, create a picture <tt>emptyRow</tt> representing one of the empty
+rows of a chessboard (this one starts with a white square).<br/>
+<img src="html/Labweek-11_1.png"/>
+<li> Using the picture <tt>emptyRow</tt> from the last question, create a picture <tt>otherEmptyRow</tt>,
+representing the other empty rows of a chessboard (starting with a grey square).<br/>
+<img src="html/Labweek-11_2.png"/>
+<li> Using the previous two pictures, make a picture <tt>middleBoard</tt> representing the four
+empty rows in the middle of a chessboard:<br/>
+<img src="html/Labweek-11_3.png"/>
+<li> Create a picture <tt>whiteRow</tt> representing the bottom row of (white) pieces on a chessboard, each on their proper squares. Also create a picture <tt>blackRow</tt> for the top row of (black) pieces. You can use intermediate pictures, but try to keep your knights pointing left. The pieces should look like this:<br/>
+<img src="html/Labweek-11_4.png"/><br/>
+<img src="html/Labweek-11_5.png"/>
+<li> Using the pictures you defined in your answers to the questions above, create a fully-populated board (<tt>populatedBoard</tt>). It will be helpful to make pictures <tt>blackPawns</tt> and <tt>whitePawns</tt> for the two rows of pawns. The result should look like this:<br/>
+<img src="html/Labweek-12_1.png"/><br/>
+</ol>
+</ol>
+<h3>Functions</h3>
+In the previous section we have used the built-in functions to arrange ever larger pictures. Now we will use them to construct more complicated functions. First, take a look at the function <tt>twoBeside</tt>:
+<pre>
+twoBeside :: Picture -&gt; Picture<br/>twoBeside x = beside x (invert x)<br/>
+</pre>
+It takes a picture and places it beside an inverted copy of itself:
+<pre>
+Main&gt; render (twoBeside bishop)<br/>
+<img src="html/Labweek-12_2.png"/><br/>
+Main&gt; render (twoBeside (over king blackSquare))<br/>
+<img src="html/Labweek-12_3.png"/><br/>
+</pre>
+<h4>Exercises</h4>
+<ol start="10">
+<li>
+<ol type="a">
+<li> Write a function <tt>twoAbove</tt> that places a picture above an inverted copy of itself;
+<li> Write a function <tt>fourPictures</tt> that puts four pictures together as shown below. You
+may use the functions <tt>twoBeside</tt> and <tt>twoAbove</tt>.<br/>
+<img src="html/Labweek-12_4.png"/>
+</ol>
+</ol>
+<h3>Extra credit exercise</h3>
+<ol start="11">
+<ol type="a">
+<li> Create a picture <tt>emptyBoard</tt> describing the empty board.
+<pre>
+Prelude> render emptyBoard
+</pre>
+<img src="html/empty.png"/><br/>
+<li>
+Given the description of a chess position in the <a href="https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">FEN notation</a>, define a picture representing it.  Use the <tt>emptyBoard</tt> picture created above.  For example, the <tt>e4c5Nf3</tt> picture is described by the <b>"rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R"</b> FEN string and it is rendered to:
+<pre>
+Prelude> render e4c5Nf3
+</pre>
+<img src="html/e4c5Nf3.png"/><br/>
+</ol>
+</ol>
+In the coming laboratories we will learn how to write a function which turns any such FEN description into a picture.
+</body>
+</html>

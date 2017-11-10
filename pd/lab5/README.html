@@ -1,0 +1,391 @@
+<html>
+<head>
+    <title>Lab 5</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="https://www.dropbox.com/s/48bx1xvl42hr5gp/progdecl.css?dl=1">
+  <script type="text/javascript" src="https://www.dropbox.com/s/hk9x49z7vmznfp9/progdecl.js?dl=1"></script> 
+</head>
+<body>
+    <h1>
+      <strong> Declarative Programming – Lab 4 </strong><br/>
+    </h1>
+    
+<h1>Higher-order functions</h1>
+<p>Haskell functions are <i>values</i>, which may be processed in the same way as other data such as numbers, tuples or lists. In this tutorial we’ll use a number of <i>higher-order functions</i>, which take other functions as arguments, to write succinct definitions for the sort of list-processing tasks that you’ve previously coded explicitly using recursion or comprehensions. </p>
+<p>The first part of the tutorial deals with three higher-order functions, <tt>map</tt>, <tt>filter</tt>, and <tt>fold</tt>. For each of these you will be asked to write three functions. The second part deals with <tt>fold</tt> in some more detail, and will ask you to write functions using both <tt>map</tt> and <tt>filter</tt> at the same time. </p>
+<h2>Map</h2>
+<p>Transforming every list element by a particular function is a common need when processing lists—for example, we may want to</p>
+<ul>
+<li>add one to each element of a list of numbers, 
+<li>extract the first element of every pair in a list,
+<li>convert every character in a string to uppercase, or
+<li>add a grey background to every picture in a list of pictures. 
+</ul>
+<p>The <tt>map</tt> function captures this pattern, allowing us to avoid the repetitious code that results from writing a recursive function for each case. </p>
+<p>Consider a function <tt>g</tt> defined in terms of an imaginary function <tt>f</tt> as follows:</p>
+<pre>
+g [] = []
+g (x:xs) = f x : g xs
+</pre>
+<p>The function <tt>g</tt> can be written with recursion (as above), or with a comprehension, or with <tt>map</tt>: all three definitions are equivalent. </p>
+<pre>
+g xs = [ f x | x &lt;- xs ]
+g xs = map f xs
+</pre>
+<p>Below right is the definition of <tt>map</tt>. Note the similarity to the recursive definition of <tt>g</tt> (below left). </p>
+<p>As compared with <tt>g</tt>, <tt>map</tt> takes one additional argument: the function <tt>f</tt> that we want to apply to each element. </p>
+
+<p>
+<div style="float:right">
+<pre>
+map :: (a -&gt; b) -&gt; [a] -&gt; [b]
+map f [] = []
+map f (x:xs) = f x : map f xs
+</pre>
+</div>
+<div>
+<pre>
+g [] = []
+g (x:xs) = f x : g xs
+</pre>
+</div>
+
+<p>
+<table align=center>
+<tr align=center><td>x<sub>1</sub></td><td>:</td><td>x<sub>2</sub></td><td>:</td><td>&hellip;</td><td>:</td><td>x<sub>n</sub></td><td>:</td><td><tt>[]</tt></td></tr>
+<tr align=center><td>&#8675;</td><td></td><td>&#8675;</td><td></td><td></td><td></td><td>&#8675;</td><td></td><td><tt></tt></td></tr>
+<tr align=center><td>f(x<sub>1</sub>)</td><td>:</td><td>f(x<sub>2</sub>)</td><td>:</td><td>&hellip;</td><td>:</td><td>f(x<sub>n</sub>)</td><td>:</td><td><tt>[]</tt></td></tr>
+<tr></tr>
+<tr align=center><td colspan=9 align=center>Figure 1: The <tt>map</tt> function</td></tr>
+</table>
+
+<p>Given <tt>map</tt> and a function that operates on a single element, we can easily write a function that operates on a list. For instance, the function that extracts the first element of every pair can be defined as follows (using <tt>fst :: (a,b) -&gt; a</tt>):</p>
+<pre>
+fsts :: [(a,b)] -&gt; [a]
+fsts pairs = map fst pairs
+</pre>
+<h3>Exercises</h3>
+<ol>
+<li> Using map and other suitable library functions, write definitions for the following: 
+<ol type="a">
+<li> A function <tt>uppers :: String -&gt; String</tt> that converts a string to uppercase. 
+<li> A function <tt>doubles :: [Int] -&gt; [Int]</tt> that doubles every item in a list. 
+<li> A function <tt>penceToPounds :: [Int] -&gt; [Float]</tt> that turns prices given in pence into the same price in pounds. 
+<li> Write a list-comprehension version of uppers and use it to check your answer to (a).
+</ol>
+</ol>
+<h2>Filter</h2>
+<p>Removing elements from a list is another common need. For example, we might want to remove non-alphabetic characters from a string, or negative integers from a list. This pattern is captured by the <tt>filter</tt> function. </p>
+<p>Consider a function <tt>g</tt> defined in terms of an imaginary predicate <tt>p</tt> as follows (a predicate is just a function into a <tt>Bool</tt> value):</p>
+<pre>
+g []     = []
+g (x:xs) | p x = x : g xs
+   | otherwise = g xs
+</pre>
+<p>The function <tt>g</tt> can be written with recursion (as above), or with a comprehension, or with <tt>filter</tt>: all three definitions are equivalent. </p>
+<pre>
+g xs = [ x | x &lt;- xs, p x ]
+g xs = filter p xs
+</pre>
+<p>For instance, we can write a function <tt>evens :: [Int] -&gt; [Int]</tt>, which removes all odd numbers from a list using <tt>filter</tt> and the standard function <tt>even :: Int -&gt; Int</tt>:</p>
+<pre>
+evens list = filter even list
+</pre>
+<p>This is equivalent to:</p>
+<pre>
+evens list = [x | x &lt;- list, even x]
+</pre>
+<p>Below right is the definition of <tt>filter</tt>. Note the similarity to the way <tt>g</tt> is defined (below left). As compared with <tt>g</tt>, <tt>filter</tt> takes one additional argument: the predicate that we use to test each element. </p>
+<p>
+<div style="float:right">
+<pre>
+filter :: (a -&gt; Bool) -&gt; [a] -&gt; [a]
+filter p []     = []
+filter p (x:xs) | p x       = x : filter p xs
+                | otherwise = filter p xs
+</pre>
+</div>
+<div>
+<pre>
+g []     = []
+g (x:xs) | p x       = x : g xs
+         | otherwise = g xs
+</pre>
+</div>
+<h3>Exercises</h3>
+<ol start="2">
+<li> Using <tt>filter</tt> and other standard library functions, write definitions for the following: 
+<ol type="a">
+<li> A function <tt>alphas :: String -&gt; String</tt> that removes all non-alphabetic characters from a string.
+<li> Define a function <tt>rmChar :: Char -&gt; String -&gt; String</tt> that removes all occurrences of a character from a string.
+<li> A function <tt>above :: Int -&gt; [Int] -&gt; [Int]</tt> that removes all numbers less than or equal to a given number.
+<li> A function <tt>unequals :: [(Int,Int)] -&gt; [(Int,Int)]</tt> that removes all pairs <tt>(x,y)</tt> where <tt>x == y</tt>. 
+<li> Write a list-comprehension version of <tt>rmChar</tt> and use QuickCheck to test it against the version using filter. 
+</ol>
+</ol>
+<h2>Comprehensions, map and filter</h2>
+<p>As we have seen, list comprehensions process a list using transformations similar to <tt>map</tt> and <tt>filter</tt>. </p>
+<p>In general, <tt>[f x | x &lt;- xs, p x]</tt> is equivalent to <tt>map f (filter p xs)</tt>. </p>
+<h3>Exercises</h3>
+<ol start="3">
+<li> Write expressions equivalent to the following using <tt>map</tt> and <tt>filter</tt>. Use QuickCheck to verify your answers. 
+<ol type="a">
+<li> <tt>[toUpper c | c &lt;- s, isAlpha c]</tt>
+<li> <tt>[2 * x | x &lt;- xs, x &gt; 3]</tt>
+<li> <tt>[reverse s | s &lt;- strs, even (length s)]</tt>
+</ol>
+</ol>
+<h2>Fold</h2>
+<p>The <tt>map</tt> and <tt>filter</tt> functions act on elements individually; they never combine one element with another. </p>
+<p>Sometimes we want to combine elements using some operation. For example, the <tt>sum</tt> function can be written like this:</p>
+<pre>
+sum []     = 0
+sum (x:xs) = x + sum xs
+</pre>
+<p>Here we’re essentially just combining the elements of the list using the <tt>+</tt> operation. Another example is <tt>reverse</tt>, which reverses a list:</p>
+<pre>
+reverse []     = []
+reverse (x:xs) = reverse xs ++ [x]
+</pre>
+<p>This function is just combining the elements of the list, one by one, by appending them onto the end of the reversed list. This time the “combining” function is a little harder to see. It might be easier if we wrote it this way:</p>
+<pre>
+reverse []     = []
+reverse (x:xs) = x ‘snoc‘ reverse xs
+
+snoc x xs = xs ++ [x]
+</pre>
+<p>Now you can see that ‘<tt>snoc</tt>‘ plays the same role as <tt>+</tt> played in the example of <tt>sum</tt>. </p>
+<p>These examples (and many more) follow a pattern: we break down a list into its head (<tt>x</tt>) and tail (<tt>xs</tt>), recurse on <tt>xs</tt>, and then apply some function to <tt>x</tt> and the modified <tt>xs</tt>. The only things we need to specify are the function (such as (<tt>+</tt>) or <tt>snoc</tt>) and the <i>initial value</i> (such as 0 in the case of <tt>sum</tt> and <tt>[]</tt> in the case of <tt>reverse</tt>. </p>
+<p>This pattern is called “a fold” and is implemented in Haskell via the function <tt>foldr</tt>. </p>
+<p>
+<div style="float:right">
+<pre>
+foldr :: (a -&gt; b -&gt; b) -&gt; b -&gt; [a] -&gt; b
+foldr f u []     = u
+foldr f u (x:xs) = x ‘f‘ foldr f u xs
+</pre>
+</div>
+<div>
+<pre>
+g []     = u
+g (x:xs) = x ‘f‘ g xs
+</pre>
+</div>
+<p>The function <tt>g</tt> can be written with recursion (as above) or by using a fold: both definitions are equivalent. </p>
+<pre>
+g xs = foldr f u xs
+</pre>
+<p>One way to visualize the action of <tt>foldr</tt> is shown in Figure 2. Given a function <tt>f :: a -&gt; b -&gt; b</tt>, an initial value <tt>u :: b</tt> (sometimes called the “unit”), and a list <tt>[x1, x2, ..., xn]</tt> of type <tt>[a]</tt>, the <tt>foldr</tt> function returns the value that results from replacing every <tt>:</tt> (cons) in list with <tt>f</tt> and replacing the terminating <tt>[]</tt> (nil) with <tt>u</tt>. </p>
+
+<p>
+<table align=center>
+<tr align=center><td>x<sub>1</sub></td><td>:</td><td>(x<sub>2</sub></td><td>:</td><td>&hellip;</td><td>:</td><td>(x<sub>n</sub></td><td>:</td><td><tt>[]</tt></td><td>)&hellip;)</td></tr>
+<tr align=center><td></td><td>&#8675;</td><td></td><td>&#8675;</td><td></td><td>&#8675;</td><td></td><td>&#8675;</td><td>&#8675;</td><td></td></tr>
+<tr align=center><td>x<sub>1</sub></td><td>`f`</td><td>(x<sub>2</sub></td><td>`f`</td><td>&hellip;</td><td>`f`</td><td>(x<sub>n</sub></td><td>`f`</td><td>u</td><td>)&hellip;)</td></tr>
+<tr></tr>
+<tr align=center><td colspan=9 align=center>Figure 2: The <tt>foldr</tt> function</td></tr>
+</table>
+<p>
+<p>For example, we can define <tt>sum :: [Int] -&gt; Int</tt> as follows, using <tt>(+)</tt> as the function and <tt>0</tt> as the initial value (unit):</p>
+<pre>
+sum :: [Int] -&gt; Int
+sum ns = foldr (+) 0 ns
+</pre>
+<p>(Note: to treat an infix operator like <tt>+</tt> as a function name, we need to wrap it in parentheses.)</p>
+
+<p>
+<table align=center>
+<tr align=center><td>10</td><td>:</td><td>20</td><td>:</td><td>30</td><td>:</td><td><tt>[]</tt></td></tr>
+<tr align=center><td></td><td>&#8675;</td><td></td><td>&#8675;</td><td></td><td>&#8675;</td><td>&#8675;</td></tr>
+<tr align=center><td>10</td><td>+</td><td>20</td><td>+</td><td>30</td><td>+</td><td>0</td></tr>
+<tr></tr>
+<tr align=center><td colspan=7 align=center>Figure 2: Illustration of <tt>foldr (+) 0 [10,20,30]</tt></td></tr>
+</table>
+<p>
+
+<h3>Exercises</h3>
+<ol start="4">
+<li> We will practice the use of <tt>foldr</tt> by writing several functions first with recursion, and then using <tt>foldr</tt>. You can use other standard library functions as well. For each pair of functions that you write, test them against each other using QuickCheck. 
+<ol type="a">
+<li> Look at the recursive function <tt>productRec :: [Int] -&gt; Int</tt> that computes the product of the numbers in a list, and write an equivalent function <tt>productFold</tt> using <tt>foldr</tt>.
+<li> Write a recursive function <tt>andRec :: [Bool] -&gt; Bool</tt> that checks whether every item in a list is <tt>True</tt>. Then, write the same function using <tt>foldr</tt>, this time called <tt>andFold</tt>.
+<li> Write a recursive function <tt>concatRec :: [[a]] -&gt; [a]</tt> that concatenates a list of lists into a single list. Then, write a similar function <tt>concatFold</tt> using <tt>foldr</tt>.
+<li> Write a recursive function <tt>rmCharsRec :: String -&gt; String -&gt; String</tt> that removes all characters in the first string from the second string, using your function <tt>rmChar</tt> from exercise (2b).
+<pre>
+*Main&gt; rmCharsRec [’a’..’l’] "football"
+"oot"
+</pre>
+<p>Then, write a second version <tt>rmCharsFold</tt> using <tt>rmChar</tt> and <tt>foldr</tt>. Check your functions with QuickCheck. </p>
+</ol>
+</ol>
+<h2>Matrix manipulation</h2>
+<p>Next, we will look at matrix addition and multiplication. As matrices we will use lists of lists of <tt>Int</tt>s; for example:</p>
+<p/>
+<table><tr><td><table><tr><td>1</td><td>4</td><td>9</td></tr>
+       <tr><td>2</td><td>5</td><td>7</td></tr></table></td>
+       <td>is represented as </td>
+       <td><pre>
+[[1,4,9],
+ [2,5,7]]
+</td></tr></table>
+<p>The declaration below, which you can find in your <tt>lab4.hs</tt>, makes the type <tt>Matrix</tt> a shorthand for the type <tt>[[Int]]</tt>. </p>
+<pre>
+type Matrix = [[Int]]
+</pre>
+<p>Our first task is to write a test to show whether a list of lists of <tt>Int</tt>s is a matrix. This test should verify two things: 1) that the lists of <tt>Int</tt>s are all of equal length, and 2) that there is at least one row and one column in the list of lists. </p>
+<h3>Exercises</h3>
+<ol start="5"><li>
+<ol type="a">
+<li> Write a function <tt>uniform :: [Int] -&gt; Bool</tt> that tests whether the integers in a list are all equal. You can use the library function <tt>all</tt>, which tests whether all the elements of a list satisfy a predicate; check the type to see how it is used. If you want, you can try to define <tt>all</tt> in terms of <tt>foldr</tt> and <tt>map</tt>. 
+<li> Using your function <tt>uniform</tt> write a function <tt>valid :: Matrix -&gt; Bool</tt> that tests whether a list of lists of <tt>Int</tt>s is a matrix (it should test the properties 1) and 2) specified above). 
+</ol>
+</ol>
+<p>A useful higher-order function is <tt>zipWith</tt>. It is a lot like the function <tt>zip</tt> that you have seen, which takes two lists and combines the elements in a list of pairs. The difference is that instead of combining elements as a pair, you can give <tt>zipWith</tt> a specific function to combine each two elements. </p>
+<p>The definition is as follows (Figure 4 gives an illustration):</p>
+<pre>
+zipWith f [] _ = []
+zipWith f _ [] = []
+zipWith f (x:xs) (y:ys) = f x y : zipWith f xs ys
+</pre>
+
+<p>
+<table align=center>
+<tr align=center><td>x<sub>1</sub></td><td>:</td><td>x<sub>2</sub></td><td>:</td><td>&hellip;</td><td>:</td><td>x<sub>n</sub></td><td>:</td><td><tt>[]</tt></td></tr>
+<tr align=center><td>y<sub>1</sub></td><td>:</td><td>y<sub>2</sub></td><td>:</td><td>&hellip;</td><td>:</td><td>y<sub>n</sub></td><td>:</td><td><tt>[]</tt></td></tr>
+<tr align=center><td>&#8675;</td><td></td><td>&#8675;</td><td></td><td></td><td></td><td>&#8675;</td><td></td><td>&#8675;</td><td></td></tr>
+<tr align=center><td>f(x<sub>1</sub>)(y<sub>1</sub>)</td><td>:</td><td>f(x<sub>2</sub>)(y<sub>2</sub>)</td><td>:</td><td>&hellip;</td><td>:</td><td>f(x<sub>n</sub>)(y<sub>n</sub>)</td><td>:</td><td><tt>[]</tt></td></tr>
+<tr></tr>
+<tr align=center><td colspan=9 align=center>Figure 4: Illustration of <tt>zipWith</tt> for lists of equal length.
+</td></tr>
+</table>
+<p>
+
+<p>Another useful function for working with pairs is <tt>uncurry</tt>, which turns a function that takes two arguments into a function that operates on a pair. </p>
+<h3>Exercises</h3>
+<ol start="6"><li>
+<ol type="a">
+<li> Look up the definition of <tt>uncurry</tt>. What is returned by the following expression? 
+<pre>
+Main&gt; uncurry (+) (10,8)
+</pre>
+<li> Show how to define <tt>zipWith</tt> using <tt>zip</tt> and a list comprehension. 
+<li> Show how to define <tt>zipWith</tt> using <tt>zip</tt> and the higher-order functions <tt>map</tt> and <tt>uncurry</tt>, instead of the list comprehension. 
+</ol>
+</ol>
+<p>Adding two matrices of equal size is done by pairwise adding the elements that are in the same position, i.e. in the same column and row, to form the new element at that position. For example:</p>
+<p/>
+<table>
+<tr><td>
+<table>
+<tr>
+<td>1</p>
+<td>2</p>
+<td>3 </p>
+</tr>
+<tr>
+<td>4</p>
+<td>5</p>
+<td>6</p>
+</tr>
+</table>
+</td>
+<td>
++
+</td>
+<td><table>
+<tr>
+<td>10</p>
+<td>20</p>
+<td>30 </p>
+</tr>
+</tr>
+<td>40</p>
+<td>50</p>
+<td>60</p>
+</tr>
+</table>
+</td>
+<td>
+<p>=</p>
+</td>
+<td>
+<table>
+<tr>
+<td>11</p>
+<td>22</p>
+<td>33 </p>
+<tr>
+<td>44</p>
+<td>55</p>
+<td>66</p>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<p>We will use <tt>zipWith</tt> to implement matrix addition. </p>
+<h3>Exercises</h3>
+<ol start="7">
+<li> Write a function <tt>plusM</tt> that adds two matrices. Return an error if the input is not suitable. 
+It might be helpful to define a helper function <tt>plusRow</tt> that adds two rows of a matrix. 
+</ol>
+<p>For matrix multiplication we need what is called the <i>dot product</i> or <i>inner product</i> of two vectors: </p>
+
+<center>(a<sub>1</sub>, a<sub>2</sub>, &hellip; , a<sub>n</sub>) · (b<sub>1</sub>, b<sub>2</sub>, &hellip; , b<sub>n</sub>) = a<sub>1</sub>b<sub>1</sub> + a<sub>2</sub>b<sub>2</sub> + &hellip; + a<sub>n</sub>b<sub>n</sub></center>
+
+<p>Matrix multiplication is then defined as follows: two matrices with dimensions <i>(n, m)</i> and <i>(m, p)</i> are multiplied to form a matrix of dimension <i>(n, p)</i> in which the element in row <i>i</i>, column <i>j</i> is the dot product of row <i>i</i> in the first matrix and column <i>j</i> in the second. For example:
+<p/>
+
+<table>
+<tr><td>
+<table>
+<tr>
+<td>1</td>
+<td>10</td>
+</tr>
+<tr>
+<td>100</td>
+<td>10</td>
+</tr>
+</table>
+</td>
+<td>
++
+</td>
+<td><table>
+<tr>
+<td>1</td>
+<td>2</td>
+</tr>
+</tr>
+<td>3</td>
+<td>4</td>
+</tr>
+</table>
+</td>
+<td>
+<p>=</p>
+</td>
+<td>
+<table>
+<tr>
+<td>31</td>
+<td>42</td>
+</tr>
+<tr>
+<td>130</td>
+<td>240</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+
+<p>(For more information see <a href="http://en.wikipedia.org/wiki/Matrix_multiplication">http://en.wikipedia.org/wiki/Matrix_multiplication</a>.)</p>
+<h3>Exercises</h3>
+<ol start="8">
+<li> Define a function <tt>timesM</tt> to perform matrix multiplication. Return an error if the input is not suitable. It might be helpful to define a helper function <tt>dot</tt> for the dot product of two vectors (lists). The function should then take the dot product of the single row with every column of the matrix, and return the values as a list. To make the columns of a matrix readily available you can use the function <tt>transpose</tt> (you should remember this function from Lab. 3). </p>
+</ol>
+</body>
+</html>

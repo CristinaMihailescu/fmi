@@ -1,0 +1,470 @@
+--Varianta 1 
+
+-- 1. a) Sa se verifice daca un nr este palindrom
+-- Puteti folosi doar recursie si functii din categoria A (ex. show)
+
+palindrom :: Int -> Bool
+palindrom = undefined
+
+-- 1. b) Sa se determine nr de nr palindrom dintr-o lista de intregi
+--  nrPal [121, 32, 5] = 2
+--     Puteti folosi doar recursie si functii din categoria A
+
+nrPal :: [Int] -> Int
+nrPal = undefined
+
+
+-- 2. Sa se scrie o functie care primeste un string si verifica daca toate vocalele din sir incep cu litera mare.
+-- Ex: verifica "AnA ArE MErE" = True
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+verifica :: String -> Bool
+verifica = undefined
+
+
+-- 3. Verificati daca un numar este perfect.  Un numar este perfect daca este egal cu suma divizorilor sai (excluzand numarul in sine).
+-- perfect 6 = True  (6 == 1 + 2 + 3)
+--     (  de simboluri)
+-- 
+--     Puteti folosi doar functii din categoriile A, B, C
+--     (fara recursie si descrieri de liste)
+--- 
+perfect :: Int -> Bool
+perfect = undefined
+
+-- 4. a) Dat fiind o lista de numere verificati daca suma diferentelor numerelor consecutive in lista este un numar perfect. Puteti folosi orice (inclusiv functiile de mai sus) in afara de recursie.
+
+
+--     Puteti folosi orice functii, inclusiv cele implementate anterior in afara de recursie
+
+diferentaPerfecta :: [Int] -> Bool
+diferentaPerfecta = undefined
+
+-- 4. b) Sa se determine daca un sir de caractere contine mai multe cifre decat litere.
+
+cifreLitere :: String -> Bool
+cifreLitere = undefined 
+
+
+--Varianta 2
+
+
+-- 1. a)  Sa se verifice daca un nr este palindrom
+-- Puteti folosi doar recursie si functii din categoria A (ex. show)
+
+palindrom :: Int -> Bool
+palindrom = undefined
+
+-- 1. b) Sa se determine nr de nr palindrom dintr-o lista de intregi
+--  nrPal [121, 32, 5] = 2
+--     Puteti folosi doar recursie si functii din categoria A
+
+nrPal :: [Int] -> Int
+nrPal = undefined
+
+
+-- 2. Sa se scrie o functie care primeste un string si verifica daca toate vocalele din sir sunt litera mare.
+-- Ex: verifica "AnA ArE MErE" = True
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+verifica :: String -> Bool
+verifica = undefined
+
+
+-- 3. Verificati daca un numar este perfect.  Un numar este perfect daca este egal cu suma divizorilor sai (excluzand numarul in sine).
+-- perfect 6 = True  (6 == 1 + 2 + 3)
+--     ( 28 de simboluri)
+-- 
+--     Puteti folosi doar functii din categoriile A, B, C
+--     (fara recursie si descrieri de liste)
+--- 
+perfect :: Int -> Bool
+perfect = undefined
+
+-- 4. a) Dat fiind o lista de numere verificati daca produsul diferentelor numerelor consecutive in lista este un numar perfect. Puteti folosi orice (inclusiv functiile de mai sus) in afara de recursie.
+
+
+--     Puteti folosi orice functii, inclusiv cele implementate anterior in afara de recursie
+
+produsulPerfect :: [Int] -> Bool
+produsulPerfect = undefined
+
+-- 4. b) Sa se determine daca un sir de caractere contine mai multe litere decat cifre.
+
+cifreLitere :: String -> Bool
+cifreLitere = undefined 
+
+
+
+--Varianta 3
+
+
+-- 1. (2.5p) Sa se transforme un  nr  din baza 10 in baza 2
+--
+--     Puteti folosi doar recursie si functii din categoria A
+-- convert 7 = 111
+
+convert :: Int -> Int
+convert = undefined
+
+-- 2. a) (1.5p) Sa se verifice daca un nr este prim.
+
+prim :: Int -> Bool
+prim = undefined
+
+-- 2. b) (1p) Sa se scrie o functie care primeste o lista de numere si 
+-- intoarce suma factorialelor numerelor prime.
+--   Ex: factSum [1, 5, 3, 4] = 126
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+
+
+factSum :: [Int] -> Int
+factSum = undefined
+
+
+-- 3. (2.5p)  Sa se scrie o functie, care primeste ca parametru un cuvant si  
+-- o lista de siruri de caractere si verifica daca toate sirurile din lista care au 
+-- ca prefix cuvantul dat, au lungime impara si se termina cu ‘.’
+--     ( 27 de simboluri)
+-- 
+--     Puteti folosi doar functii din categoriile A, B, C
+--     (fara recursie si descrieri de liste)
+
+verifica :: String -> [String] -> Bool
+verifica = undefined
+
+-- 4.  a) (1.5p) Sa se scrie o functie care primeste o lista de lista si
+-- returneaza intersectia lor.
+--   Ex: intersectie [[1,5,3,11],[1,5,2,11],[5,3,2,11]] = [5, 11]
+
+--  Puteti folosi orice functii
+
+intersectie :: (Eq a) => [[a]] -> [a]
+intersectie = undefined
+
+
+-- 4. b)(1p) Sa se scrie o functie care primeste doua liste si returneaza diferenta lor.
+--   Ex: diff [1, 5, 3, 2, 11] [2, 3, 1] = [5, 11]
+
+diff :: (Eq a) => [a] -> [a] -> [a]
+diff = undefined
+
+--Varianta 4
+
+
+
+-- 1. (2.5p)  Sa se scrie o functie care pentru un sir de caractere 
+-- calculeaza suma codificarilor caracterelor din sir folosind urmatoarea codificare:
+-- Caracterul e vocala => 1
+-- Caracterul e consoana => 2
+-- Caracterul e cifra => 3
+-- Orice altceva => -1
+-- codif "This is the example number #1!" == (2 + 2 + 1 + 2 - 1 + 1 + 2 - 1 + 1 + 2 + 1 + 2 + 2 + 2 + 1 - 1 + 2 + 1 + 2 + 2 + 1 + 2 - 1 - 1 + 3 - 1)
+--     Puteti folosi doar recursie si functii din categoria A
+
+codif :: String -> Int
+codif = undefined
+
+
+-- 2. (2.5p) Sa se scrie o functie care primeste o lista de numere intregi 
+-- si verifica daca toate numerele au suma cifrelor mai mare decat 10.
+--   Ex: sumaCifre [339, 122, 1445] = False
+
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+
+
+sumaCifre :: [Int] -> Bool
+sumaCifre = undefined
+
+
+-- 3. (2.5p) Sa se scrie o functie care pentru doua liste, x si y, calculeaza 
+-- produsul sumelor xi^2 + yi^2 cu xi din x si yi din y
+-- prod [1,2,3,4] [5,6,7,8] == 4825600
+--     ( 27 de simboluri)
+-- 
+--     Puteti folosi doar functii din categoriile A, B, C
+--     (fara recursie si descrieri de liste)
+--- 
+prod :: [Int] -> [Int] -> Int
+prod = undefined
+
+-- 4. (1.5p) a) Sa se scrie o functie care primeste un argument de tip a si o
+--  lista de elemente de acelasi tip si returneaza lista fara acel element.
+--  Ex: sterge 3 [1, 3, 5, 2, 3] = [1, 5, 2]
+
+--     Puteti folosi orice functii
+sterge :: (Eq a) => a -> [a] -> [a]
+sterge = undefined
+
+-- 4. (1p) b) Sa se scrie o functie care primeste doua liste si 
+-- returneaza reuniunea lor. Daca exista duplicate in prima lista vor exista si in rezultat
+--   Ex: reuniune [2, 5, 3, 2] [3, 11, 2, 2] = [2, 5, 3, 2, 11]
+
+reuniune :: (Eq a) => [a] -> [a] -> [a]
+reuniune = undefined
+
+--Varianta 5
+
+
+-- 1. a) (1.5p) Sa se determine al n-lea nr fibonacci.
+
+--     Puteti folosi doar recursie si functii din categoria A
+
+fibN :: Int -> Int
+fibN = undefined
+
+-- 1. b) (1p) Sa se calculeze suma primelor n nr fibonacci.
+--     Puteti folosi doar recursie si functii din categoria A
+
+sumFib :: Int -> Int 
+sumFib = undefined
+
+
+-- 2. a) (1.5p) Pentru o lista de numere intregi afiseaza produsul dintre diferenta dintre doua elemente consecutive daca elementele sunt pozitive sau maximul dintre elemente, altfel.
+
+--  prod [7,5,4,-3,2] == 2 * 1 * 4 * 2 == 16
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+
+prod :: [Int] -> Int
+prod = undefined
+
+--2. b) (1p) Pentru o lista de siruri de caractere, sa se afiseze lista cu cuvintele de lungime impara formatate astfel: prima litera devine litera mare si la finalul cuvantului se concateneaza '*'
+
+--  prelucrare ["ana","are","Mere"] == ["Ana*", "Are*", "Mere"]
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+
+prelucrare :: [String] -> String
+prelucrare = undefined
+
+-- 3. (2.5p)  Sa se scrie o functie care primeste 3 liste de intregi, x, y si z, si verifica daca lista z contine toate sumele (xi+yi) pt i = 0..n, xi din x si yi din y
+--     ( 33 de simboluri)
+-- 
+--     Puteti folosi doar functii din categoriile A, B, C
+--     (fara recursie si descrieri de liste)
+
+--verif [1,2,3,4] [3,4,5,6] [1..13] == True
+
+verif :: [Int] -> [Int] -> [Int] -> Bool
+verif = undefined
+
+-- 4. (2.5p) Sa se scrie o functie care primeste o matrice (lista de liste) si pentru fiecare element verifica daca lista curenta contine toate sumele (xi+yi) unde x e lista de pe pozitia anterioara si y e lista de pe pozitia urmatoare. (prima si ultima linie se ignora)
+
+--     Puteti folosi orice functii inclusiv pe cele de mai sus
+-- verif' [[1,2,-3,-4],[1..7],[3,4,5,6], [1,2,3,4]] == [True,False]
+-- verif' [[1,2,-3,-4],[1..7],[3,4,5,6], [2,2,3,1]] == [True,True]
+verif' :: [[Int]] -> [Bool]
+verif' = undefined
+
+
+-- Varianta 6 
+
+
+-- 1.  Sa se calculeze cel mai mare divizor comun al 2 numere
+--
+--     Puteti folosi doar recursie si functii din categoria A
+gcdRec :: Int -> Int -> Int
+gcdRec = undefined
+
+
+-- 2. Pentru un nr intreg sa se afiseze lista de divizori ai numarului.
+--
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+
+divs :: Int ->  [Int]
+divs = undefined
+
+-- 3. Pentru o lista de numere, sa se calculeze cel mai mare divizor comun al elementelor pozitive.
+-- (11 simboluri)
+--     Puteti folosi doar functii din categoriile A, B, C si functiile definite mai sus
+--     (fara recursie si descrieri de liste)
+
+gcdList :: [Int] -> Int
+gcdList = undefined
+
+-- 4.  Sa se implementeze metoda de sortare QuickSort.
+
+-- Quicksort imparte lista de sortat in doua subliste mai usor de sortat. 
+-- Pașii algoritmului sunt:
+--    Se alege un element al listei - pivot (poate fi primul element al listei)
+--    Se reordoneaza lista astfel incat toate elementele mai mici decat pivotul sa fie plasate inaintea pivotului si toate elementele mai mari sa fie dupa pivot. Dupa aceasta partitionare, pivotul se afla in pozitia sa finala.
+--    Se sorteaza sublista de elemente mai mici decat pivotul și sublista de elemente mai mari decat pivotul. 
+
+--     Puteti folosi functii din categoriile A, B, C, recursie sau list comprehension
+
+
+qsort :: [Int] -> [Int]
+qsort = undefined
+
+-- Varianta 7
+
+
+-- 1.  Pentru un sir de nr intregi verifica daca toate  numerele au suma cifrelor mai mare decat 10
+--
+--     Puteti folosi doar recursie si functii din categoria A
+
+
+
+verificaSumaCifrelor :: [Int] -> Bool
+verificaSumaCifrelor  = undefined
+
+
+
+-- 2.  Sa se scrie o functie care pentru o lista de intregi afiseaza toate numerele care sunt egale cu dublul elementului de pe pozitia urmatoare din lista.
+-- duble [1,2,1,3,8,4,2,6] = [2,8,4]
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+duble :: [Int] -> [Int]
+duble  = undefined
+
+-- 3. (2.5p) Sa se scrie o functie care pentru doua liste, x si y, calculeaza 
+-- produsul dintre (xi^2 - yi^2 + 2*x*y) cu xi din x si yi din y
+--
+--     ( 38 de simboluri)
+-- 
+--     Puteti folosi doar functii din categoriile A, B, C - fara a folosi functia product
+--     (fara recursie si descrieri de liste)
+--- 
+prod :: [Int] -> [Int] -> Int
+prod  = undefined
+
+
+
+-- 4.  Sa se scrie o functie care pentru o matrice (lista de liste) prelucreaza fiecare element al matricei (de tip lista) pastrand in fiecare lista doar elementele care sunt egale cu dublul elementului de pe pozitia urmatoare din lista. Apoi pentru fiecare 2 liste consecutive din matrice calculeaza produsul sumelor xi^2 + yi^2 (se ignora ultima lista) si se pun intr-o lista.
+
+-- prel [[1,2,1,3,8,4,2,6],[1,2,1,3,8,4,2,6],[1,2,1,3,8,4,2,6],[1,2,1,3,8,4,2,6]] == [4608, 4608, 4608]
+
+--     Puteti folosi orice functii, inclusiv cele implementate anterior
+
+prel :: [[Int]] -> [Int]
+prel  = undefined
+
+--- Varianta 8 
+
+
+-- 1.  Pentru un sir de nr intregi verifica daca toate  numerele au produsul cifrelor mai mic decat 50
+--
+--     Puteti folosi doar recursie si functii din categoria A
+
+verificaProdCifrelor :: [Int] -> Bool
+verificaProdCifrelor = undefined
+
+
+-- 2.  Pentru o lista de siruri de caractere determina lista formata transformand fiecare element de lungime > 10 astfel:
+--			Literele mari se transforma in litere mici
+--			Literele mici se transforma in codul ascii corespunzator
+--			Cifrele se transforma in ‘*’
+--			Restul caracterelor se ignora
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+prelucreaza :: [String] -> [String]
+prelucreaza = undefined
+
+-- 3. Pentru o lista de siruri de caractere sa se calculeze suma lungimilor elementelor care contin semne de punctuatie (punct '.', semnul intrebarii '?', semnul exclamarii '!', doua puncte ':' ).
+-- (22 simboluri)
+--     Puteti folosi doar functii din categoriile A, B, C
+--     (fara recursie si descrieri de liste)
+
+sumLength :: [String] -> Int 
+sumLength = undefined
+
+
+-- 4. a)  Scrieti o functie care verifica daca un caracter e semn de punctuatie
+-- Semne de punctuatie: 
+--    punct '.', semnul intrebarii '?', semnul exclamarii '!', doua puncte ':' 
+--    virgula ',' ,  paranteza deschisa '(', paranteza inchisa ')' 
+
+punct :: Char -> Bool
+punct = undefined
+
+-- 4. b) Formatati un text astfel incat dupa fiecare semn de punctuatie sa fie un
+--    spatiu, fara a insera unul daca nu este necesar.
+--
+--    Puteti folosi orice (inclusiv functiile definite mai sus)
+
+formateaza :: String -> String
+formateaza = undefined
+
+
+--- Varianta 9 
+
+
+-- 1. Pentru doua siruri de caractere, sa se afiseze cel mai lung prefix comun
+--   Puteti folosi doar recursie si functii din categoria A
+
+prefix :: String -> String -> String 
+prefix = undefined
+
+
+-- 2.   Sa se scrie o functie care are ca intrare un sir de caractere s, un caracter c si un nr n si inlocuieste caracterele din s de pe pozitiile divizibile cu n, cu caracterul c.
+--
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+
+codif ::Char -> Int ->  String -> String
+codif = undefined
+
+-- 3.  Sa se scrie o functie care pentru un sir de cuvinte afiseaza cel mai mare prefix comun al cuvintelor care au lungime > 10, in care s-au inlocuit caracterele de pe pozitii divizibile cu 3 cu simbolul '*'.
+--     ( 28 de simboluri)
+-- 
+--     Puteti folosi doar functii din categoriile A, B, C si cele implementate mai sus
+--     (fara recursie si descrieri de liste)
+
+cgp :: [String] -> String
+cgp = undefined
+
+
+-- 4. a) Scrieti o functie care verifica daca un caracter e zgomot.
+-- Semne de punctuatie: 
+--    punct '.', semnul intrebarii '?', semnul exclamarii '!', doua puncte ':' ,  virgula ',' ,  paranteza deschisa '(', paranteza inchisa ')' 
+-- Zgomote sunt caracterele care nu sunt litere, cifre sau semne de punctuatie
+zgomot :: Char -> Bool
+zgomot = undefined
+
+-- 4. b) Sa se elimine zgomotele dintr-un sir de caractere si formatati un text astfel incat dupa fiecare semn de punctuatie sa fie un    spatiu, fara a insera unul daca nu este necesar.
+--
+--    Puteti folosi orice (inclusiv functiile definite mai sus)
+
+formateaza :: String -> String
+formateaza = undefined
+
+
+
+-- 1. Pentru un sir de caractere, sa se afiseze lista de sufixe
+--   Puteti folosi doar recursie si functii din categoria A
+
+sufixe :: String -> [String]
+sufixe = undefined
+
+
+-- 2. Sa se scrie o functie care pentru o lista de nr intregi l si 2 numere x si y afiseaza lista formata din pozitiile elementelor din intervalul [x,y], divizibile cu 3
+
+--     Puteti folosi doar descrieri de liste (list comprehension) si 
+--     functii din categoriile A si B
+
+listaPoz :: [Int] -> Int -> Int -> [Int]
+listaPoz = undefined
+
+-- 3.   Sa se scrie o functie care primeste 3 liste de intregi, x, y si z, si verifica daca lista z contine toate sumele (xi+yi) pt i = 0..n, xi din x si yi din y
+--     ( 33 de simboluri)
+-- 
+--  (steluta - 17 simboluri)
+--     Puteti folosi doar functii din categoriile A, B, C
+--     (fara recursie si descrieri de liste)
+
+--verif [1,2,3,4] [3,4,5,6] [1..13] == True
+
+verif :: [Int] -> [Int] -> [Int] -> Bool
+verif = undefined
+
+-- 4.  Sa se scrie o functie care pentru o lista de numere verificati daca suma numerelor care sunt diferite fata de elementul de pe pozitia urmatoare din lista este un numar perfect.
+--
+--     Puteti folosi orice (inclusiv functiile de mai sus) in afara de 
+--     descrieri de liste.
+
+sumaPerfecta :: [Int] -> Bool
+sumaPerfecta = undefined

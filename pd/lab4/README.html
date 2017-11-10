@@ -1,0 +1,316 @@
+<html>
+<head>
+<title>Programare Declarativă – Laboratorul 4</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="https://www.dropbox.com/s/48bx1xvl42hr5gp/progdecl.css?dl=1">
+  <script type="text/javascript" src="https://www.dropbox.com/s/hk9x49z7vmznfp9/progdecl.js?dl=1"></script>
+</head>
+<body>
+<h1><strong>Declarative Programming – Lab 4</strong></h1>
+
+<h1 class="Heading_20_1"><a id="a__The_Caesar_Cipher"><span/></a>The Caesar Cipher</h1>
+When we talk about cryptography these days, we usually refer to the encryption of digital messages,
+but encryption actually predates the computer by quite a long period. One of the best examples
+of early cryptography is the Caesar cipher, named after Julius Caesar because he is believed to
+have used it, even if he didn’t actually invent it. The idea is simple: take the message you want to
+encrypt and shift all letters by a certain amount between 0 and 26 (called the <i>offset</i>). For example:
+encrypting the sentence “THIS IS A BIG SECRET” with shifts of 5, would result in “YMNX NX
+F GNL XJHWJY”.
+In this exercise you will be implementing a variant of the Caesar cipher. You can use all the library
+functions in the tables <a href="prelude-fn1.png" target="_blank">prelude-fn1.png</a> and <a href="prelude-fn2.png" target="_blank">prelude-fn2.png</a>, as well as those in the <a href="#appendix">Appendix</a>.
+<h2 class="Heading_20_2"><a id="a__Encrypting_text"><span/></a>Encrypting text</h2>
+A character-by-character cipher such as a Caesar cipher can be represented by a key, a list of pairs.
+Each pair in the list indicates how one letter should be encoded. For example, a cipher for the letters
+A–E could be given by the list
+<pre>[(’A’, ’C’), (’B’, ’D’), (’C’, ’E’), (’D’, ’A’), (’E’, ’B’)] .</pre>
+Although it’s possible to choose any letter as the ciphertext for any other letter, this tutorial deals
+mainly with the type of cipher where we encipher each letter by shifting it the same number of spots
+around a circle, for the whole English alphabet.
+<h3 class="Heading_20_3"><a id="a__Exercises"><span/></a>Exercises</h3>
+<ol>
+<li> We can rotate a list by taking some items off the front of it and putting them on the end.
+For example:
+<pre>
+Main&gt; rotate 3 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+"DEFGHIJKLMNOPQRSTUVWXYZABC"
+</pre>
+Open <tt>lab4.hs</tt> and complete the function <tt>rotate :: Int -&gt; [Char] -&gt; [Char].</tt> When
+given a number <i>n</i> greater than 0 and smaller than the length of the input list, your function
+should rotate the list by <i>n</i> items. Your function should return an error if the number <i>n</i> is
+negative or too large.
+<li> Look at the test function <tt>prop_rotate</tt>.
+<ol type="a"><li> What precisely does it test?
+<li> Your function <tt>rotate</tt> can produce an error if the Int provided is negative or too large.
+How does <tt>prop_rotate</tt> avoid triggering this error?
+</ol>
+<li> Using the function <tt>rotate</tt> from the previous question, write a function
+<pre>
+makeKey :: Int -&gt; [(Char, Char)]
+</pre>
+that returns the cipher key with the given offset. See above for the description of how the
+cipher key is represented as a list of pairs. Example:
+<pre>
+Main&gt; makeKey 5
+[(’A’,’F’),(’B’,’G’),(’C’,’H’),(’D’,’I’),(’E’,’J’),(’F’,’K’),
+(’G’,’L’),(’H’,’M’),(’I’,’N’),(’J’,’O’),(’K’,’P’),(’L’,’Q’),
+(’M’,’R’),(’N’,’S’),(’O’,’T’),(’P’,’U’),(’Q’,’V’),(’R’,’W’),
+(’S’,’X’),(’T’,’Y’),(’U’,’Z’),(’V’,’A’),(’W’,’B’),(’X’,’C’),
+(’Y’,’D’),(’Z’,’E’)]
+</pre>
+The cipher key should show how to encrypt all of the uppercase English letters, and there
+should be no duplicates: each letter should appear just once amongst the pairs’ first compo-
+nents (and just once amongst the second components).
+<li> Write a function
+<pre>
+lookUp :: Char -&gt; [(Char, Char)] -&gt; Char
+</pre>
+that finds a pair by its first component and returns that pair’s second component. When you
+try to look up a character that does not occur in the cipher key, your function should leave
+it unchanged. Examples:
+<pre>
+Main&gt; lookUp ’B’ [(’A’, ’F’), (’B’, ’G’), (’C’, ’H’)]
+’G’
+Main&gt; lookUp ’9’ [(’A’, ’X’), (’B’, ’Y’), (’C’, ’Z’)]
+’9’
+</pre>
+<li> Write a function
+<pre>
+encipher :: Int -&gt; Char -&gt; Char
+</pre>
+that encrypts the given single character using the key with the given offset. For example:
+<pre>
+Main&gt; encipher 5 ’C’
+’H’
+Main&gt; encipher 7 ’Q’
+’X’
+</pre>
+<li> Text encrypted by a cipher is conventionally written in uppercase and without punctuation.
+Write a function
+<pre>
+normalize :: String -&gt; String
+</pre>
+that converts a string to uppercase, removing all characters other than letters and digits
+(remove spaces too). Example:
+<pre>
+Main&gt; normalize "July 4th!"
+"JULY4TH"
+</pre>
+<li> Write a function
+<pre>
+encipherStr :: Int -&gt; String -&gt; String
+</pre>
+that normalizes a string and encrypts it, using your functions <tt>normalize</tt> and <tt>encipher</tt>.
+Example:
+<pre>
+Main&gt; encipherStr 5 "July 4th!"
+"OZQD4YM"
+</pre>
+</ol>
+<h2 class="Heading_20_2"><a id="a__Decoding_a_message"><span/></a>Decoding a message</h2>
+The Caesar cipher is one of the easiest forms of encryption to break. Unlike most encryption schemes commonly in use today, it is susceptible to a simple brute-force attack of trying all the possible keys in succession. The Caesar cipher is a symmetric key cipher: the key has enough information within it to use it for encryption as well as decryption.
+<h3 class="Heading_20_3"><a id="a__Exercises"><span/></a>Exercises</h3>
+<ol start="8">
+<li> Decrypting an encoded message is easiest if we transform the key first. Write a function
+<pre>
+reverseKey :: [(Char, Char)] -&gt; [(Char, Char)]
+</pre>
+to reverse a key. This function should swap each pair in the given list. For example:
+<pre>
+Main&gt; reverseKey [(’A’, ’G’), (’B’, ’H’) , (’C’, ’I’)]
+[(’G’, ’A’), (’H’, ’B’) , (’I’, ’C’)]
+</pre>
+<li> Write the functions
+<pre>
+decipher :: Int -&gt; Char -&gt; Char
+decipherStr :: Int -&gt; String -&gt; String
+</pre>
+that decipher a character and a string, respectively, by using the key with the given offset.
+Your function should leave digits and spaces unchanged, but remove lowercase letters and
+other characters. For example:
+<pre>
+Main&gt; decipherStr 5 "OZQD4YM"
+"JULY4TH"
+</pre>
+</ol>
+<h2 class="Heading_20_2"><a id="a__More_QuickCheck_tricks"><span/></a>More QuickCheck tricks</h2>
+To test the rotate function we had to make sure that the test function did not generate any errors.
+The input, randomly generated by QuickCheck, had to obey certain criteria—you found out which
+in exercise (2).
+<p>In the test <tt>prop_rotate</tt> we made sure the input was of the right kind by <i>changing</i> it. But this is
+not always the best solution, and sometimes it is not even possible. A more general way to ensure
+the input of a function has a certain property, is to use an <i>implication</i> ‘<tt>==&gt;</tt>’.
+<p>The QuickCheck implication is a lot like a logical implication. It takes two Boolean expressions as
+arguments, for example <tt>expr1</tt> and <tt>expr2</tt> (its resulting type is called Property):
+<pre>
+expr1, expr2 :: Bool
+
+prop_test :: Property
+prop_test = expr1 ==&gt; expr2
+</pre>
+In general, the property described above holds if <tt>expr1</tt> is <tt>False</tt> or <tt>expr2</tt> is <tt>True</tt>. However, to make sure that all tests are relevant, QuickCheck ignores the test if <tt>expr1</tt> is <tt>False</tt>, and only counts the tests in which both <tt>expr1</tt> and <tt>expr2</tt> are <tt>True</tt>:
+<pre>
+*Main&gt; quickCheck (True ==&gt; True)
+OK, passed 100 tests.
+*Main&gt; quickCheck (False ==&gt; True)
+Arguments exhausted after 0 tests.
+</pre>
+As you can see, QuickCheck does not continue to generate values forever; if after a certain amount
+of tests <tt>expr2</tt> still isn’t <tt>True</tt>, it will stop with the message ‘arguments exhausted ’.
+<h3 class="Heading_20_3"><a id="a__Exercises"><span/></a>Exercises</h3>
+<ol start="10">
+<li> To see if your encryption works, write a QuickCheck test <tt>prop_cipher</tt> to verify that decoding
+an encoded string with the same key returns the original message — but then in uppercase
+and without spacing or punctuation (“normalized”). Use ‘<tt>==&gt;</tt>’ to make sure your test doesn’t
+generate any errors.
+</ol>
+<h2 class="Heading_20_2"><a id="a__Breaking_the_encryption"><span/></a>Breaking the encryption</h2>
+One kind of brute-force attack on an encrypted string is to decrypt it using each possible key and then search for common English letter sequences in the resulting text. If such sequences are discovered then the key is a candidate for the actual key used to encrypt the plaintext. For example, the words “the” and “and” occur very frequently in English text: in the <i>Adventures of Sherlock Holmes</i>, “the” and “and” account for about one in every 12 words, and there is no sequence of more than 150 words without either “the” or “and”.
+<p>
+The conclusion to draw is that if we try a key on a sufficiently long sequence of text and the result
+does not contain any occurrences of “the” or “and” then the key can be discarded as a candidate.
+<h3 class="Heading_20_3"><a id="a__Exercises"><span/></a>Exercises</h3>
+<ol start="11">
+<li> Write a function <tt>contains :: String -&gt; String -&gt; Bool</tt> that returns <tt>True</tt> if the first
+string contains the second as a substring (this exercise is the same as the last of the optional
+exercises of the previous tutorial).
+<pre>
+Main&gt; contains "Example" "amp"
+True
+Main&gt; contains "Example" "xml"
+False
+</pre>
+<li> Write a function
+<pre>
+candidates :: String -&gt; [(Int, String)]
+</pre>
+that decrypts the input string with each of the 26 possible keys and, when the decrypted text
+contains “THE” or “AND”, includes the decryption key and the text in the output list.
+<pre>
+Main&gt; candidates "DGGADBCOOCZYMJHZYVMTOJOCZHVS"
+[(5,"YBBVYWXJJXUTHECUTQHOJEJXUCQN"),
+(14,"PSSMPNOAAOLKYVTLKHYFAVAOLTHE"),
+(21,"ILLFIGHTTHEDROMEDARYTOTHEMAX")]
+</pre>
+</ol>
+
+<h2 class="Heading_20_2"><a id="a__Optional_Material"><span/></a>Optional Material</h2>
+As you have seen in the previous section, the Caesar Cipher is not a very safe encryption method.
+In this section, security will be upgraded a little.
+<h3 class="Heading_20_3"><a id="a__Exercises"><span/></a>Exercises</h3>
+<ol start="13">
+<li>Write a function <tt>splitEachFive :: String -&gt; [String] </tt>that splits a string into substrings
+of length five. Fill out the last part with copies of the character ’X’ to make it as long as the
+others.
+<pre>
+Main&gt; splitEachFive "Secret Message"
+["Secre", "t Mes", "sageX"]</pre>
+<li>The library function <tt>transpose</tt> switches the rows and columns of a list of lists:
+<pre>
+Main&gt; transpose ["123","abc","ABC"]
+["1aA","2bB", "3cC"]
+Main&gt; transpose ["1","22","333"]
+["123","23","3"]</pre>
+If the rows in a list of lists are of the same length, transposing it twice returns the original
+one. Use your <tt>splitEachFive</tt> function to write a <span class="T2">Q</tt>uickCheck property to test this. Also,
+show with an example that this is not always the case when the rows are of different lengths.
+<li>Write a function <tt>encrypt :: Int -&gt; String -&gt; String</tt> that encrypts a string by first applying the Caesar Cipher, then splitting it into pieces of length five, transposing, and putting
+the pieces together as a single string.
+<li> Write a function to decrypt messages encrypted in the way above.
+<p><b>Hint:</b> The last action of the previous function is to put the transposed list of strings back
+together. You will need a helper function to undo this (it is not <tt>splitEachFive</tt>).
+</ol>
+<h2 class="Heading_20_2"><a id="a__Challenge__Optional_"><span/></a>Challenge (Optional)</h2>
+While the strengthened encryption thwarts a cracker searching for candidate substrings in the cipher-
+text, it is of little help against a cracker looking at the cipher-text letter-by-letter. If the cracker
+can determine the relationship between a letter and its enciphered counterpart, she can compute the
+offset used in enciphering. Now it turns out that in English prose, certain letters are more common
+than others, so if we compare the relative frequencies of enciphered letters with those of prose, we
+can often determine the Caesar offset. For instance,
+<pre>
+Main&gt; encypt 12 "Secret Message"
+"EFMQYSOQQDEXQEX"</pre>
+The most frequent letter in the above cipher-text is ‘Q’. This letter lies 12 places to the right in the
+alphabet from the letter ‘E’, and the letter ‘E’ is the most common letter in English prose.
+<h3 class="Heading_20_3"><a id="a__Exercises"><span/></a>Exercises</h3>
+<ol start="17">
+<li> To perform decipherings based on this method,
+first write a function
+<tt>countFreqs :: String -&gt; [(Char, Int)]</tt> to compute the frequency of each character in
+the input string:
+<pre>
+Main&gt; countFreqs "Secret Message"
+[(’S’,1),(’e’,4),(’c’,1),(’r’,1),(’t’,1)
+,(’ ’,1),(’M’,1),(’s’,2),(’a’,1),(’g’,1)]</pre>
+<li> Next, write a function <tt>freqDecipher :: String -&gt; [String]</tt> which tries to decrypt a
+string encrypted using encrypt. It should use <tt>countFreqs</tt> to rank the candidates which
+will decipher to ‘E’, from most frequent to least, and then use <tt>decrypt</tt> to produce a ranked
+list of potential dicipherings.
+<pre>
+Main&gt; freqDecipher (encrypt 20 "To be or not to be")
+["JERUEHDEJJERUTT","EZMPZCYZEEZMPOO","WREHRUQRWWREHGG"
+,"TOBEORNOTTOBEDD",...]
+ </pre>
+</ol>
+
+<h1><a name="appendix">Appendix: Utility function reference</a></h1>
+Note: for most of these functions you will need to import <tt>Data.Char</tt> or <tt>Data.List</tt>.
+<pre>
+ord :: Char -&gt; Int
+</pre>
+Return the numerical code corresponding to a character
+Examples: <pre>ord ’A’ == 65
+ord ’1’ == 49
+
+chr :: Int -&gt; Char
+</pre>
+Return the character corresponding to a numerical code
+Examples: <pre>chr 65 == ’A’
+chr 49 == ’1’
+
+mod :: Int -&gt; Int -&gt; Int
+</pre>
+Return the remainder after the first argument is divided by the second
+Examples: <pre>mod 10 3 == 1
+mod 25 5 == 0
+
+isAlpha :: Char -&gt; Bool
+</pre>
+Return <tt>True</tt> if the argument is an alphabetic character
+Examples: <pre>isAlpha ’3’ == False
+isAlpha ’x’ == True
+
+isDigit :: Char -&gt; Bool
+</pre>
+Return <tt>True</tt> if the argument is a numeric character
+Examples: <pre>isDigit ’3’ == True
+isDigit ’x’ == False
+
+isUpper :: Char -&gt; Bool
+</pre>
+Return <tt>True</tt> if the argument is an uppercase letter
+Examples: <pre>isUpper ’x’ == False
+isUpper ’X’ == True
+
+isLower :: Char -&gt; Bool
+</pre>
+Return <tt>True</tt> if the argument is a lowercase letter
+Examples: <pre>isLower ’3’ == False
+isLower ’x’ == True
+
+toUpper :: Char -&gt; Char
+</pre>
+If the argument is an alphabetic character, convert it to upper case
+Examples: <pre>toUpper ’x’ == ’X’
+toUpper ’3’ == ’3’
+
+isPrefixOf :: String -&gt; String -&gt; Bool
+</pre>
+Return <tt>True</tt> if the first list argument is a prefix of the second
+Examples: <pre>isPrefix "has" "haskell" == True
+isPrefix "has" "handle" == False
+
+error :: String -&gt; a
+</pre>
+Signal an error
+Examples: <pre>error "Function only defined on positive numbers!"</pre>
+</body></html>
