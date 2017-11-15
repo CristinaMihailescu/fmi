@@ -1,0 +1,46 @@
+set serveroutput on
+/*
+--sterge tot de la declare pt for cu var de scriere a cursorului in interiorul sau
+declare
+cursor ang_sal is
+select last_name, salary*12*(1 + nvl(commission_pct, 0)) sal_anual
+from employees
+where department_id = 50;
+*/
+--linie ang_sal%rowtype; --merge cursor%rowtype || sterge pt for
+
+begin
+--sterge pt for
+/*
+if not ang_sal%isopen then
+  open ang_sal;
+end if;
+
+fetch ang_sal into linie; --sterge pt for si loop
+
+while ang_sal%found loop
+  dbms_output.put_line(linie.last_name || ' castiga ' || linie.sal_anual);
+  fetch ang_sal into linie;
+end loop;
+
+loop
+  fetch ang_sal into linie;
+  exit when ang_sal%notfound;
+  dbms_output.put_line(linie.last_name || ' castiga ' || linie.sal_anual);
+end loop;
+
+
+for linie in ang_sal loop
+  dbms_output.put_line(linie.last_name || ' castiga ' || linie.sal_anual);
+end loop;
+*/
+
+for linie in (select last_name, salary*12*(1 + nvl(commission_pct, 0)) sal_anual
+from employees
+where department_id = 50) loop
+  dbms_output.put_line(linie.last_name || ' castiga ' || linie.sal_anual);
+end loop; 
+--close ang_sal; sterge pt for .. in (select)
+end;
+
+--for deschide singur cursorul !!!!!!
