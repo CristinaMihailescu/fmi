@@ -1,0 +1,27 @@
+create table dep_emp_vsl11
+(cod_dep number, cod_ang number primary key);
+
+declare
+type deps is table of departments.department_id%type;
+d deps := deps();
+
+begin
+
+select distinct department_id bulk collect into d --dc scriu select into e pt o val; select bulk collect into e pt mai multe linii
+from employees
+where department_id is not null
+order by department_id;
+
+forall i in 1..d.count
+insert into dep_emp_vsl11
+select department_id, employee_id
+from employees
+where department_id = d(i);
+
+for i in 1..d.count loop
+dbms_output.put_line('in dep ' || d(i) || ' avem ' || sql%bulk_rowcount(i) || ' ang');
+end loop;
+
+end;
+
+rollback;
