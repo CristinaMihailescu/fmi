@@ -1,0 +1,28 @@
+set serveroutput on
+declare
+optiune number := &opt;
+--c_dinamic sys_refcursor; --cursor dinamic predefinit
+type c_dinamic_custom is ref cursor;
+c_dinamic c_dinamic_custom;
+linie employees%rowtype;
+
+begin
+
+if optiune = 1 then
+  open c_dinamic for select * from employees;
+elsif optiune = 2 then
+  open c_dinamic for select * from employees
+  where salary between 10000 and 20000;
+elsif optiune = 3 then
+  open c_dinamic for select * from employees
+  where to_char(hire_date, 'yyyy') = 1990;
+end if;
+
+loop
+  fetch c_dinamic into linie;
+  exit when c_dinamic%notfound;
+  dbms_output.put_line(linie.employee_id || ' ' || linie.salary || ' ' || linie.hire_date);
+end loop;
+
+close c_dinamic;
+end;
