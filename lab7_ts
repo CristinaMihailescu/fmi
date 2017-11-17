@@ -34,3 +34,11 @@ hist TABLE Q$coadaReceptie,5,5,10
 GENERATE 1
 TABULATE hist
 TERMINATE
+
+
+; histograma pt client si bancomat
+; M1 lungime interval timp de cand a fost creata o tranzactie pana la momentul la care se calculeaza aceasta variabila
+hist TABLE M1,10,10,15
+GENERATE
+TABULATE hist
+TERMINATE
