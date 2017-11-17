@@ -1,0 +1,36 @@
+timpPetrecut FUNCTION RN1,D4
+0.1,10/0.4,15/0.8,20/1,30
+
+GENERATE (EXPONENTIAL(1,0,10))
+QUEUE coadaReceptie
+SEIZE recept
+DEPART coadaReceptie
+ADVANCE 10
+RELEASE recept
+SEIZE cabinet1
+TERMINATE 10
+
+GENERATE 10,20,1
+QUEUE coadaReceptie
+SEIZE recept
+DEPART coadaReceptie
+ADVANCE 10
+RELEASE recept
+SEIZE cabinet2
+ADVANCE F$timpPetrecut
+RELEASE cabinet2
+TERMINATE
+
+GENERATE 1
+TERMINATE
+
+; -----------reprezentarea grafica-----------
+; histograma
+; ox val aleatoare = lungimea cozii de asteptare la receptie
+; oy inaltimi
+
+; din minut in minut. Q$ceva e lungimea lui ceva
+hist TABLE Q$coadaReceptie,5,5,10
+GENERATE 1
+TABULATE hist
+TERMINATE
