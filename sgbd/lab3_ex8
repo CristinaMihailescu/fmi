@@ -1,0 +1,16 @@
+declare
+
+cursor pb8 is
+select employee_id
+from employees
+where hire_date < to_date('01-01-1995', 'dd-mm-yyyy')
+for update of salary nowait; --wait 5 = asteapta 5 sec
+--for update verifica daca resursa pe care o accesez este disponibila sau nu
+
+begin
+for a in pb8 loop
+  update employees
+  set salary = salary*2
+  where employee_id = a.employee_id;
+end loop;
+end;
