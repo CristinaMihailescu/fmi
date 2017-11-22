@@ -1,0 +1,22 @@
+create or replace function get_medie(d in number) --same as d in number; incorect daca scrii number(3)
+return number is
+
+s number;
+begin
+select avg(salary) into s
+from employees
+where department_id = d;
+
+return s;
+end;
+
+
+select get_medie(10)
+from dual;
+
+--tabel blocat de operatia update => nu-l poti accesa in functie
+update employees
+set salary = get_medie(department_id)
+where department_id = 50;
+
+rollback;
