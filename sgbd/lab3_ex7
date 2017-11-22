@@ -1,0 +1,29 @@
+--ex 7/lab3
+create table mesaje_cm (info varchar2(200));
+
+declare
+
+cursor c_dep is
+select department_id from departments;
+
+cursor c_job is
+select job_id from jobs;
+
+cursor c_dep_job (d NUMBER, j jobs.job_id%type) is
+select employee_id
+from employees
+where department_id = d and job_id = j;
+
+begin
+
+for d in c_dep loop --putea fi select in loc de c_dep
+  for j in c_job loop -- same
+    for a in c_dep_job (d.department_id, j.job_id) loop
+      insert into mesaje_cm values (d.department_id || '*' || j.job_id || '*' || a.employee_id);
+    end loop;
+  end loop;
+end loop;
+
+end;
+
+rollback;
