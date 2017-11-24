@@ -8,6 +8,8 @@ DEPART coadaReceptie
 ADVANCE 10
 RELEASE recept
 SEIZE cabinet1
+ADVANCE F$timpPetrecut
+RELEASE cabinet1
 TERMINATE 10
 
 GENERATE 10,20,1
