@@ -1,0 +1,121 @@
+Exercitiul 1: Start 1
+
+timpSectie FUNCTION RN1,D4
+0.1,10/0.4,15/0.8,20/1,30
+
+GENERATE (EXPONENTIAL(1,0,10))
+SEIZE receptie
+ADVANCE 10
+RELEASE receptie
+SEIZE sectie1
+ADVANCE FN$timpSectie
+RELEASE sectie1
+TERMINATE
+
+GENERATE 10,2
+SEIZE receptie
+ADVANCE 10
+RELEASE receptie
+SEIZE sectie2
+ADVANCE FN$timpSectie
+RELEASE sectie2
+TERMINATE
+
+GENERATE (60#24#2)
+TERMINATE 1
+
+------------------------------------------
+Exercitiul 2: Start 100
+
+timpSectie FUNCTION RN1,D4
+0.1,10/0.4,15/0.8,20/1,30
+
+GENERATE (EXPONENTIAL(1,0,10))
+SEIZE receptie
+ADVANCE 10
+RELEASE receptie
+SEIZE sectie1
+ADVANCE FN$timpSectie
+RELEASE sectie1
+TERMINATE 1
+
+GENERATE 10,2
+SEIZE receptie
+ADVANCE 10
+RELEASE receptie
+SEIZE sectie2
+ADVANCE FN$timpSectie
+RELEASE sectie2
+TERMINATE
+
+------------------------------------------
+Exercitiul 3: Start 100
+
+timpSectie FUNCTION RN1,D4
+0.1,10/0.4,15/0.8,20/1,30
+
+hist TABLE Q$coadaReceptie,5,5,10
+
+GENERATE (EXPONENTIAL(1,0,10))
+SEIZE receptie
+ADVANCE 10
+RELEASE receptie
+SEIZE sectie1
+ADVANCE FN$timpSectie
+RELEASE sectie1
+TERMINATE 1
+
+GENERATE 10,2
+SEIZE receptie
+ADVANCE 10
+RELEASE receptie
+SEIZE sectie2
+ADVANCE FN$timpSectie
+RELEASE sectie2
+TERMINATE
+
+GENERATE 1
+TABULATE hist
+TERMINATE
+
+------------------------------------------
+Exercitiul 4: Start 100
+
+timpSectie FUNCTION RN1,D4
+0.1,10/0.4,15/0.8,20/1,30
+
+intre2si7 BVARIABLE (C1 > 120 'AND' C1 < 420)
+
+GENERATE (EXPONENTIAL(1,0,10))
+TEST E BV$intre2si7,0,calc1plus
+calc1plusback SEIZE receptie
+ADVANCE 10
+RELEASE receptie
+SEIZE sectie1
+ADVANCE FN$timpSectie
+RELEASE sectie1
+TEST E BV$intre2si7,0,calc1minus
+calc1minusback TERMINATE 1
+
+GENERATE 10,2
+TEST E BV$intre2si7,0,calc2plus
+calc2plusback SEIZE receptie
+ADVANCE 10
+RELEASE receptie
+SEIZE sectie2
+ADVANCE FN$timpSectie
+RELEASE sectie2
+TEST E BV$intre2si7,0,calc2minus
+calc2minusback TERMINATE
+
+calc1plus SAVEVALUE pacienti+,1
+TRANSFER ,calc1plusback
+
+calc1minus SAVEVALUE pacienti-,1
+TRANSFER ,calc1minusback
+
+calc2plus SAVEVALUE pacienti+,1
+TRANSFER ,calc2plusback
+
+calc2minus SAVEVALUE pacienti-,1
+TRANSFER ,calc2minusback
