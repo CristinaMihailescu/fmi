@@ -1,0 +1,126 @@
+; 1. Evolutia sistemului pentru 100 de persoane
+
+angajat_transfer STORAGE 2
+
+durataTransfer FUNCTION RN1,D4
+0.2,5/0.4,7/0.9,10/1,15
+
+GENERATE (Exponential(1,0,7))
+TRANSFER 0.2,casierie
+QUEUE coadaTransfer
+ENTER angajat_transfer
+DEPART coadaTransfer
+ADVANCE FN$durataTransfer
+LEAVE angajat_transfer
+TERMINATE
+
+
+casierie QUEUE coadaCasierie
+SEIZE op_casa
+DEPART coadaCasierie
+ADVANCE 15
+RELEASE op_casa
+TERMINATE 1 ; numaram doar clientii de la casierie
+
+; START 100
+
+
+; ------------
+
+; 2. Evolutia sistemului pentru o zi de lucru
+
+angajat_transfer STORAGE 2
+
+durataTransfer FUNCTION RN1,D4
+0.2,5/0.4,7/0.9,10/1,15
+
+GENERATE (Exponential(1,0,7))
+TRANSFER 0.2,casierie
+QUEUE coadaTransfer
+ENTER angajat_transfer
+DEPART coadaTransfer
+ADVANCE FN$durataTransfer
+LEAVE angajat_transfer
+TERMINATE
+
+
+casierie QUEUE coadaCasierie
+SEIZE op_casa
+DEPART coadaCasierie
+ADVANCE 15
+RELEASE op_casa
+TERMINATE
+
+
+GENERATE (24#60)
+TERMINATE 1
+
+; START 1
+
+
+; ------------
+; 3. Reprezentati grafic distributia timpului petrecut de un client care realizeaza transfer
+
+angajat_transfer STORAGE 2
+
+durataTransfer FUNCTION RN1,D4
+0.2,5/0.4,7/0.9,10/1,15
+
+histTransfer TABLE M1,2,2,10
+
+GENERATE (Exponential(1,0,7))
+TRANSFER 0.2,casierie
+QUEUE coadaTransfer
+ENTER angajat_transfer
+DEPART coadaTransfer
+ADVANCE FN$durataTransfer
+LEAVE angajat_transfer
+TABULATE histTransfer
+TERMINATE 1
+
+
+casierie QUEUE coadaCasierie
+SEIZE op_casa
+DEPART coadaCasierie
+ADVANCE 15
+RELEASE op_casa
+TERMINATE
+
+
+; START 100 ; de exemplu, pentru 100 de clienti care fac transfer
+
+
+; ------------
+
+; 4. Definiti o variabila pentru numarul persoanelor care au realizat transfer; valoarea la sfarsitul simularii
+
+; CU SAVEVALUE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+angajat_transfer STORAGE 2
+
+durataTransfer FUNCTION RN1,D4
+0.2,5/0.4,7/0.9,10/1,15
+
+numarClienti VARIABLE 1
+
+GENERATE (Exponential(1,0,7))
+TRANSFER 0.2,casierie
+QUEUE coadaTransfer
+ENTER angajat_transfer
+DEPART coadaTransfer
+ADVANCE FN$durataTransfer
+LEAVE angajat_transfer
+SAVEVALUE V$numarClienti+,1
+TERMINATE 1
+
+
+casierie QUEUE coadaCasierie
+SEIZE op_casa
+DEPART coadaCasierie
+ADVANCE 15
+RELEASE op_casa
+TERMINATE
+
+
+; START 100 ; de exemplu, pentru 100 de clienti care fac transfer
+; numarClienti are valoarea 100
