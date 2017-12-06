@@ -1,0 +1,61 @@
+-------TIPURI-------
+create or replace 
+type d_pacient is object 
+(cod number, nume varchar2(30), zile number);
+
+create or replace 
+type t_pacient
+is table of d_pacient;
+
+-------PROCEDURA-------
+
+create or replace 
+PROCEDURE t2_p1(m number, 
+pacienti out t_pacienti) is
+cursor pacs(medic number) is
+select distinct id_pacient , nume || ' ' ||prenume nume
+from pacienti join trateaza using (id_pacient)
+where id_salariat=medic
+order by id_pacient;
+dmax date;
+dmin date;
+zile number;
+flag number;
+begin
+select count(*) into flag
+from personal
+where id_salariat=m;
+if flag=0 then
+    raise_application_error(-20001, 'salariatul nu exista');
+end if;
+pacienti:=t_pacienti();
+for p in pacs (m) loop
+    pacienti.extend;
+    select min(data_internare), max(nvl(data_externare,round(sysdate))) into dmin, dmax
+    from trateaza
+    where id_pacient=p.id_pacient;
+    zile:=0;
+        for z in 0..dmax-dmin loop
+            select count(*) into flag
+            from trateaza
+            where z + dmin between data_internare and nvl(data_externare,round(sysdate))
+            and p.id_pacient=id_pacient;
+            if flag>0 then zile:=zile+1;
+            end if;
+        end loop;
+    pacienti(pacienti.count):=d_pacient(p.id_pacient, p.nume, zile);
+end loop;
+end t2_p1;
+
+-------APELARE-------
+
+set serveroutput on
+declare
+lista t_pacienti
+begin
+t2_p1(22, lista);
+for i in 1..lista.count loop
+  dbms_output.put_line(lista(i).cod || ' ' || lista(i).nume || ' ' || lista(i).zile);
+end loop;
+
+-------rezolvare vsl-------
