@@ -1,0 +1,31 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Movies</title>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <div style="height: 120px; width: auto; background-color: #bbddff; padding: 10px">
+            <h2>Movies</h2>
+
+            <ul>
+                <li>
+                    <asp:HyperLink ID="HyperLink1" NavigateUrl="~/Index.aspx" runat="server">All Movies</asp:HyperLink>
+                </li>
+                <li>
+                    <asp:HyperLink ID="HyperLink2" NavigateUrl="~/AddMovie.aspx" runat="server">Add New Movie</asp:HyperLink>
+                </li>
+            </ul>
+        </div>
+        <div style="padding: 10px">
+            <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,59 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body style="background-color:#ecf0f1">
+    <form id="form1" runat="server">
+    <div>
+        <div style="width:100%; height: 100px; background-color:#3498db; padding:10px">
+            <h2>Restaurant La Mama</h2>
+
+            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/HomePage.aspx">Acasa</asp:HyperLink>
+
+            <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/PhotoGallery.aspx">Galerie foto</asp:HyperLink>
+
+            <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Map.aspx">Harta</asp:HyperLink>
+
+        </div>
+
+       <table>
+            <tr> 
+                <td style="background-color:#aabbff; padding:10px; width: 150px;">
+                    <asp:SiteMapDataSource ID="MainSMDS" runat="server" />
+
+                      <asp:Menu ID="Menu1" runat="server" BackColor="#B5C7DE" DataSourceID="MainSMDS" DynamicHorizontalOffset="2" Font-Names="Verdana" Font-Size="0.8em" ForeColor="#284E98" StaticSubMenuIndent="10px">
+                        
+                        <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+
+                        <DynamicMenuStyle BackColor="#B5C7DE" />
+
+                        <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+                        
+                        
+                    </asp:Menu>
+                </td>
+                <td>
+                    <div style="padding:10px">
+                        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+                            <!-- Aici nu se pun tag-uri-->
+                        </asp:ContentPlaceHolder>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <div style="width:100%; height: 100px; background-color:#3498db; padding:10px">
+            <div style="text-align:center">
+                <p>Restaurant La Mama</p>
+                <p>Adresa: Str. Academiei 14</p>
+                <p>Telefon: 021 555-1234</p>
+            </div>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

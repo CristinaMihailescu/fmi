@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<moviestore>
+  <movie ID="1" genre="Fantasy, Action" year="2015" duration="120">
+    <title>Star Wars: The Force Awakens</title>
+    <director>J.J. Abrams</director>
+    <actor>Harrison Ford</actor>
+    <actor>Mark Hamill</actor>
+    <actor>Carrie Fisher</actor>
+  </movie>
+  <movie ID="2" genre="Thriller" year="2015" duration="148">
+    <title>Spectre</title>
+    <director>Sam Mendes</director>
+    <actor>Daniel Craig</actor>
+  </movie>
+  <movie ID="3" genre="Sci-Fi" year="2015" duration="144">
+    <title>The Martian</title>
+    <director>Ridley Scott</director>
+    <actor>Matt Damon</actor>
+  </movie>
+  <movie ID="4" genre="Sci-Fi" year="2014" duration="169">
+    <title>Interstellar</title>
+    <director>Christopher Nolan</director>
+    <actor>Matthew McConaughey</actor>
+    <actor>Anne Hathaway</actor>
+  </movie>
+  <movie ID="5" genre="Comedy" year="2015" duration="91">
+    <title>Minions</title>
+    <director>Kyle Balda</director>
+    <actor>Sandra Bullock</actor>
+    <actor>Jon Hamm</actor>
+    <actor>Michael Keaton</actor>
+  </movie>
+  <movie genre="Western" year="2015" duration="168" ID="6">
+    <title>The Hateful Eight</title>
+    <director>Quentin Tarantino </director>
+    <actor>Jennifer Jason Leigh </actor>
+    <actor>Channing Tatum</actor>
+    <actor>Samuel L. Jackson</actor>
+  </movie>
+</moviestore>
