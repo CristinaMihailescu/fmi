@@ -1,0 +1,75 @@
+alter table dept_cmm
+add (nr number); --nr tine minte nr de ang din fiecare departament
+
+create or replace trigger
+pb10_aux_nr_cmm
+before insert or update
+of department_id on emp_cmm
+begin
+update dept d
+set nr = (select count(employee_id)
+          from emp_cmm
+          where department_id = d.department_id);
+
+end;
+
+--insert -> before trigger
+--update -> after trigger
+create or replace trigger pb_10_before_v3_cmm
+before insert or update of department_id
+on emp_cmm
+for each row
+declare
+x number;
+begin
+
+if inserting then --nu ne atingem de emp_cmm aka tabelul unde se executa evenimentul := AXIOMA
+  select nr into x
+  from dept_cmm
+  where department_id = :new.department_id;
+  if x >= 50 then
+    raise_application_error(-20457, 'Esti pe cale sa adaugi ang 51 in departmentul ' || :new.department_id);
+  end if;
+  update dept_cmm
+  set nr = nr + 1
+  where department_id = :new.department_id;
+else
+  update dept_cmm
+  set nr = nr + 1
+  where department_id = :new.department_id;
+  update dept_cmm
+  set nr = nr - 1
+  where department_id = :old.department_id;
+
+end if;
+
+end;
+
+create or replace trigger pb_10_after_v3_cmm
+after update of department_id
+on emp_cmm
+for each row
+declare
+x number;
+begin
+select max(nr) into x
+from dept_cmm;
+if x > 50 then
+raise_application_error(-20456, 'Ai mai mult de 50 de ang');
+end if;
+end;
+
+--sol se termina aici
+
+--testare
+update emp_cmm
+set department_id = 110
+where department_id = 100;
+
+insert into emp_cmm(employee_id, last_name, job_id, email, hire_date, department_id) --faci insert in emp_cmm
+select employee_id + 300, last_name, job_id, email, hire_date, 30 --aici blochezi emp_cmm
+from emp_cmm
+where department_id = 100;
+
+--2p din 3p
+commit;
