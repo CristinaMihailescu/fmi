@@ -1,0 +1,9 @@
+create or replace package aux as
+type tabel is table of emp_cmm%rowtypeș
+x tabelș
+end;
+
+--need pachet
+--scrie trigger before care sa populeze var asta - ia tot din employees
+--trigger before row (la nivel de linie) -- modificarea pe care o fac o raportez la var asta
+--trigger after
