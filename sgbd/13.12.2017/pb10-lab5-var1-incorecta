@@ -1,0 +1,45 @@
+create table emp_cmm
+as select * from employees;
+
+create table dept_cmm
+as select * from departments;
+
+create or replace 
+trigger pb10_gresit_cmm
+before insert on emp_cmm
+for each row
+declare 
+nr number;
+begin
+select count(employee_id) into nr
+from emp_cmm
+where department_id=:new.department_id;
+if nr>=50 then
+  raise_application_error(-20456,'Prea multi angajati 
+  ind epartamentul '||:new.department_id);
+end if;
+end;
+
+select department_id, count(employee_id)
+from emp_cmm
+group by department_id;
+
+update emp_cmm
+set department_id = 50
+where department_id = 60;
+
+commit;
+
+insert into emp_cmm(employee_id, last_name, job_id, email, hire_date, department_id)
+values(345, 'nume', 'CA_REP', 'email@gmail.com', sysdate, 50);
+
+--INSER GRESIT!! SA NU FACI ASA CEVA
+insert into emp_cmm(employee_id, last_name, job_id, email, hire_date, department_id) --faci insert in emp_cmm
+select employee_id + 300, last_name, job_id, email, hire_date, 30 --aici blochezi emp_cmm
+from emp_cmm
+where department_id = 100;
+
+rollback;
+
+--mai mult de 0.5p la test nu
+--10/lab5
