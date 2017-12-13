@@ -1,0 +1,32 @@
+create or replace trigger pb10_after_v2_cmm
+after insert or update
+of department_id on emp_cmm
+declare
+nr number;
+begin
+  select max(count(employee_id)) into nr
+  from emp_cmm
+  group by department_id;
+  
+  if nr > 50 then
+    raise_application_error(-20456,'Prea multi angajati');
+end if;
+end;
+--triggerul trebuie definit inainte sa adaugi informatii in tabel
+
+select department_id, count(employee_id)
+from emp_cmm
+group by department_id;
+
+update emp_cmm
+set department_id = 110
+where department_id = 20;
+--imi da eroare pt ca am de la inceput 51 de ang in dep 50!!
+
+insert into emp_cmm(employee_id, last_name, job_id, email, hire_date, department_id) --faci insert in emp_cmm
+select employee_id + 300, last_name, job_id, email, hire_date, 50 --aici blochezi emp_cmm
+from emp_cmm
+where department_id = 100;
+
+--tot nu e corect in intregime
+--10/lab5
