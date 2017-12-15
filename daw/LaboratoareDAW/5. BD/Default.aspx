@@ -16,7 +16,7 @@
         <h4>Agenda curenta:</h4>
         <br />
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='Data Source=(LocalDB)\v11.0;AttachDbFilename="C:\Facultate Materiale\Materii Predate\Dezvoltarea Aplicatiilor Web\Laboratoare\5. BD\App_Data\Agenda.mdf";Integrated Security=True' SelectCommand="select * from agenda"></asp:SqlDataSource>
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='Data Source=(LocalDB)\v11.0;AttachDbFilename="C:\Users\mihai\Desktop\Git\fmi\daw\LaboratoareDAW\5. BD\App_Data\Agenda.mdf";Integrated Security=True' SelectCommand="select * from agenda"></asp:SqlDataSource>
 
         <asp:ListView ID="ListView1" runat="server" DataSourceID="SqlDataSource1">
             <LayoutTemplate>

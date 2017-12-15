@@ -16,7 +16,7 @@ public partial class Search : System.Web.UI.Page
                     + " FROM agenda";
 
             // Deschidem conexiunea la baza de date
-            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename='C:\Facultate Materiale\Materii Predate\Dezvoltarea Aplicatiilor Web\Laboratoare\5. BD\App_Data\Agenda.mdf';Integrated Security=True");
+            SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename='C:\Users\mihai\Desktop\Git\fmi\daw\LaboratoareDAW\5. BD\App_Data\Agenda.mdf';Integrated Security=True");
             con.Open();
             // Incercam sa executam comanda
             try
@@ -49,7 +49,7 @@ public partial class Search : System.Web.UI.Page
         string query = "SELECT * FROM agenda WHERE nume LIKE @search OR prenume LIKE @search OR email LIKE @search OR telefon LIKE @search";
 
         // Deschidem conexiunea la baza de date
-        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename='C:\Facultate Materiale\Materii Predate\Dezvoltarea Aplicatiilor Web\Laboratoare\5. BD\App_Data\Agenda.mdf';Integrated Security=True");
+        SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename='C:\Users\mihai\Desktop\Git\fmi\daw\LaboratoareDAW\5. BD\App_Data\Agenda.mdf';Integrated Security=True");
         con.Open();
         // Incercam sa executam comanda
         try
