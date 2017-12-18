@@ -1,0 +1,257 @@
+<html>
+<head>
+    <title>Lab 7</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="https://www.dropbox.com/s/48bx1xvl42hr5gp/progdecl.css?dl=1">
+  <script type="text/javascript" src="https://www.dropbox.com/s/hk9x49z7vmznfp9/progdecl.js?dl=1"></script> 
+
+</head>
+<body>
+    <h1>
+      <strong> Declarative Programming – Lab 7 </strong><br/>
+    </h1>
+
+<h1>Logic</h1>
+
+<h2>Warmup</h2>
+
+<p>First you we will write some functions to act on input of the user-defined type <tt>Fruit</tt>. In the file
+<tt>lab7.hs</tt> you will find the following data declaration:
+<pre>
+data Fruit = Apple String Bool
+           | Orange String Int
+</pre>
+<p>An expression of type <tt>Fruit</tt> is either an <tt>Apple String Bool</tt> or an <tt>Orange String Int</tt>. We use
+a <tt>String</tt> to indicate the variety of the apple or orange, a <tt>Bool</tt> to describe whether an apple has a
+worm and an <tt>Int</tt> to count the number of segments in an orange. For example:
+<pre>
+Apple "Granny Smith" False  -- a Granny Smith apple with no worm
+Apple "Braeburn" True       -- a Braeburn apple with a worm
+Orange "Sanguinello" 10     -- a Sanguinello orange with 10 segments
+</pre>
+
+<h3>Exercises</h3>
+
+<ol>
+<li> Write a function <tt>isBloodOrange :: Fruit -> Bool</tt> which returns <tt>True</tt> for blood oranges
+and <tt>False</tt> for apples and other oranges. Blood orange varieties are: Tarocco, Moro and
+Sanguinello. For example:
+<pre>
+isBloodOrange(Orange "Moro" 12) == True
+isBloodOrange(Apple "Granny Smith" True) == False
+</pre>
+<li> Write a function <tt>bloodOrangeSegments :: [Fruit] -> Int</tt> which returns the total number
+of blood orange segments in a list of fruit.
+<li> Write a function <tt>worms :: [Fruit] -> Int</tt> which returns the number of apples that contain
+worms.
+</ol>
+
+
+<h3>Logic</h3>
+
+<p>In the rest of this tutorial we will implement propositional logic in Haskell. In the file <tt>lab7.hs</tt>
+you will find the following type and data declarations:
+<pre>
+type Name = String
+data Prop = Var Name
+          | F
+          | T
+          | Not Prop
+          | Prop :|: Prop
+          | Prop :&: Prop
+</pre>
+
+<p>The type <tt>Prop</tt> is a representation of propositional formulas. Propositional variables such as <i>P</i> and
+<i>Q</i> can be represented as <tt>Var "P"</tt> and <tt>Var "Q"</tt>. Furthermore, we have the Boolean constants <tt>T</tt>
+and <tt>F</tt> for ‘true’ and ‘false’, the unary connective <tt>Not</tt> for negation (not to be confused with the
+function <tt>not :: Bool -> Bool</tt>), and (infix) binary connectives <tt>:|:</tt> and <tt>:&:</tt> for disjunction (∨)
+and conjunction (&). Another type defined by <tt>lab7</tt> is:
+<pre>
+type Env = [(Name, Bool)]
+</pre>
+
+<p>The type <tt>Env</tt> is used as an ‘environment’ in which to evaluate a proposition: it is a list of truth
+assignments for (the names of) propositional variables. Using these types, <tt>lab7.hs</tt> defines
+the following functions:
+<ul>
+<li> <tt>satisfiable :: Prop -> Bool</tt> checks whether a formula is satisfiable — that is, whether
+there is some assignment of truth values to the variables in the formula that will make the
+whole formula true.
+<pre>
+*Main> satisfiable (Var "P" :&: Not (Var "P"))
+False
+*Main> satisfiable ((Var "P" :&: Not (Var "Q")) :&: (Var "Q" :|: Var "P"))
+True
+</pre>
+<li> <tt>eval :: Env -> Prop -> Bool</tt> evaluates the given proposition in the given environment (assignment of truth values). For example:
+<pre>
+*Main> eval [("P", True), ("Q", False)] (Var "P" :|: Var "Q")
+True
+</pre>
+<li> <tt>showProp :: Prop -> String</tt> converts a proposition into a readable string approximating
+the mathematical notation. For example:
+<pre>
+*Main> showProp (Not (Var "P") :&: Var "Q")
+"((~P)&Q)"
+</pre>
+<li> <tt>names :: Prop -> Names</tt> returns all the variable names used in a proposition. Example:
+<pre>
+*Main> names (Not (Var "P") :&: Var "Q")
+["P", "Q"]
+</pre>
+<li> <tt>envs :: Names -> [Env]</tt> generates a list of all the possible truth assignments for the given
+list of variables. Example:
+<pre>
+*Main> envs ["P", "Q"]
+[[("P",False),("Q",False)],
+[("P",False),("Q",True)],
+[("P",True),("Q",False)],
+[("P",True),("Q",True)]    ]
+</pre>
+<li> <tt>table :: Prop -> IO ()</tt> prints out a truth table.
+<pre>
+*Main> table ((Var "P" :&: Not (Var "Q")) :&: (Var "Q" :|: Var "P"))
+P Q | ((P&(~Q))&(Q|P))
+- - | ---------------
+F F |        F
+F T |        F
+T F |        T
+T T |        F
+</pre>
+<li> <tt>fullTable :: Prop -> IO ()</tt> prints out a truth table that includes the evaluation of the
+subformulas of the given proposition. (<b>Note</b>: <tt>fullTable</tt> uses the function subformulas that
+you will define in Exercise 8, so it doesn’t work just yet.)
+<pre>
+*Main> fullTable ((Var "P" :&: Not (Var "Q")) :&: (Var "Q" :|: Var "P"))
+P Q | ((P&(~Q))&(Q|P)) (P&(~Q)) (~Q) (Q|P)
+- - | ---------------- -------- ---- ----
+F F |        F            F      T     F
+F T |        F            F      F     T
+T F |        T            T      T     T
+T T |        F            F      F     T
+</pre>
+</ul>
+<h3>Exercises</h3>
+
+<ol start="4">
+<li> Write the following formulas as <tt>Props</tt> (call them <tt>p1</tt>, <tt>p2</tt> and <tt>p3</tt>). 
+Then use <tt>satisfiable</tt> to
+check their satisfiability and <tt>table</tt> to print their truth tables.
+<pre>
+(a) ((P ∨ Q) & (P & Q))
+(b) ((P ∨ Q) & ((¬P ) & (¬Q)))
+(c) ((P & (Q ∨ R)) & (((¬P ) ∨ (¬Q)) & ((¬P ) ∨ (¬R))))
+</pre>
+
+<li>
+<ol type="a">
+<li> A proposition is a tautology if it is always true, i.e. in every possible environment. Using
+<tt>names</tt>, <tt>envs</tt> and <tt>eval</tt>, write a function <tt>tautology :: Prop -> Bool</tt> which checks
+whether the given proposition is a tautology. Test it on the examples from Exercise (4)
+and on their negations.
+<li> Create two QuickCheck tests to verify that <tt>tautology</tt> is working correctly. Use the
+following facts as the basis for your test properties:
+For any property <i>P</i>,
+<ol type="i">
+<li> either <i>P</i> is a tautology, or <i>¬P</i> is satisfiable,
+<li> either <i>P</i> is not satisfiable, or <i>¬P</i> is not a tautology.
+</ol>
+<b>Note:</b> be careful to distinguish the negation for <tt>Bools</tt> (<tt>not</tt>) from that for <tt>Props</tt> (<tt>Not</tt>).
+</ol>
+<li> We will extend the datatype and functions for propositions in <tt>lab7.hs</tt> to handle the
+connectives → (implication) and ↔ (bi-implication, or ‘if and only if’). They will be implemented as the constructors <tt>:->:</tt> and <tt>:<->:</tt>. After you have implemented them, the truth
+tables for both should be as follows:
+<table><tr><td>
+<pre>
+*Main> table (Var "P" :->: Var "Q")
+P Q | (P->Q)
+- - | -----
+F F |   T
+F T |   T
+T F |   F
+T T |   T
+</pre>
+</td><td>
+<pre>
+*Main> table (Var "P" :<->: Var "Q")
+P Q | (P<->Q)
+- - | ------
+F F |    T
+F T |    F
+T F |    F
+T T |    T
+</pre>
+</td></tr></table>
+<ol type="a">
+<li> Find the declaration of the datatype <tt>Prop</tt> in <tt>lab7.hs</tt> and extend it with the infix
+constructors <tt>:->:</tt> and <tt>:<->:</tt>.
+<li> Find the printer (<tt>showProp</tt>), evaluator (<tt>eval</tt>), and name-extractor (<tt>names</tt>) functions
+and extend their definitions to cover the new constructors <tt>:->:</tt> and <tt>:<->:</tt>. Test your
+definitions by printing out the truth tables above.
+<li> Define the following formulas as <tt>Props</tt> (call them <tt>p4</tt>, <tt>p5</tt>, and <tt>p6</tt>). Check their satisfiability and print their truth tables.
+<ol type="i">
+<li> <i>((P → Q) & (P ↔ Q))</i>
+<li> <i>((P → Q) & (P & (¬Q)))</i>
+<li> <i>((P ↔ Q) & ((P & (¬Q)) ∨ ((¬P ) & Q)))</i>
+</ol>
+<li> Below the ‘exercises’ section of <tt>lab7.hs</tt>, in the section called ‘for QuickCheck’,
+you can find a declaration that starts with:
+<pre>
+instance Arbitrary Prop where
+</pre>
+This tells QuickCheck how to generate arbitrary <tt>Props</tt> to conduct its tests. To make
+QuickCheck use the new constructors, uncomment the two lines in the middle of the
+definition:
+<pre>
+-- , liftM2 (:->:) subform subform
+-- , liftM2 (:<->:) subform’ subform’
+</pre>
+Now try your test properties from Exercise (5b) again.
+</ol>
+<li> Two formulas are equivalent if they always have the same truth values, regardless of the
+values of their propositional variables. In other words, formulas are equivalent if in any given
+environment they are either both <tt>true</tt> or both <tt>false</tt>.
+<ol type="a">
+<li> Write a function <tt>equivalent :: Prop -> Prop -> Bool</tt> that returns <tt>True</tt> just when
+the two propositions are equivalent in this sense. For example:
+<pre>
+*Main> equivalent (Var "P" :&: Var "Q") (Not (Not (Var "P") :|: Not (Var "Q")))
+True
+*Main> equivalent (Var "P") (Var "Q")
+False
+*Main> equivalent (Var "R" :|: Not (Var "R")) (Var "Q" :|: Not (Var "Q"))
+True
+</pre>
+You can use <tt>names</tt> and <tt>envs</tt> to generate all relevant environments, and use <tt>eval</tt> to
+evaluate the two <tt>Prop</tt>s.
+<li> Write another version of <tt>equivalent</tt>, this time by combining the two arguments into a
+larger proposition and using <tt>tautology</tt> or <tt>satisfiable</tt> to evaluate it.
+<li> Write a QuickCheck test property to verify that the two versions of <tt>equivalent</tt> are
+equivalent.
+</ol>
+</ol>
+
+<p>The <i>subformulas</i> of a proposition are defined as follows:
+<ul>
+<li> A propositional letter <i>P</i> or a constant <b>t</b> or <b>f</b> has itself as its only subformula.
+<li> A proposition of the form <i>¬P</i> has as subfomulas itself and all the subformulas of <i>P</i>.
+<li> A proposition of the form <i>P & Q</i>, <i>P ∨ Q</i>, <i>P → Q</i>, or <i>P ↔ Q</i> has as subformulas itself and all
+the subformulas of <i>P</i> and <i>Q</i>.
+</ul>
+
+<p>The function <tt>fullTable :: Prop -> IO ()</tt>, already defined in <tt>lab7.hs</tt>, prints out a truth
+table for a formula, with a column for each of its non-trivial subformulas.
+
+<h3>Exercises</h3>
+
+<ol start="8">
+<li> Add a definition for the function <tt>subformulas :: Prop -> [Prop]</tt> that returns all of the
+subformulas of a formula. For example:
+<pre>
+*Main> map showProp (subformulas p2)
+["((P|Q)&((~P)&(~Q)))","(P|Q)","P","Q","((~P)&(~Q))","(~P)","(~Q)"]
+</pre>
+(We need to use <tt>map showProp</tt> here in order to convert each proposition into a string; otherwise we could not easily view the results.)
+<p>Test out <tt>subformulas</tt> and <tt>fullTable</tt> on each of the <tt>Prop</tt>s you defined earlier (<tt>p1</tt>–<tt>p6</tt>).
+</body>
+</html>

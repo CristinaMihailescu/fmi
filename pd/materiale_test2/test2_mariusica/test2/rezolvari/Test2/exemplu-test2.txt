@@ -1,0 +1,12 @@
+pentru nota 8
+
+scrieți un program Haskell care conține un modul Arbore care definește o librărie conținând un tip algebric de date Arbore a pentru reprezentarea arborilor binari de căutare cu date de tip a. 
+
+Modulul trebuie să exporte tipul de date Arbore si următoarele funcții:
+adauga - care dat fiind un element x si un arbore t adaugă elementul x în arborele t
+cauta - care dat fiind un n element x si un arbore t spune dacă acesta se află în arbore.
+fromList - care dată fiind o listă de elemente creează un arbore binar de căutare care le conține
+toList - care dat fiind un arbore produce lista obținută prin parcurgerea în inordine (SRD) a arborelui.
+
+scrieți un modul Principal executabil care folosește funcțiile din modulul Arbore pentru a citi de la tastatură o listă de numere separate prin spațiu, aflate pe aceeași line, si afișează numerele citite, în ordine crescătoare, separate prin spațiu.
+

@@ -1,0 +1,207 @@
+<html>
+<head>
+    <title>Lab 5</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="https://www.dropbox.com/s/48bx1xvl42hr5gp/progdecl.css?dl=1">
+  <script type="text/javascript" src="https://www.dropbox.com/s/hk9x49z7vmznfp9/progdecl.js?dl=1"></script> 
+</head>
+<body>
+<h1>Optional material</h1>
+<h2>Normal Forms</h2>
+<p>In this part of the tutorial we will put propositional formulas into several different normal forms.
+First, we will deal with negation normal form. As a reminder, a formula is in negation normal
+form if it consists of just the connectives ∨ and &, unnegated propositional variables P and negated
+propositional variables ¬P , and the constants t and f. Thus, negation is only applied to propositional
+variables, and nothing else.
+
+<p>To transform a formula into negation normal form, you might want to use the following equivalences:
+<table align="center"><tr><td>
+<table>
+<tr><td>
+¬(P & Q)
+</td></tr>
+<tr><td>
+¬(P ∨ Q)
+</td></tr>
+<tr><td>
+(P → Q)
+</td></tr>
+<tr><td>
+(P ↔ Q)
+</td></tr>
+<tr><td>
+¬(¬P )
+</td></tr>
+</table>
+</td><td>
+<table>
+<tr><td>
+⇔
+</td></tr>
+<tr><td>
+⇔
+</td></tr>
+<tr><td>
+⇔
+</td></tr>
+<tr><td>
+⇔
+</td></tr>
+<tr><td>
+⇔
+</td></tr>
+</table>
+</td><td>
+<table>
+<tr><td>
+(¬P ) ∨ (¬Q)
+</td></tr>
+<tr><td>
+(¬P ) & (¬Q)
+</td></tr>
+<tr><td>
+(¬P ) ∨ Q
+</td></tr>
+<tr><td>
+(P → Q) & (Q → P )
+</td></tr>
+<tr><td>
+P
+</td></tr>
+</table>
+</td></tr>
+</table>
+
+<h3>Exercises</h3>
+<ol start="9">
+<li> Write a function <tt>isNNF</tt> to test whether a <tt>Prop</tt> is in negation normal form.
+<lI> Write a function <tt>toNNF</tt> that puts an arbitrary <tt>Prop</tt> into negation normal form. Use the test properties <tt>prop_NNF1</tt> and <tt>prop_NNF2</tt> to verify that your function is correct. <p><b>Hint:</b> don’t be alarmed if you need many case distinctions.
+</ol>
+<p>Next, we will turn a formula into conjunctive normal form. This means the formula is a conjunction
+of clauses, and a clause is a disjunction of (possibly negated) propositional variables, called <i>atoms</i>.
+
+<p>You will need to pay special attention to the constants <b>t</b> and <b>f</b>. The <tt>Prop</tt>s <tt>T</tt> and <tt>F</tt> themselves are
+considered to be in conjunction normal form, but otherwise they should not occur in formulas in
+normal form. They can be eliminated using the following equivalences:
+<table align="center"><tr><td>
+<table>
+<tr><td>
+(P & t)
+</td></tr>
+<tr><td>
+(P & f )
+</td></tr>
+<tr><td>
+(P ∨ t)
+</td></tr>
+<tr><td>
+(P ∨ f )
+</td></tr>
+</table>
+</td><td>
+<table>
+<tr><td>
+⇔ (t & P )
+</td></tr>
+<tr><td>
+⇔ (f & P )
+</td></tr>
+<tr><td>
+⇔ (t ∨ P )
+</td></tr>
+<tr><td>
+⇔ (f ∨ P )
+</td></tr>
+</table>
+</td><td>
+<table>
+<tr><td>
+⇔
+</td></tr>
+<tr><td>
+⇔
+</td></tr>
+<tr><td>
+⇔
+</td></tr>
+<tr><td>
+⇔
+</td></tr>
+</table>
+</td><td>
+<table>
+<tr><td>
+P
+</td></tr>
+<tr><td>
+f
+</td></tr>
+<tr><td>
+t
+</td></tr>
+<tr><td>
+P
+</td></tr>
+</table>
+</td></tr>
+</table>
+
+<h3>Exercises</h3>
+<ol start="11">
+<li> Write a function <tt>isCNF</tt> to test if a <tt>Prop</tt> is in conjunction normal form.
+</ol>
+
+<p>A common way of writing formulas in conjunctive normal form is as a list of lists, where the inner
+lists represent the clauses. Thus:
+
+<div align="center">((A ∨ B) & ((C ∨ D) ∨ E)) & G ⇔ [[A,B],[C,D,E],[G]]</div>
+
+<h3>Exercises</h3>
+<ol start="12">
+<li> Think of how the constants <b>t</b> and <b>f</b> can be represented as lists of lists.
+<p><b>Hint:</b> a formula in conjunction normal form is true when <i>all</i> its clauses are true. A clause is
+true if <i>any</i> of its atoms is true.
+<li> Write a function <tt>listsToCNF</tt> to translate a list of lists of <tt>Prop</tt>s (which you may assume to be variables or negated variables) to a <tt>Prop</tt> in conjunction normal form.
+<li> Write a function <tt>listsFromCNF</tt> to write a formula in conjunction normal form as a list of
+lists.
+</ol>
+<p>Finally, we will convert an arbitrary Prop to a list of lists. You can use the following distributive
+law (check it first using your previous code):
+
+<div align="center">P ∨ (Q & R) ⇔ (P ∨ Q) & (P ∨ R)</div>
+
+Or, in a more generalized version:
+
+<table align="center">
+<tr><td>
+(P<sub>1</sub> & P<sub>2</sub> & . . . & P<sub>m</sub> ) ∨ (Q<sub>1</sub> & Q<sub>2</sub> & &hellip; & Q<sub>n</sub> )
+</td></tr>
+<tr><td align="center">
+⇔
+</td></tr>
+<tr><td>
+(P<sub>1</sub> ∨ Q<sub>1</sub> ) & (P<sub>1</sub> ∨ Q<sub>2</sub> ) &  &hellip; & (P<sub>1</sub> ∨ Q<sub>n</sub> ) &
+</td></tr>
+<tr><td>
+(P<sub>2</sub> ∨ Q<sub>1</sub> ) & (P<sub>2</sub> ∨ Q<sub>2</sub> ) &  &hellip; & (P<sub>2</sub> ∨ Q<sub>n</sub> ) &
+</td></tr>
+<tr><td align=center>
+&hellip;
+</td></tr>
+<tr><td>
+(P<sub>m</sub> ∨ Q<sub>1</sub> ) & (P<sub>m</sub> ∨ Q<sub>2</sub> ) & &hellip; & (P<sub>m</sub> ∨ Q<sub>n</sub> )
+</td></tr>
+</table>
+
+<h3>Exercises</h3>
+<ol start="15">
+<li> Write a function <tt>toCNFList</tt> that turns a <tt>Prop</tt> into a list of lists of propositional variables and their negations, representing the formula in conjunction normal form. The output of
+<tt>toCNFList</tt> may contain empty clauses as long as <tt>toCNF</tt> produces a formula without T nor F
+as strict subformulas.
+</ol>
+<b>Note:</b> transforming to conjunctive normal form is computationally expensive, especially for formulas
+with many bi-implications (↔). Be sure to test your code on small examples first before trying the
+test property <tt>prop_CNF</tt> with QuickCheck.
+
+</body>
+</html>

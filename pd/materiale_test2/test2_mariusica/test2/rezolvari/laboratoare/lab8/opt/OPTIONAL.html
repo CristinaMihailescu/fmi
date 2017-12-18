@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>Lab 6</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="https://www.dropbox.com/s/48bx1xvl42hr5gp/progdecl.css?dl=1">
+  <script type="text/javascript" src="https://www.dropbox.com/s/hk9x49z7vmznfp9/progdecl.js?dl=1"></script> 
+</head>
+<body>
+    <h1>
+      <strong> Declarative Programming – Lab 6 </strong><br/>
+    </h1>
+
+    
+<h2>Optional material</h2>
+<h3>Exercises</h3>
+<ol start="12">
+<li> Define two functions <tt>filterLT</tt> and <tt>filterGT</tt>, such that <tt>filterLT k t</tt> is the tree that results from removing all elements in <tt>t</tt> whose key is greater than <tt>k</tt>. For example:
+<pre>*Main&gt; filterLT "0900000000000" testDB
+[("0042400212509",("Universal deep-frying pan","pc"))
+,("0265090316581",("The Macannihav’nmor Highland Single Malt","75ml bottle"))
+
+*Main&gt; filterLT "0" testDB
+[]
+</pre>
+<p>The function <tt>filterGT k t</tt> is the tree that results from removing all elements in <tt>t</tt> whose key is less than <tt>k</tt>. So:</p>
+<pre>
+*Main&gt; filterGT "0900000000000" testDB
+[("0903900739533",("Bagpipes of Glory","6-CD Box"))
+,("9780201342758",
+    ("Thompson - \"Haskell: The Craft of Functional Programming\"","Book"))]
+
+*Main&gt; filterGT "0" testDB
+[("0042400212509",("Universal deep-frying pan","pc"))
+,("0265090316581",("The Macannihav’nmor Highland Single Malt","75ml bottle"))
+,("0903900739533",("Bagpipes of Glory","6-CD Box"))
+,("9780201342758",
+    ("Thompson - \"Haskell: The Craft of Functional Programming\"","Book"))]
+</pre>
+<p>We will need these functions for the next part of the exercise.</p>
+<li> Define the function <tt>merge</tt>, which takes two trees and produces a single tree of all their elements. Write a suitable <tt>quickCheck</tt> test for your function.
+<li> Define the function <tt>del</tt>, which takes a key and a tree, and returns a tree identical to its argument except with any entry for the given key deleted. You will need the function <tt>merge</tt> here.
+<li> Define the function <tt>select</tt>, which takes a predicate and a tree, and returns a new tree that contains only entries where the value satisfies the predicate.
+</ol>
+
+</body>
+</html>

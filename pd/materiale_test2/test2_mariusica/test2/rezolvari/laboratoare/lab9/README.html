@@ -1,0 +1,411 @@
+
+<html>
+<head>
+<title>Lab 7</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="stylesheet" type="text/css" href="https://www.dropbox.com/s/48bx1xvl42hr5gp/progdecl.css?dl=1">
+  <script type="text/javascript" src="https://www.dropbox.com/s/hk9x49z7vmznfp9/progdecl.js?dl=1">
+  </script>
+</head>
+
+<body>
+<h1><strong>Turtle Graphics and L-systems</strong></h1>
+
+<h1>Turtle graphics</h1>
+Turtle graphics is a simple way of making line drawings (See <a href="http://el.media.mit.edu/logo-foundation/logo/turtle.html">http://el.media.mit.edu/logo-foundation/logo/turtle.html</a> for more on turtle graphics). The turtle has a given location on the
+canvas and is facing in a given direction. A command describes a sequence of actions to be undertaken
+by a turtle, including moving forward a given distance or turning through a given angle.
+<p>Turtle commands can be represented in Haskell using an algebraic data type:
+
+<pre>
+type Distance = Float
+type Angle = Float
+data Command = Go Distance
+             | Turn Angle
+             | Sit
+             | Command :#: Command
+</pre>
+
+The last line declares an infix data constructor. We have already seen such constructors in Lab 5,
+where we used them for the binary connectives of propositional logic. While ordinary constructors
+must begin with a capital letter, infix constructors must begin with a colon. Here, we have used the
+infix constructor <tt>:#:</tt> to join two commands.
+<p>Thus, a command has one of four forms:
+
+<ul>
+<li> <tt>Go d</tt>, where <tt>d</tt> is a distance — move the turtle the given distance in the direction it is facing.
+     (<b>Note:</b> distances are not expected to be negative.)
+<li> <tt>Turn a</tt>, where <tt>a</tt> is an angle — turn the turtle anticlockwise through the given angle.
+<li>    <tt>Sit</tt> — do nothing: leaves the turtle’s position and direction unchanged.
+<li>   <tt>p :#: q</tt>, where <tt>p</tt> and <tt>q</tt> are themselves commands — execute the two given commands in
+     sequence.
+</ul>
+For instance, to draw an equilateral triangle with sides of thirty units, we need to order the turtle
+to move forward three times, turning 120◦ between moves:
+<pre>
+    Go 30 :#: Turn 120 :#: Go 30 :#: Turn 120 :#: Go 30
+</pre>
+<figure>
+    <img src='triangle.png' alt='Drawing a triangle with turtle commands' />
+    <figcaption>Figure 1: Drawing a triangle with turtle commands</figcaption>
+</figure>
+                        
+<h2>Viewing paths</h2>
+You can view a turtle’s path by typing
+
+<pre>
+    *Main> display path
+</pre>
+
+where path is an expression of type Command. This will open a new graphics window and draw the
+turtle graphic. For example,
+
+<pre>
+    *Main> display (Go 30 :#: Turn 120 :#: Go 30 :#: Turn 120 :#: Go 30)
+</pre>
+
+draws the triangle described above.
+<p>When you close the graphics window, GHCi will exit as well, so you will need to re-load your code
+to draw another picture.
+
+
+<h2>Equivalences</h2>
+Note that :#: is an associative operator with identity Sit. So we have:
+
+<pre>
+    p :#: Sit            =     p
+    Sit :#: p            =     p
+    p :#: (q :#: r)      =     (p :#: q) :#: r
+</pre>
+
+We can omit parentheses in expressions with :#: because, wherever they are placed, the meaning
+remains the same. In this assignment, when we say that two commands are equivalent we mean that
+they are the same according to the equalities listed above.
+<p>However, to evaluate an expression Haskell has to place parentheses; if you ask it to show a command,
+it will also show where it has placed them:
+
+<pre>
+    *Main> Sit :#: Sit :#: Sit
+    Sit :#: (Sit :#: Sit)
+</pre>
+
+<h3>Exercises</h3>
+<ol>
+  <li> In this first exercise we will explore the equivalence of turtle commands and convert them
+       into lists and back.
+       <ol type="a">
+       <li> Write a function
+            <pre> split :: Command -> [Command] </pre>
+            that converts a command to a list of individual commands containing no <tt>:#:</tt> or <tt>Sit</tt>
+            elements. For example,
+            <pre>
+                 *Main> split (Go 3 :#: Turn 4 :#: Go 7)
+                 [Go 3, Turn 4, Go 7]
+            </pre>
+       <li> Write a function
+            <pre> join :: [Command] -> Command </pre>
+            that converts a list of commands into a single command by joining the elements together.
+            For example,
+            <pre>
+                 *Main> join [Go 3, Turn 4, Go 7]
+                 Go 3 :#: Turn 4 :#: Go 7 :#: Sit
+            </pre>
+            As in all our examples, the result can be any command equivalent to the given command.
+       <li> Note that two commands are equivalent, in the sense of the equivalence laws above, if
+            <tt>split</tt> returns the same result for both.
+            <pre>
+                 *Main>   split ((Go 3 :#: Turn 4) :#: (Sit :#: Go 7))
+                 [Go 3,   Turn 4, Go 7]
+                 *Main>   split (((Sit :#: Go 3) :#: Turn 4) :#: Go 7)
+                 [Go 3,   Turn 4, Go 7]
+            </pre>
+            Write a function <tt>equivalent</tt> that tests two commands for equivalence. Give both its
+            type and definition.
+      <li> Write two QuickCheck properties to test <tt>split</tt> and <tt>join</tt>. The first should check that
+           <tt>join (split c)</tt> is equivalent to <tt>c</tt>, where <tt>c</tt> is an arbitrary command. The second should
+           check that the list returned by <tt>split</tt> contains no <tt>Sit</tt> and <tt>(:#:)</tt> commands. You need
+           to give the type as well as the definition of both test properties.
+      </ol>
+
+   <li> Using the above translation from lists, we will write a function to draw regular polygons.
+      <ol type="a">
+       <li> Write a function
+            <pre> copy :: Int -> Command -> Command </pre>
+            which given an integer and a command returns a new command consisting of the given
+            number of copies of the given command, joined together. Thus, the following two com-
+            mands should be equivalent:
+            <pre>
+            copy 3 (Go 10 :#: Turn 120)
+
+            Go 10 :#: Turn 120 :#: Go 10 :#: Turn 120 :#: Go 10 :#: Turn 120
+            </pre>
+   <li> Using copy, write a function
+
+        <pre>pentagon :: Distance -> Command </pre>
+        that returns a command which traces a pentagon with sides of a given length. The
+        following two commands should be equivalent:
+        <pre>
+            pentagon 50
+        </pre>
+        and
+        <pre>
+            Go   50.0   :#:   Turn   72.0   :#:
+            Go   50.0   :#:   Turn   72.0   :#:
+            Go   50.0   :#:   Turn   72.0   :#:
+            Go   50.0   :#:   Turn   72.0   :#:
+            Go   50.0   :#:   Turn   72.0
+        </pre>
+   <li> Write a function
+        <pre>polygon :: Distance -> Int -> Command</pre>
+        that returns a command that causes the turtle to trace a path with the given number of
+        sides, of the specified length. Thus, the following two commands should be equivalent:
+        <pre>
+                 polygon 50 5
+
+                 pentagon 50
+        </pre>
+        <b>Hint:</b> You may need to use the <tt>Prelude</tt> function <tt>fromIntegral</tt> to convert an <tt>Int</tt> to a <tt>Float</tt>.
+   </ol>
+<li> Next, we will approximate a spiral, by making our turtle travel increasing (or decreasing)
+   lengths and turning slightly in between. Our function <tt>copy</tt> is of no help here, since the
+   distance our turtle needs to travel changes after each corner it takes. Therefore, your spiral
+   function will have to be recursive. It’s type signature should be as follows:
+   <pre>spiral :: Distance -> Int -> Distance -> Angle -> Command</pre>
+  Its parameters are
+  <ul>
+    <li> <tt>side</tt>, the length of the first segment,
+    <li> <tt>n</tt>, the number of line segments to draw,
+    <li> <tt>step</tt>, the amount by which the length of successive segments changes, and
+    <li> <tt>angle</tt>, the angle to turn after each segment.
+  </ul>
+
+  To draw such a spiral, we draw <tt>n</tt> line segments, each of which makes angle <tt>angle</tt> with the
+  previous one; the first should be as long as <tt>segment</tt> and thereafter each one should be longer
+  by <tt>step</tt> (or shorter, if <tt>step</tt> is negative).
+  Thus, the following two commands should be equivalent:
+  <pre>
+       spiral 30 4 5 30
+
+       Go   30.0    :#:   Turn   30.0 :#:
+       Go   35.0    :#:   Turn   30.0 :#:
+       Go   40.0    :#:   Turn   30.0 :#:
+       Go   45.0    :#:   Turn   30.0
+  </pre>
+
+
+
+  <b>Note:</b> your recursion should definitely stop after <tt>n</tt> steps (the second parameter), but you
+  will also need to keep in mind that line segments should not become negative in length.
+  <p>Sample output is shown in Figure 2.
+
+<figure>
+    <img src='spiral.png' alt='Figure 2: A spiral (spiral 0.1 1000 0.1 4)'/>
+    <figcaption>Figure 2: A spiral (<tt>spiral</tt> 0.1 1000 0.1 4)</figcaption>
+</figure>
+
+<li> Besides the equalities we saw earlier, we might also want to consider the following ones:
+<pre>
+     Go 0 = Sit
+     Go d :#: Go e = Go (d+e)
+     Turn 0 = Sit
+     Turn a :#: Turn b = Turn (a+b)
+</pre>
+  So the <tt>Sit</tt> command is equivalent to either moving or turning by zero, and any sequence of
+  consecutive moves or turns can be collapsed into a single move or turn (as long as moves have
+  a non-negative distance!).
+  Write a function:
+  <pre>optimise :: Command -> Command</pre>
+  which, given a command <tt>p</tt>, returns a command <tt>q</tt> that draws the same picture, but has the
+  following properties:
+  <ul>
+     <li> <tt>q</tt> contains no <tt>Sit</tt>, <tt>Go 0</tt> or <tt>Turn 0</tt> commands, unless the command is equivalent to <tt>Sit</tt>.
+     <li> <tt>q</tt> contains no adjacent <tt>Go</tt> commands.
+     <li> <tt>q</tt> contains no adjacent <tt>Turn</tt> commands.
+  </ul>
+
+  For example:
+  <pre>
+      *Main> optimise (Go 10 :#: Sit :#: Go 20 :#:
+                       Turn 35 :#: Go 0 :#: Turn 15 :#: Turn (-50))
+      Go 30.0
+  </pre>
+  You can use <tt>split</tt> and <tt>join</tt> to make your task easier. (If your version of <tt>join</tt> adds a<tt>Sit</tt> 
+  command, you will need to define a new version which does not.)
+</ol>
+
+<h2>Branching and colours</h2>
+So far we’ve only been able to draw linear paths; we haven’t been able to branch the path in any
+way. In the next section, we will make use of two additional command constructors:
+
+<pre>
+data Command = ...
+             | GrabPen Pen
+             | Branch Command
+</pre>
+
+where <tt>Pen</tt> is defined as:
+
+<pre>
+data Pen = Colour Float Float Float
+         | Inkless
+</pre>
+
+These give two additional forms of path.
+
+   • <tt>GrabPen p</tt>, where <tt>p</tt> is a pen: causes the turtle to switch to a pen of the given colour. The
+     following pens are predefined:
+     <pre>
+         white, black, red, green, blue :: Pen
+     </pre>
+
+      You can create pens with other colours using the <tt>Colour</tt> constructor, which takes a value
+      between 0 and 1.0 for each of the red, green and blue components of the colour. The special
+      <tt>Inkless</tt> pen makes no output; you can use <tt>Inkless</tt> to create disjoint pictures with a single
+      command.
+   • <tt>Branch p</tt>, where <tt>p</tt> is a path: draws the given path and then returns the turtle to direction
+     and position which it had at the start of the path (rather than leaving it at the end). Pen
+     changes within a branch have no effect outside the branch.
+     <p> To see the effect of branching, draw the following path.
+
+     <pre>
+        let inDirection angle = Branch (Turn angle :#: Go 100) in
+           join (map inDirection [20,40..360])
+     </pre>
+
+<h2>Introduction to L-Systems</h2>
+The Swedish biologist Aristid Lindenmayer developed L-Systems to model the development of
+plants. For more on L-Systems, see <a href="http://en.wikipedia.org/wiki/L-System">http://en.wikipedia.org/wiki/L-System</a>. A book, <i>The Algorithmic
+Beauty of Plants</i>, contains beautiful color illustrations produced by L-Systems; it is available online at
+<a href="http://algorithmicbotany.org/papers/#abop2">http://algorithmicbotany.org/papers/#abop2</a>. 
+An L-System consists of a start pattern and a set of rewrite rules which are recursively applied to
+the pattern to produce further increasingly complex patterns. For example, Figure 3 was produced
+from the “triangle” L-System:
+<pre>
+           angle:     90
+           start:     +f
+           rewrite:   f → f+f-f-f+f
+</pre>
+<figure>
+    <img src='ltriangle.png' alt='Figure 3: Triangle L-System output'/>
+    <figcaption>Figure 3: Triangle L-System output</figcaption>
+</figure>
+
+Each symbol in the string generated by an L-System represents a path command: here, <tt>+</tt> and <tt>-</tt>
+represent clockwise and anticlockwise rotation and <tt>f</tt> represents a forward movement. Which symbols
+represent which commands is a matter of convention.
+<p> In this system, only the symbol <tt>f</tt> is rewritten, while the <tt>+</tt> and <tt>-</tt> symbols are not. The rewriting replaces the straight lines with more complex figures.
+
+<p>Here is how to generate a picture with an L-System. Begin with the start pattern. Then apply the
+rewrite rule some number of times, replacing the character on the left by the sequence on the right.
+For instance, applying the above rule three times gives the following strings in successive steps:
+
+<pre>
+                <b>Step    Pattern</b>
+
+                  0     +f
+
+                  1     +f+f-f-f+f
+
+                  2     +f+f-f-f+f+f+f-f-f+f-f+f-f-f+f-f+f-f-f+f+f+f-f-f+f
+
+                        +f+f-f-f+f+f+f-f-f+f-f+f-f-f+f-f+f-f-f+f+f+f-f-f+f
+                        +f+f-f-f+f+f+f-f-f+f-f+f-f-f+f-f+f-f-f+f+f+f-f-f+f
+                  3     -f+f-f-f+f+f+f-f-f+f-f+f-f-f+f-f+f-f-f+f+f+f-f-f+f
+                        -f+f-f-f+f+f+f-f-f+f-f+f-f-f+f-f+f-f-f+f+f+f-f-f+f
+                        +f+f-f-f+f+f+f-f-f+f-f+f-f-f+f-f+f-f-f+f+f+f-f-f+f
+</pre>
+
+Note that you could continue this process for any number of iterations.
+<p>After rewriting the string the desired number of times, replace each character that remains by some
+drawing commands. In this case, replace f with a move forward (say, by 10 units), replace each +
+by a clockwise turn through the given angle, and replace each - by an anticlockwise turn through
+the given angle.
+<p>Converting L-Systems to functions that return turtle commands is straightforward. For example,
+the function corresponding to this “triangle” L-System can be written as follows:
+
+<pre>
+triangle :: Int -> Command
+triangle x = p :#: f x
+  where
+  f 0      = Go 10
+  f x      = f (x-1) :#: p :#: f (x-1) :#: n :#: f (x-1)
+             :#: n :#: f (x-1) :#: p :#: f (x-1)
+  n        = Turn 90
+  p        = Turn (-90)
+</pre>
+
+Study the above definition and compare it with the L-System definition on the previous page. The
+above definition is included in <tt>LSystem.hs</tt>, so you can try it out by typing (for instance):
+<pre>
+    display (triangle 5)
+</pre>
+
+
+
+A couple of things are worth noting. The symbols from the system that are rewritten are imple-
+mented as functions that take a “step number” parameter—in this case, only <tt>f</tt> is rewritten. When
+we have taken the desired number of steps, the step number bottoms-out at 0, and here <tt>f</tt> is just in-
+terpreted as a drawing command. The symbols that are not rewritten are implemented as variables,
+such as <tt>n</tt> and <tt>p</tt>. In general, there will be one definition in the <tt>where</tt> clause for each letter in the
+L-System.
+<p>A rewrite rule for the L-System may contain clauses in square brackets, which correspond to branches.
+For example, here is a second L-System, that uses two letters and branches.
+<pre>
+          angle:     45
+          start:     f
+          rewrite:   f → g[-f][+f][gf]
+                     g → gg
+</pre>
+Here is the corresponding code (also included in <tt>LSystem.hs</tt>).
+<pre>
+tree :: Int -> Command
+tree x = f x
+  where
+  f 0      = GrabPen red :#: Go 10
+  f x      = g (x-1) :#: Branch (n :#: f (x-1))
+             :#: Branch (p :#: f (x-1))
+             :#: Branch (g (x-1) :#: f (x-1))
+  g 0      = GrabPen blue :#: Go 10
+  g x      = g (x-1) :#: g (x-1)
+  n        = Turn 45
+  p        = Turn (-45)
+</pre>
+<figure>
+    <img src='ltree.png' alt='Figure 4: Tree L-System output'/>
+    <figcaption>Figure 4: Tree L-System output</figcaption>
+</figure>
+
+A picture generated by this definition is shown in Figure 4. Here we use different pens to draw the
+segments generated by different symbols: this is not part of the description of the L-system, but it
+generates prettier pictures.
+
+<h3>Exercises</h3>
+<ol start="5">
+  <li> Write a function <tt>arrowhead :: Int -> Command</tt> implementing the following L-System:
+<pre>
+                angle:      60
+                start:      f
+                rewrite:    f → g+f+g
+                            g → f-g-f
+</pre>
+  <li> Write a function <tt>snowflake :: Int -> Command</tt> implementing the following L-System:
+<pre>
+                angle:      60
+                start:      f- -f- -f- -
+                rewrite:    f → f+f- -f+f
+</pre>
+  <li> Write a function <tt>hilbert :: Int -> Command</tt> implementing the following L-System:
+<pre>
+                angle:      90
+                start:      l
+                rewrite:    l → +rf-lfl-fr+
+                            r → -lf+rfr+fl-
+</pre>
+       <b>Note:</b> Not all of the symbols here need to move the turtle. Check your result against
+       the pictures at <a href="http://en.wikipedia.org/wiki/Hilbert_curve">http://en.wikipedia.org/wiki/Hilbert_curve</a> and adjust the final values
+       (e.g. <tt>r 0 = ...</tt>) until it looks like those.
+</ol>
+
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<html>
+<head>
+    <title>Lab 8</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link rel="stylesheet" type="text/css" href="https://www.dropbox.com/s/48bx1xvl42hr5gp/progdecl.css?dl=1">
+  <script type="text/javascript" src="https://www.dropbox.com/s/hk9x49z7vmznfp9/progdecl.js?dl=1"></script> 
+</head>
+<body>
+    <h1>
+      <strong> Declarative Programming – Lab 8</strong><br/>
+    </h1>
+
+    
+<h1>The Barcode Reader</h1>
+<p>In this tutorial we will take a look at a barcode scanner. Of course, we will not be doing the actual scanning, but what we <i>will</i> do is search a database for the item that belongs to a scanned barcode.</p>
+<p>We will read the database from a file and store it in different shapes, to see which gives the fastest retrieval times.</p>
+<p>The Haskell files that come with this tutorial are <tt>lab8.hs</tt>, <tt>KeymapList.hs</tt>, and <tt>KeymapTree.hs</tt>.
+There is also the database itself: <tt>database.csv</tt> (<tt>csv</tt> stands for ‘comma-separated values’).</p>
+<p>Let’s start by opening <tt>KeymapList.hs</tt>. This file defines an abstract data type for a keymap. The file starts as follows:</p>
+<pre>
+module KeymapList ( Keymap,
+                    size,
+                    ...
+                  )
+where
+</pre>
+<p>This declaration means that <tt>KeymapList.hs</tt> contains a <i>module</i> that can be used by other Haskell files, just like <tt>Data.Char</tt> and <tt>Test.QuickCheck</tt>. The functions and constructors mentioned in parentheses (<tt>Keymap</tt>, <tt>size</tt>, etc.) are the ones that are <i>exported</i> by the module, i.e. the ones that can be used when the module is imported somewhere else.</p>
+<p>Next, let’s take a look at the type declaration for <tt>Keymap</tt>.</p>
+<pre>
+newtype Keymap k a = K [(k,a)]
+</pre>
+<p>This defines the polymorphic data type <tt>Keymap</tt>. The first argument, <tt>k</tt>, is what’s used as the <i>key</i> in the keymap, the second (a) is the type of the <i>values</i> stored. For instance, a keymap of type <tt>Keymap Int String</tt> associates keys of type <tt>Int</tt> with values of type <tt>String</tt>.</p>
+<p>Finally, there is the definition itself, <tt>K [(k,a)]</tt>. As you see, a keymap is simply stored as a list of key–value pairs. The type-constructor <tt>K</tt> is just a wrapper that prevents us from using normal list functions on keymaps. This is precisely the idea: we want the type to be <i>abstract</i>, so we can hide the fact that we are using lists underneath. This ensures that we don’t use ordinary list functions on keymaps and accidentally invalidate the representation. And it frees us to change our representation whilst guaranteeing that our users’ code still works.</p>
+<p>Now, let’s look at the functions in the file. The <i>constraints</i> <tt>Eq k</tt> mean that whatever the type <tt>k</tt>, it must support equality testing. In other words, if we want to use a type as a key, we have to be able to use the function <tt>(==)</tt> on values of that type&mdash;otherwise, we would have no way to identify the right key in the keymap.</p>
+<ul>
+<li><pre>size :: Eq k =&gt; Keymap k a -&gt; Int</pre>
+This function gives the number of entries in a <tt>Keymap</tt>.
+<li><pre>get :: Eq k =&gt; k -&gt; Keymap k a -&gt; Maybe a</pre>
+ Given a key, this function looks up the associated value in a <tt>Keymap</tt>. In this function keys are matched using <tt>(==)</tt>, which is why the constraint <tt>Eq k</tt> is needed. The value returned is not just of type <tt>a</tt>, but <tt>Maybe a</tt>, because a key might not occur in a <tt>Keymap</tt>. We will get back to this later.
+<li><pre>set :: Eq k =&gt; k -&gt; a -&gt; Keymap k a -&gt; Keymap k a</pre>
+Given a key and a value, this function sets the value associated with the key to the given value in a <tt>Keymap</tt>. If the key already had a value, this value is replaced; otherwise the key is newly added to the keymap.
+<li><pre>del :: Eq k =&gt; k -&gt; Keymap k a -&gt; Keymap k a</pre>
+This function deletes an entry from a keymap.
+<li><pre>select :: Eq k =&gt; (a -&gt; Bool) -&gt; Keymap k a -&gt; Keymap k a</pre>
+This function narrows a keymap down to those values that satisfy a given predicate.
+<li><pre>tolist :: Eq k =&gt; Keymap k a -&gt; [(k,a)]</pre>
+This function exports the keymap as a list.
+<li><pre>fromList :: Eq k =&gt; [(k,a)] -&gt; Keymap k a</pre>
+This function builds a keymap from a list.
+</ul>
+<p>Now that we know what <tt>KeymapList</tt> is like, we can start working on <tt>lab8.hs</tt>. Just below the top, you will find the declarations:</p>
+<pre>
+import KeymapList
+type Barcode = String
+type Product = String
+type Unit    = String
+
+type Item    = (Product,Unit)
+
+type Catalogue = Keymap Barcode Item
+</pre>
+<p>Firstly, we are importing the <tt>KeymapList</tt> module. Next, there are type aliases <tt>Barcode</tt>, <tt>Product</tt> and <tt>Unit</tt>, whose values are strings, and <tt>Item</tt> which is a pair <tt>(Product,Unit)</tt>. Finally, we are using the type alias <tt>Catalogue</tt> whose values are keymaps that associate a <tt>Barcode</tt> with an <tt>Item</tt>.</p>
+<p>Below that, you will find a little test database.</p>
+<h3>Exercises</h3>
+<ol>
+<li>Before we can work on the database, we need some way of viewing it. If you try <tt>testDB</tt> or <tt>show testDB</tt> on the GHCi prompt, you will find it refuses to print. Instead, try:
+<pre>*Main&gt; toList testDB</pre>
+However, this looks rather cluttered.
+<ol type="a">
+<li> Write a function <tt>longestProductLen</tt> that finds the length of the longest product name in a list of <tt>(Barcode,Item)</tt>-pairs.
+<li> Write a function <tt>formatLine</tt> that, given a number (the desired length of the product name) prints the barcode, product and unit information, separated by dots, as a single line. For example:
+<pre>
+*Main&gt; formatLine 7 ("0001",("product","unit")) 
+"0001...product...unit"
+*Main&gt; formatLine 7 ("0002",("thing","unknown")) 
+"0002...thing.....unknown"
+</pre>
+You may assume that the product name is never longer than the desired length for it.
+<li> Write a function <tt>showCatalogue</tt> that pretty-prints a <tt>Catalogue</tt>. You will need to use <tt>toList</tt> (from the <tt>KeymapList</tt> module). Test your function by writing at the prompt:
+<pre>*Main&gt; putStr (showCatalogue testDB)</pre>
+</ol>
+<li> Next, we will start using the <tt>get</tt> function.
+<p>Firstly, try the following at the interpreter: <pre>*Main&gt; :t get</pre>
+<p>You will see that the result type is <tt>Maybe a</tt>. This data-type is defined as follows: 
+<pre>
+Maybe a = Nothing
+        | Just a
+</pre>
+<p>A value of type <tt>Maybe a</tt> is either the value <tt>Nothing</tt>, or it is a value of the form <tt>Just x</tt>.
+In this way, values of type <tt>Maybe a</tt> can be used to represent ordinary values that have the option of failing. The type is just like the type <tt>a</tt>, but it contains the extra value <tt>Nothing</tt> meaning “there is no value.”</p>
+<p>So by saying that <tt>get</tt> returns a value of type <tt>Maybe a</tt>, we are saying that it will either return a value of the form <tt>Just x</tt> if <t>x</t> appears in the database, or otherwise will return <tt>Nothing</tt>.</p>
+<p>Now try the following expressions at the interpreter: </p>
+<pre>
+*Main&gt; get "9780201342758" testDB
+
+*Main&gt; get "000" testDB
+</pre>
+<p>What did you get?</p>
+<ol type="a">
+<li> When you apply your function <tt>get</tt> with a certain key to the test database, what is the type it returns? What are the possible values (hint: there are five)?
+<li> Write a function <tt>maybeToList :: Maybe a -&gt; [a]</tt> that returns the empty list if the input is <tt>Nothing</tt>, and returns a singleton list otherwise.
+<li> Write another function <tt>listToMaybe :: [a] -&gt; Maybe a</tt>. You can think of this function as a safe version of head. It should return <tt>Nothing</tt> if the input is the empty list, and return just the head otherwise.
+
+<li> Write the function <tt>catMaybes :: [Maybe a] -&gt; [a]</tt>. This function should drop all elements of the form <tt>Nothing</tt>, and strip the <tt>Just</tt> constructor from all the other elements.
+</ol>
+<li> Using the functions from the previous exercise, write a function <tt>getItems</tt> that, given a list of <tt>Barcode</tt>s, returns a list of <tt>Item</tt>s. Test your code for errors by typing:
+<pre>*Main&gt; getItems ["0001","9780201342758","0003"] testDB</pre>
+<p>It should return a list containing only the item for the textbook.</p>
+</ol>
+</ol>
+<h2>The real database</h2>
+<p>Your file <tt>lab8.hs</tt> contains a few functions that we haven’t shown yet. First of all, it can read in the database file <tt>database.csv</tt>. You can do this by writing: </p>
+<pre>*Main&gt; theDB &lt;- readDB</pre>
+<p>(it might take a little while). The database is now loaded and assigned to the variable <tt>theDB</tt>, and will remain in the computer’s memory until you reload your file.</p>
+<p>The database is pretty large, so it’s not a good idea to try to print it on the screen. But you can ask for the size:</p>
+<pre>*Main&gt; size theDB</pre>
+<p>Another thing that is provided is the function <tt>getSample</tt>. This will give you a random barcode from the database; try:</p>
+<pre>*Main&gt; getSample theDB</pre>
+<p>To find the <tt>Item</tt> for that barcode, follow the previous command with: </p>
+<pre>*Main&gt; get it theDB</pre>
+<p>(‘<tt>it</tt>’ is a GHCi-special that refers to the value returned by the last expression it evaluated).</p>
+<p>We will see how fast our implementation of keymaps in <tt>KeymapList</tt> is. First, we need to turn on the timekeeping feature of GHCi. Type this at the prompt: <pre>*Main&gt; :set +s</pre></p>
+<p>It may seem as if nothing has changed, but GHCi will now give you time (and memory use) information for each expression you ask it to evaluate.</p>
+<h3>Exercises</h3>
+<ol start="4">
+<li>
+<ol type="a">
+<li> Reload your file and load up the database again. Take a note of how much time it took.
+<li> Take at least ten samples from the database, and record how much time it takes to find an item with get. (The time it takes to find a random sample is not really relevant here.)
+<li> Think about the different values you get. If the database was 2 times bigger, how much longer would it take (on average) to find an item? How many items does the get function from <tt>KeymapList</tt> look at before it finds the right item, if it happens to be the last one?
+</ol>
+</ol>
+<h2>Keymaps as trees</h2>
+<p>In this part of the exercise we will build a different implementation of keymaps, based on trees rather than lists. In the file <tt>KeymapTree.hs</tt> you will find a different declaration of the <tt>Keymap</tt> data type, as well as the skeletons of the functions as in <tt>KeymapList.hs</tt>.</p>
+In <tt>KeymapTree</tt> we will implement the same functions and data type as we had in <tt>KeymapList</tt>, so from the outside they will look the same. However, internally they will be very different, and so will their performance.</p>
+<!--<p>The idea behind the tree implementation is explained in section 16.7 (page 395) of Thompson or pages 135-137 of Lipovaca. -->
+<p> Basically, the data is stored in the nodes of a tree. The left branch of a node only stores data that is <i>smaller</i> than the data at the node itself, while the right branch stores data that is <i>larger</i>.</p>
+<p>First, look at the data type for Keymap. It is a lot more complicated than before:</P>
+<pre>
+data Ord k =&gt; Keymap k a = Leaf
+                            | Node k a (Keymap k a) (Keymap k a)
+</pre>
+<p>The data type again defines a keymap storing keys of type <tt>k</tt> and values of type <tt>a</tt>. To sort the keys into larger and smaller ones, we need the constraint <tt>Ord k</tt>. This means that the keys used in a keymap can be ordered ; in practice, the means we can always use the functions <tt>(==)</tt>, <tt>(&gt;=)</tt> and <tt>(&lt;=)</tt> on keys.</p>
+<p>The constructors for <tt>Keymap</tt>s then are <tt>Leaf</tt> and <tt>Node</tt>. The value of <tt>Leaf</tt> is just a leaf. It stores no data, like the empty list <tt>[]</tt>. The second one does all the work. It carries (in order):</p>
+<ul>
+<li> a key of type <tt>k</tt>
+<li> the associated value of type <tt>a</tt>
+<li> a subtree on the left, which is a tree of type <tt>Keymap k a</tt>
+<li> a subtree on the right, also a tree of type <tt>Keymap k a</tt>
+</ul>
+<p> When building a keymap in the shape of a tree, we want to make sure that the tree remains sorted.
+That is, for any node with a certain key, the keys in the left subtree should all be smaller than that key, and the keys in the right subtree should all be larger. To ensure this, we make sure a user of these keymaps can only access them through functions that are safe.</p>
+<h3>Exercises</h3>
+<ol start="5">
+<li> In <tt>lab8.hs</tt> change the line:</p>
+<pre>import KeymapList</pre>
+<p>to</p>
+<pre>import KeymapTree</pre>
+<p>and load <tt>lab8.hs</tt> up in GHCi. Think of what the following expression should return: </p>
+<pre>size ( Node "0001" "just some item" Leaf Leaf )</pre>
+<p> If you try it out, what does it say?</p>
+</ol>
+<p>What happens is that by not exporting the constructors <tt>Node</tt> and <tt>Leaf</tt> themselves, we prevent people from writing recursive functions on our trees—at least outside of <tt>KeymapTree.hs</tt>. Now, we will complete the functions in <tt>KeymapTree.hs</tt>.</p>
+<h3>Exercises</h3>
+<ol start="6">
+<li>
+<ol type="a">
+<li> Look at the function <tt>size</tt>. How does it work, and how can we recurse over trees?
+<li> Define the function <tt>depth</tt>, which takes a tree and returns the <i>maximal</i> depth of the tree, i.e. the length of the longest path from its root to any of its leaves. A leaf should have depth 0.
+<li> Load up <tt>KeymapTree.hs</tt> into GHCi and try the functions <tt>size</tt> and <tt>depth</tt> on the little test tree <tt>testTree</tt> (it should have size 4 and depth 3).
+</ol>
+<li> Define the function <tt>toList</tt>, which takes a tree and returns the corresponding list of pairs.
+<p>Try it on <tt>testTree</tt>. Can you make it so that the returned list is sorted?</p>
+<li>Take a look at the function <tt>set</tt>. The function defines a helper function <tt>f</tt> to do the recursion, to avoid repeating the variables <tt>key</tt> and <tt>value</tt> too often in the definition.
+<ol type="a">
+<li> Explain what the function <tt>f</tt> does when it encounters a leaf.
+<li> Explain what the function <tt>f</tt> does when it looks at a node and it encounters the key it was looking for? Complete the definition of this function. Hint: the last two cases will need to recurse down an appropriate branch.
+</ol>
+<li> Complete the function <tt>get</tt>. Remember that you should return a <tt>Maybe</tt>-value. When should it return <tt>Nothing</tt>, and when should it return <tt>Just</tt> a value? Test your function on <tt>testTree</tt> first, and then use <tt>QuickCheck</tt> to verify<tt> prop_set_get</tt>.
+<li> Write a function <tt>fromList</tt> to turn a list into a tree. You should use the function <tt>set</tt> to add each element to the tree. Think about what the tree is that you should start out with. For this question you can use recursion over the input list, but you could also try to use foldr and uncurry.
+<p>Use the test property prop_toList_fromList to test your solutions. If you managed to return sorted lists with toList, you can also test with prop_toList_fromList_sorted.</p>
+</ol>
+<p>At this point we have added enough functions to <tt>KeymapTree</tt> to start evaluating its performance.</p>
+<h3>Exercises</h3>
+<ol start="11">
+<li> Save <tt>KeymapTree.hs</tt> and open up <tt>labl6.hs</tt>
+<ol type="a">
+<li> Load up the database again by entering <tt>theDB &lt;- readDB</tt> at the prompt. This time, it will be constructed as a tree. How much time did it take?
+<li> Try on at least 10 examples how fast your <tt>get</tt> function is now. Remember: <pre>*Main&gt; getSample theDB</pre>
+<p>gives you a random barcode, and then</p>
+<pre>*Main&gt; get it theDB</pre>
+<p>looks up the associated item.</p>
+<li> How many barcodes does our get function inspect, at most, when searching the database?
+</ol>
+</ol>
+</body>
+</html>
